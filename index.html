@@ -3,13 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DataGlif - Video Hero + Data Exhaustion</title>
+  <title>DataGlif - AI-Ready Data at Scale</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --surface-deepest: #05070C;
       --surface-deep: #0A0D12;
       --surface-mid: #0F131C;
       --accent-cyan: #38BDF8;
+      --accent-lime: #d4ff00;
+      --white: #ffffff;
+      --gray-300: #d1d5db;
+      --gray-700: #374151;
+      --gray-900: #111827;
 
       /* Chart theme variables */
       --dex-ink: #e2e8f0;
@@ -29,16 +40,141 @@
     }
 
     body {
-      background: var(--surface-deepest);
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #FFFFFF;
+      color: #000000;
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       overflow-x: hidden;
+    }
+
+    /* Navbar - Compact and transparent */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.75rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      backdrop-filter: none;
+      border-bottom: none;
+    }
+
+    .navbar-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #000000;
+      letter-spacing: -0.02em;
+    }
+
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-item {
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: #000000;
+      cursor: pointer;
+      transition: color 200ms ease;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      color: var(--accent-cyan);
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    /* CTA Button - Stable (no movement on hover) */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.3rem, 1vw, 0.5rem);
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-radius: 9999px;
+      padding: clamp(0.3rem, 0.8vw, 0.4rem);
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+      transition: all 300ms ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .cta-button:hover {
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-button:active {
+      transform: scale(0.98);
+    }
+
+    .cta-button-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      background: #000000;
+      padding: clamp(0.4rem, 1.5vw, 0.65rem) clamp(1rem, 4vw, 1.75rem);
+      font-weight: 700;
+      font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      transition: all 300ms ease;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .cta-button:hover .cta-button-label {
+      background: var(--accent-lime);
+      color: var(--gray-900);
+    }
+
+    .cta-button-arrow {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      border-radius: 9999px;
+      background: #000000;
+      padding: clamp(0.4rem, 1.8vw, 0.65rem);
+      transition: all 300ms ease;
+    }
+
+    .cta-button:hover .cta-button-arrow {
+      background: var(--accent-lime);
+    }
+
+    .cta-button-arrow svg {
+      width: clamp(0.75rem, 3vw, 1rem);
+      height: clamp(0.75rem, 3vw, 1rem);
+      color: #FFFFFF;
+      transition: all 300ms ease-out;
+    }
+
+    .cta-button:hover .cta-button-arrow svg {
+      color: var(--gray-900);
+      transform: rotate(45deg);
     }
 
     /* Video Hero Styles */
     .hero-container {
       height: 200vh;
       position: relative;
+      padding-top: 60px;
+      background: #FFFFFF;
     }
 
     .hero-sticky {
@@ -49,17 +185,22 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      padding: 2rem;
     }
 
     .video-wrapper {
-      position: absolute;
+      position: relative;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 2rem;
-      padding: 4rem;
+      padding: 2rem;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #FFFFFF;
     }
 
     .video-card {
@@ -68,8 +209,26 @@
       height: 100%;
       border-radius: 0;
       overflow: hidden;
-      background: var(--surface-mid);
+      background: #FFFFFF;
       will-change: transform, opacity;
+      border: 3px solid rgba(0, 0, 0, 0);
+      transition: border-color 400ms ease;
+    }
+
+    .video-card.separated {
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1;
+      pointer-events: none;
     }
 
     .video-card video {
@@ -78,47 +237,100 @@
       object-fit: cover;
     }
 
+    .video-label-overlay {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      z-index: 2;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+
+    .video-card.active .video-label-overlay {
+      opacity: 1;
+    }
+
+    .video-description {
+      position: absolute;
+      bottom: -3.5rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(0.875rem, 2vw, 1.125rem);
+      color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      transition: opacity 400ms ease;
+      padding: 0 1rem;
+    }
+
+    .video-card.active .video-description {
+      opacity: 1;
+    }
+
     .hero-content {
-      position: relative;
+      position: absolute;
       z-index: 10;
       text-align: center;
-      max-width: 900px;
+      max-width: 1400px;
       padding: 2rem;
       will-change: transform, opacity;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .brand {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 0.5rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(3rem, 8vw, 14.375rem); /* 230px */
+      font-weight: 500; /* Medium */
+      color: #FFFFFF;
+      margin-bottom: 2rem;
       letter-spacing: -0.02em;
+      line-height: 1;
     }
 
     .tagline {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.75rem);
       font-weight: 600;
       margin-bottom: 1.5rem;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      display: none; /* Hide "Where Data Evolves" */
     }
 
     .description {
-      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.5rem); /* Reduced from 64px to ~24px */
+      font-weight: 400; /* Regular */
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 800px;
-      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 900px;
+      margin: 0 auto 2.5rem;
+      letter-spacing: -0.01em;
+      text-align: center;
     }
 
-    /* Chart Section */
+    .hero-cta {
+      margin-top: 2rem;
+    }
+
+    /* Chart Section - Reversed Layout */
     .chart-section {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8rem 2rem;
-      background: linear-gradient(180deg, var(--surface-deepest) 0%, var(--surface-deep) 50%, var(--surface-deepest) 100%);
+      padding: 8rem 3rem;
+      background: #FFFFFF;
       position: relative;
     }
 
@@ -129,86 +341,92 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
     }
 
     .chart-container {
-      max-width: 1200px;
+      max-width: 1400px;
       width: 100%;
       display: grid;
-      gap: 4rem;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
       align-items: center;
     }
 
     .chart-intro {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 3rem;
+      text-align: left;
     }
 
     .chart-intro h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--accent-cyan);
-      letter-spacing: -0.02em;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #000000;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
 
     .chart-intro p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.7);
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+      line-height: 1.7;
+      color: rgba(0, 0, 0, 0.8);
+      font-weight: 400;
+      margin-bottom: 1rem;
     }
 
     /* Data Exhaustion Chart Styles */
     .dex-chart {
-      width: min(100%, 720px);
-      margin: 0 auto;
+      width: 100%;
       color: var(--dex-ink);
-      font: inherit;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
 
     .dex-chart__header {
       display: grid;
-      gap: 6px;
-      margin: 0 0 14px;
+      gap: 8px;
+      margin: 0 0 16px;
     }
 
     .dex-chart__eyebrow {
       margin: 0;
       color: var(--accent-cyan);
-      font-size: 0.76rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .dex-chart__title {
-      max-width: 38rem;
+      max-width: 40rem;
       margin: 0;
-      color: #ffffff;
-      font-size: clamp(1.45rem, 3.2vw, 2.05rem);
+      color: var(--white);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.25rem, 2.8vw, 1.75rem);
       font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1.06;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
     }
 
     .dex-chart__legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px 14px;
-      margin: 0 0 14px;
+      gap: 8px 16px;
+      margin: 0 0 16px;
       padding: 0;
       color: var(--dex-muted);
-      font-size: 0.72rem;
-      line-height: 1.25;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      line-height: 1.3;
       list-style: none;
     }
 
     .dex-chart__legend-item {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       white-space: nowrap;
     }
 
@@ -315,7 +533,7 @@
     .dex-chart__axis-title,
     .dex-chart__callout text {
       fill: var(--dex-ink);
-      font-family: inherit;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
 
     .dex-chart__model-label {
@@ -371,15 +589,17 @@
     }
 
     .dex-chart__axis-title {
+      font-family: 'DM Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
     }
 
     .dex-chart__caption {
-      margin-top: 10px;
+      margin-top: 12px;
       color: var(--dex-muted);
-      font-size: 0.73rem;
-      line-height: 1.45;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
 
     .dex-chart__caption a {
@@ -453,13 +673,42 @@
       100% { opacity: 0; transform: scale(2.7); }
     }
 
+    @media (max-width: 1024px) {
+      .chart-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .chart-intro {
+        text-align: center;
+      }
+
+      .navbar-nav {
+        display: none;
+      }
+    }
+
     @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem 1.5rem;
+      }
+
+      .navbar-actions {
+        gap: 1rem;
+      }
+
+      .nav-login {
+        display: none;
+      }
+
       .chart-section {
         padding: 4rem 1.5rem;
       }
+
       .dex-chart__title {
-        font-size: 1.35rem;
+        font-size: 1.25rem;
       }
+
       .dex-chart__legend {
         gap: 6px 10px;
         font-size: 0.68rem;
@@ -469,28 +718,71 @@
 </head>
 <body>
 
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">DataGlif</div>
+
+    <div class="navbar-nav">
+      <a href="#home" class="nav-item">Home</a>
+      <a href="#services" class="nav-item">Services</a>
+      <a href="#approach" class="nav-item">Our Approach</a>
+      <a href="#contact" class="nav-item">Contact</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="cta-button" onclick="window.location.href='#contact'">
+        <span class="cta-button-label">Book a Call</span>
+        <span class="cta-button-arrow">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Video Hero Section -->
   <div class="hero-container">
     <div class="hero-sticky">
       <div class="video-wrapper">
+        <!-- Video 1: Drone (plays first) -->
         <div class="video-card" data-video="1">
-          <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
-        </div>
-        <div class="video-card" data-video="2">
           <video src="./videos/city_drone_.mp4" autoplay loop muted playsinline></video>
+          <div class="video-label-overlay">Aerial / Geo</div>
+          <div class="video-description">High-altitude surveillance and geographic mapping data for spatial intelligence</div>
         </div>
+
+        <!-- Video 2: CCTV -->
+        <div class="video-card" data-video="2">
+          <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
+          <div class="video-label-overlay">Scene / Object</div>
+          <div class="video-description">Real-world scene understanding and object detection from fixed camera feeds</div>
+        </div>
+
+        <!-- Video 3: People -->
         <div class="video-card" data-video="3">
           <video src="./videos/people_walking_official.mp4" autoplay loop muted playsinline></video>
+          <div class="video-label-overlay">Segmentation</div>
+          <div class="video-description">Precise instance segmentation for human activity analysis and crowd dynamics</div>
         </div>
       </div>
 
       <div class="hero-content">
-        <div class="brand">DataGlif</div>
-        <h1 class="tagline">Where Data Evolves</h1>
+        <div class="brand">DataGlif<br>Where Data Evolves</div>
         <p class="description">
-          DataGlif transforms raw, unstructured information into clean, validated, and production-ready datasets.
-          We power AI and Agentic systems with high-quality, human-validated data.
+          DataGlif transforms raw, unstructured information into clean, validated, and production-ready datasets.<br>
+          We power next-generation AI and Agentic systems with high-quality, human-validated data.
         </p>
+        <div class="hero-cta">
+          <button class="cta-button" onclick="window.location.href='#contact'">
+            <span class="cta-button-label">Request a Dataset</span>
+            <span class="cta-button-arrow">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -498,14 +790,20 @@
   <!-- Data Exhaustion Chart Section -->
   <div class="chart-section">
     <div class="chart-container">
+      <!-- Text Left -->
       <div class="chart-intro">
         <h2>The Data Exhaustion Challenge</h2>
         <p>
           As AI models grow exponentially, we're approaching a critical inflection point:
-          the world's supply of training data. See how compute-optimal demand projects to
-          meet available data stocks by 2027.
+          the world's supply of training data.
+        </p>
+        <p>
+          See how compute-optimal demand projects to meet available data stocks by 2027 — and why quality,
+          human-validated datasets are the key to sustaining AI progress.
         </p>
       </div>
+
+      <!-- Chart Right -->
       <div id="chart-root"></div>
     </div>
   </div>
@@ -520,7 +818,7 @@
   <script>
     // Video Hero Animation
     const lenis = new Lenis({
-      duration: 0.8,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       smoothTouch: false,
@@ -551,13 +849,14 @@
     let currentVideoIndex = 0;
     let isScrolling = false;
 
+    // Video cycling timeline - drone plays first (video 1)
     const videoCycleTl = gsap.timeline({
       repeat: -1,
       onUpdate: function() {
         if (!isScrolling) {
           const progress = this.progress();
           const totalDuration = this.duration();
-          const singleVideoDuration = 4.9;
+          const singleVideoDuration = 5.5;
           currentVideoIndex = Math.floor((progress * totalDuration) / singleVideoDuration) % 3;
         }
       }
@@ -565,9 +864,9 @@
 
     videoCards.forEach((card, i) => {
       videoCycleTl
-        .to(card, { opacity: 1, duration: 1.2, ease: 'power3.inOut' }, i * 4.9)
-        .to(card, { opacity: 1, duration: 2.5 }, i * 4.9 + 1.2)
-        .to(card, { opacity: 0, duration: 1.2, ease: 'power3.inOut' }, i * 4.9 + 3.7);
+        .to(card, { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, i * 5.5)
+        .to(card, { opacity: 1, duration: 2.5 }, i * 5.5 + 1.5)
+        .to(card, { opacity: 0, duration: 1.5, ease: 'power2.inOut' }, i * 5.5 + 4);
     });
 
     const tl = gsap.timeline({
@@ -575,28 +874,41 @@
         trigger: '.hero-container',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.8,
+        scrub: 1.2,
         onEnter: () => {
           isScrolling = true;
           videoCycleTl.pause();
           videoCards.forEach((card, i) => {
             if (i !== currentVideoIndex) {
               gsap.set(card, { opacity: 0 });
+              card.classList.remove('separated');
             } else {
               gsap.set(card, { opacity: 1, zIndex: 3 });
+              card.classList.add('active');
             }
           });
         },
         onLeaveBack: () => {
           isScrolling = false;
           videoCycleTl.play();
+          videoCards.forEach(card => {
+            card.classList.remove('active', 'separated');
+          });
         },
+        onUpdate: (self) => {
+          // Add white borders when cards start separating (after 20% scroll progress)
+          if (self.progress > 0.2) {
+            videoCards.forEach(card => card.classList.add('separated'));
+          } else {
+            videoCards.forEach(card => card.classList.remove('separated'));
+          }
+        }
       }
     });
 
     const getPositions = (centerIndex) => {
-      const positions = [-500, 0, 500];
-      const rotations = [-8, 0, 8];
+      const positions = [-680, 0, 680];
+      const rotations = [-6, 0, 6];
       const result = [];
       const order = [
         (centerIndex + 2) % 3,
@@ -615,13 +927,14 @@
 
     const positions = getPositions(currentVideoIndex);
 
+    // Bigger video cards with less spacing
     tl.to(videoCards, {
-      width: '400px',
-      height: '280px',
-      borderRadius: '24px',
-      scale: 0.95,
-      duration: 0.3,
-      ease: 'power3.inOut'
+      width: '560px',
+      height: '400px',
+      borderRadius: '20px',
+      scale: 0.92,
+      duration: 0.35,
+      ease: 'power2.inOut'
     }, 0);
 
     videoCards.forEach((card, i) => {
@@ -630,20 +943,25 @@
         x: pos.x,
         scale: 1,
         rotateY: pos.rotateY,
-        z: pos.zIndex === 3 ? 50 : 0,
+        z: pos.zIndex === 3 ? 60 : 0,
         opacity: 1,
         zIndex: pos.zIndex,
-        duration: 0.6,
-        ease: 'expo.out'
-      }, 0.2 + (i === currentVideoIndex ? 0.05 : Math.abs(i - currentVideoIndex) * 0.05));
+        duration: 0.7,
+        ease: 'expo.out',
+        onComplete: () => {
+          if (i === currentVideoIndex || pos.zIndex === 3) {
+            card.classList.add('active');
+          }
+        }
+      }, 0.25 + (i === currentVideoIndex ? 0.05 : Math.abs(i - currentVideoIndex) * 0.05));
     });
 
     tl.to('.hero-content', {
       opacity: 0,
-      scale: 0.85,
-      y: -80,
-      filter: 'blur(10px)',
-      ease: 'power3.inOut'
+      scale: 0.88,
+      y: -60,
+      filter: 'blur(8px)',
+      ease: 'power2.inOut'
     }, 0);
   </script>
 
