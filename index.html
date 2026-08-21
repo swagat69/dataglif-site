@@ -8,7 +8,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,6 +31,14 @@
       --dex-grid: rgba(255, 255, 255, 0.12);
       --dex-muted: #94a3b8;
       --dex-surface: var(--surface-mid);
+
+      /* Service cards */
+      --card-1: #0d0f12;
+      --card-2: #17191d;
+      --card-3: #202226;
+      --card-4: #2a2c30;
+      --card-5: #34363a;
+      --card-6: #3e4044;
     }
 
     * {
@@ -80,7 +88,7 @@
 
     .nav-item {
       position: relative;
-      font-family: 'Inter', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 0.875rem;
       font-weight: 400;
       color: #000000;
@@ -258,19 +266,20 @@
 
     .video-description {
       position: absolute;
-      bottom: -3.5rem;
+      bottom: -5rem;
       left: 0;
       right: 0;
       text-align: center;
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(0.875rem, 2vw, 1.125rem);
-      color: rgba(255, 255, 255, 0.8);
+      font-size: clamp(0.875rem, 1.8vw, 1rem);
+      color: rgba(0, 0, 0, 0.7);
       opacity: 0;
-      transition: opacity 400ms ease;
+      transition: opacity 600ms ease;
       padding: 0 1rem;
+      line-height: 1.5;
     }
 
-    .video-card.active .video-description {
+    .video-card.separated .video-description {
       opacity: 1;
     }
 
@@ -330,7 +339,7 @@
       align-items: center;
       justify-content: center;
       padding: 8rem 3rem;
-      background: #FFFFFF;
+      background: var(--surface-deep);
       position: relative;
     }
 
@@ -341,7 +350,7 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     }
 
     .chart-container {
@@ -362,7 +371,7 @@
       font-size: clamp(2.25rem, 4.5vw, 3.5rem);
       font-weight: 600;
       margin-bottom: 1.5rem;
-      color: #000000;
+      color: #FFFFFF;
       letter-spacing: -0.03em;
       line-height: 1.1;
     }
@@ -371,7 +380,7 @@
       font-family: 'DM Sans', sans-serif;
       font-size: clamp(1.125rem, 2.2vw, 1.375rem);
       line-height: 1.7;
-      color: rgba(0, 0, 0, 0.8);
+      color: rgba(255, 255, 255, 0.8);
       font-weight: 400;
       margin-bottom: 1rem;
     }
@@ -608,6 +617,395 @@
       text-underline-offset: 2px;
     }
 
+    /* Services Section */
+    .services-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10rem 3rem 6rem;
+      background: #FFFFFF;
+    }
+
+    .services-hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .services-hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #000000;
+      margin-bottom: 2.5rem;
+    }
+
+    .services-hero h1 .muted {
+      color: rgba(0, 0, 0, 0.35);
+    }
+
+    .services-hero p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.6);
+      max-width: 600px;
+      margin-bottom: 3.5rem;
+    }
+
+    .scroll-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    .scroll-hint span:first-child {
+      animation: smooth-float 2s ease-in-out infinite;
+    }
+
+    @keyframes smooth-float {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-8px); opacity: 0.7; }
+    }
+
+    /* Service Cards - Complete Rewrite */
+    .services-container {
+      position: relative;
+      background: #FFFFFF;
+      z-index: 2;
+    }
+
+    .card-sticky-wrapper {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem;
+    }
+
+    .service-card {
+      position: relative;
+      width: 100%;
+      max-width: 1400px;
+      height: 78vh;
+      border-radius: 32px;
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      box-shadow: 0 40px 120px -40px rgba(0, 0, 0, 0.55);
+      transform-origin: center top;
+      will-change: transform;
+    }
+
+    .service-card-header {
+      display: flex;
+      align-items: start;
+      justify-content: flex-end;
+    }
+
+    .service-card-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .service-card-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(4rem, 12vw, 7rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .service-card-title .line-1 {
+      display: block;
+      color: #FFFFFF;
+    }
+
+    .service-card-title .line-2 {
+      display: block;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .service-card-footer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    @media (min-width: 768px) {
+      .service-card-footer {
+        grid-template-columns: 1fr 1.1fr;
+      }
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+    }
+
+    .service-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      transition: background 200ms ease;
+    }
+
+    .service-description {
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .service-icon {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 0.125rem;
+    }
+
+    @media (max-width: 768px) {
+      .services-hero {
+        padding: 6rem 1.5rem 4rem;
+      }
+
+      .service-card {
+        padding: 2rem;
+      }
+
+      .cards-inner {
+        padding: 1rem;
+      }
+    }
+
+    /* Pipeline Section */
+    .pipeline-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 8rem 1.5rem;
+      background: #f6f5f3;
+    }
+
+    .pipeline-container {
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .pipeline-header {
+      max-width: 48rem;
+    }
+
+    .pipeline-eyebrow {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: #6b6b70;
+    }
+
+    .pipeline-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: #0a0a0b;
+      margin-top: 1.25rem;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    @media (min-width: 1000px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pipeline-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pipeline-panel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 12px;
+      will-change: transform;
+    }
+
+    .panel-texture-coarse {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.32;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-texture-fine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.2;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 12px;
+      box-shadow: inset 0 0 60px 12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .panel-card-container {
+      position: relative;
+      z-index: 10;
+    }
+
+    .pipeline-card {
+      display: flex;
+      flex-direction: column;
+      height: 288px;
+      width: 244px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .pipeline-card.light {
+      background: #ffffff;
+      box-shadow: 0 18px 40px -12px rgba(0,0,0,0.35);
+      outline: 1px solid rgba(10,10,11,0.06);
+    }
+
+    .pipeline-card.dark {
+      background: #141416;
+      box-shadow: 0 18px 40px -12px rgba(0,0,0,0.55);
+      outline: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-eyebrow {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .card-eyebrow.light { color: #9a9a9f; }
+    .card-eyebrow.dark { color: #7a7a82; }
+
+    .card-pill {
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 3px 8px;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #059669;
+    }
+
+    .card-metric {
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .card-metric-value {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #0a0a0b;
+    }
+
+    .card-metric-unit {
+      font-size: 18px;
+      font-weight: 600;
+      color: #9a9a9f;
+      margin-left: 0.25rem;
+    }
+
+    .card-badge {
+      margin-bottom: 0.25rem;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 2px 6px;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      color: #059669;
+    }
+
+    .pipeline-column h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0a0a0b;
+      margin-top: 1.5rem;
+    }
+
+    .pipeline-column p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #6b6b70;
+      margin-top: 0.5rem;
+      max-width: 42ch;
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-section {
+        padding: 4rem 1.5rem;
+      }
+    }
+
     /* Chart Animations */
     .dex-chart[data-animation-state="idle"] .dex-chart__grid,
     .dex-chart[data-animation-state="idle"] .dex-chart__axes {
@@ -725,7 +1123,7 @@
     <div class="navbar-nav">
       <a href="#home" class="nav-item">Home</a>
       <a href="#services" class="nav-item">Services</a>
-      <a href="#approach" class="nav-item">Our Approach</a>
+      <a href="approach.html" class="nav-item">Our Approach</a>
       <a href="#contact" class="nav-item">Contact</a>
     </div>
 
@@ -771,7 +1169,7 @@
         <div class="brand">DataGlif<br>Where Data Evolves</div>
         <p class="description">
           DataGlif transforms raw, unstructured information into clean, validated, and production-ready datasets.<br>
-          We power next-generation AI and Agentic systems with high-quality, human-validated data.
+          We power AI and agentic systems with high-quality, human-validated data.
         </p>
         <div class="hero-cta">
           <button class="cta-button" onclick="window.location.href='#contact'">
@@ -807,6 +1205,192 @@
       <div id="chart-root"></div>
     </div>
   </div>
+
+  <!-- Pipeline Section -->
+  <section class="pipeline-section">
+    <div class="pipeline-container">
+      <!-- Header -->
+      <div class="pipeline-header">
+        <span class="pipeline-eyebrow">End-to-End Data Solution</span>
+        <h2 class="pipeline-title">
+          From requirements to<br>
+          reliable data.
+        </h2>
+      </div>
+
+      <!-- Grid -->
+      <div class="pipeline-grid">
+        <!-- Column 1: Collect -->
+        <div class="pipeline-column">
+          <div class="pipeline-panel" style="background: radial-gradient(120% 120% at 12% 8%, #f5a623 0%, #b8531a 38%, #4a1e0c 72%, #120806 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="pipeline-card light">
+                <div class="card-header">
+                  <span class="card-eyebrow light">Sources Ingested</span>
+                </div>
+                <div class="card-metric">
+                  <span class="card-metric-value">1.24<span class="card-metric-unit">M</span></span>
+                  <span class="card-badge">↗ 18%</span>
+                </div>
+                <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>Web</span>
+                      <span>38%</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #f4b06a; width: 0;" data-width="38"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>APIs</span>
+                      <span>27%</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #e89043; width: 0;" data-width="27"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>Licensed</span>
+                      <span>21%</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #c76a2b; width: 0;" data-width="21"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>Proprietary</span>
+                      <span>14%</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #7c3f1d; width: 0;" data-width="14"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Collect</h3>
+          <p>Sourcing structured and unstructured data from any digital origin — web, APIs, licensed sources, and proprietary datasets.</p>
+        </div>
+
+        <!-- Column 2: Annotate -->
+        <div class="pipeline-column">
+          <div class="pipeline-panel" style="background: radial-gradient(120% 120% at 88% 6%, #7f8ea3 0%, #3a4a63 40%, #131a2b 78%, #080b14 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="pipeline-card dark">
+                <div class="card-header">
+                  <span class="card-eyebrow dark">Frame_0428</span>
+                  <span class="card-pill">reviewed</span>
+                </div>
+                <div style="position: relative; margin-top: 0.75rem; flex: 1; overflow: hidden; border-radius: 8px; background: radial-gradient(130% 130% at 30% 20%, #232a38 0%, #10131c 100%);">
+                  <!-- Grid -->
+                  <div style="position: absolute; inset: 0; opacity: 0.5; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 22px 22px;"></div>
+                  <!-- Entity box -->
+                  <div class="annotation-box" style="position: absolute; left: 16%; top: 20%; width: 52%; height: 56%; opacity: 0; transform: scale(0.7);">
+                    <div style="position: absolute; inset: 0; border-radius: 3px; border: 1px solid rgba(52, 211, 153, 0.9); background: rgba(52, 211, 153, 0.1);"></div>
+                    <span style="position: absolute; top: -15px; left: 0; border-radius: 3px; background: #34d399; padding: 1px 4px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; font-weight: 500; color: #0a1a10;">entity · 0.98</span>
+                    <span style="position: absolute; left: -3px; top: -3px; height: 6px; width: 6px; border-radius: 1px; background: #6ee7b7;"></span>
+                    <span style="position: absolute; right: -3px; top: -3px; height: 6px; width: 6px; border-radius: 1px; background: #6ee7b7;"></span>
+                    <span style="position: absolute; left: -3px; bottom: -3px; height: 6px; width: 6px; border-radius: 1px; background: #6ee7b7;"></span>
+                    <span style="position: absolute; right: -3px; bottom: -3px; height: 6px; width: 6px; border-radius: 1px; background: #6ee7b7;"></span>
+                  </div>
+                  <!-- Token box -->
+                  <div class="token-box" style="position: absolute; left: 56%; top: 52%; width: 26%; height: 26%; border-radius: 3px; border: 1px solid rgba(56, 189, 248, 0.9); background: rgba(56, 189, 248, 0.1); opacity: 0; transform: scale(0.7);">
+                    <span style="position: absolute; top: -13px; left: 0; border-radius: 2px; background: #38bdf8; padding: 0 4px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; font-weight: 500; color: #06141f;">token</span>
+                  </div>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 6px;">
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">NER</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">bbox</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">RLHF</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">segment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Annotate & Label</h3>
+          <p>Expert human-reviewed annotations tailored to your model needs (NER, bounding boxes, RLHF pairs, segmentation, etc.).</p>
+        </div>
+
+        <!-- Column 3: Clean -->
+        <div class="pipeline-column">
+          <div class="pipeline-panel" style="background: radial-gradient(120% 120% at 10% 92%, #8aa06a 0%, #3f5a34 40%, #16260f 76%, #070d05 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="pipeline-card light">
+                <div class="card-header">
+                  <span class="card-eyebrow light">Validation</span>
+                  <span class="card-pill">97.2% pass</span>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+                  <div class="validation-row" style="display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateX(-14px);">
+                    <span style="height: 7px; width: 7px; flex-shrink: 0; border-radius: 9999px; background: #4d7c2f;"></span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: #3a3a40;">rec_8842</span>
+                    <span style="margin-left: auto; border-radius: 4px; background: rgba(16, 185, 129, 0.12); color: #047857; padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em;">pass</span>
+                  </div>
+                  <div class="validation-row" style="display: flex; align-items: center; gap: 8px; opacity: 0.45; transform: translateX(-14px);">
+                    <span style="height: 7px; width: 7px; flex-shrink: 0; border-radius: 9999px; background: #c4c4ca;"></span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: #3a3a40; text-decoration: line-through;">rec_8843</span>
+                    <span style="margin-left: auto; border-radius: 4px; padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #a0a0a6;">duplicate</span>
+                  </div>
+                  <div class="validation-row" style="display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateX(-14px);">
+                    <span style="height: 7px; width: 7px; flex-shrink: 0; border-radius: 9999px; background: #c99312;"></span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: #3a3a40;">rec_8844</span>
+                    <span style="margin-left: auto; border-radius: 4px; background: rgba(245, 158, 11, 0.15); color: #b45309; padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em;">normalized</span>
+                  </div>
+                  <div class="validation-row" style="display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateX(-14px);">
+                    <span style="height: 7px; width: 7px; flex-shrink: 0; border-radius: 9999px; background: #4d7c2f;"></span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: #3a3a40;">rec_8845</span>
+                    <span style="margin-left: auto; border-radius: 4px; background: rgba(16, 185, 129, 0.12); color: #047857; padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em;">pass</span>
+                  </div>
+                  <div class="validation-row" style="display: flex; align-items: center; gap: 8px; opacity: 0.45; transform: translateX(-14px);">
+                    <span style="height: 7px; width: 7px; flex-shrink: 0; border-radius: 9999px; background: #c4c4ca;"></span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: #3a3a40; text-decoration: line-through;">rec_8846</span>
+                    <span style="margin-left: auto; border-radius: 4px; padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #a0a0a6;">duplicate</span>
+                  </div>
+                </div>
+                <div style="margin-top: auto;">
+                  <div style="display: flex; height: 8px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                    <div class="segment-bar" style="background: #4d7c2f; width: 0;" data-width="84"></div>
+                    <div class="segment-bar" style="background: #c99312; width: 0;" data-width="13"></div>
+                    <div class="segment-bar" style="background: #c4c4ca; width: 0;" data-width="3"></div>
+                  </div>
+                  <div style="margin-top: 8px; display: flex; align-items: center; gap: 12px;">
+                    <span style="display: flex; align-items: center; gap: 4px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #4d7c2f;"></span>
+                      Clean
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 4px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #c99312;"></span>
+                      Fixed
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 4px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #c4c4ca;"></span>
+                      Dropped
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Clean & Validate</h3>
+          <p>Deduplication, normalization, quality assurance, and rigorous adjudication to ensure production-grade datasets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- GSAP & Lenis -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -963,6 +1547,149 @@
       filter: 'blur(8px)',
       ease: 'power2.inOut'
     }, 0);
+
+    // Services Cards Stacking Animation - Exact Source Logic
+    const container = document.querySelector('#cards-container');
+    const cards = gsap.utils.toArray('.service-card');
+    const totalCards = cards.length;
+
+    if (container && cards.length) {
+      cards.forEach((card, i) => {
+        const targetScale = 1 - (totalCards - i) * 0.05;
+        const cardWrapper = card.closest('.card-sticky-wrapper');
+
+        ScrollTrigger.create({
+          trigger: cardWrapper,
+          start: 'top top',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
+          scrub: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const scale = gsap.utils.interpolate(1, targetScale, progress);
+            gsap.set(card, { scale: scale });
+          }
+        });
+      });
+    }
+
+    // Pipeline Section Animations
+    const pipelinePanels = gsap.utils.toArray('.pipeline-panel');
+
+    pipelinePanels.forEach((panel, index) => {
+      gsap.from(panel, {
+        opacity: 0,
+        y: 64,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: index * 0.12,
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      // Parallax effect for card inside panel
+      const cardContainer = panel.querySelector('.panel-card-container');
+      if (cardContainer) {
+        gsap.to(cardContainer, {
+          y: -46,
+          scrollTrigger: {
+            trigger: panel,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+          }
+        });
+      }
+    });
+
+    // Animate bars in Collect card
+    const barFills = document.querySelectorAll('.bar-fill');
+    barFills.forEach((bar, i) => {
+      const targetWidth = bar.getAttribute('data-width');
+      gsap.to(bar, {
+        width: `${targetWidth}%`,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.15 + (i * 0.1),
+        scrollTrigger: {
+          trigger: bar,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // Animate annotation boxes
+    const annotationBox = document.querySelector('.annotation-box');
+    const tokenBox = document.querySelector('.token-box');
+
+    if (annotationBox) {
+      gsap.to(annotationBox, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power3.out',
+        delay: 0.25,
+        scrollTrigger: {
+          trigger: annotationBox,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+
+    if (tokenBox) {
+      gsap.to(tokenBox, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power3.out',
+        delay: 0.42,
+        scrollTrigger: {
+          trigger: tokenBox,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+
+    // Animate validation rows
+    const validationRows = document.querySelectorAll('.validation-row');
+    validationRows.forEach((row, i) => {
+      gsap.to(row, {
+        opacity: row.style.opacity || 1,
+        x: 0,
+        duration: 0.5,
+        ease: 'power3.out',
+        delay: 0.2 + (i * 0.08),
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // Animate segment bars
+    const segmentBars = document.querySelectorAll('.segment-bar');
+    segmentBars.forEach((bar, i) => {
+      const targetWidth = bar.getAttribute('data-width');
+      gsap.to(bar, {
+        width: `${targetWidth}%`,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: 0.5 + (i * 0.12),
+        scrollTrigger: {
+          trigger: bar,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
   </script>
 
 </body>

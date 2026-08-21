@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - DataGlif</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0a0a0b;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 11, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .navbar-nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-item {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #22d3ee;
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #22d3ee;
+      color: #0a0a0b;
+      border: none;
+      border-radius: 8px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
+    }
+
+    /* Hero Section */
+    .services-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      background: #0a0a0b;
+    }
+
+    .services-hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .services-hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .services-hero p {
+      font-size: clamp(1.125rem, 2vw, 1.375rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 700px;
+      margin-bottom: 3rem;
+    }
+
+    /* Service Network */
+    .service-network {
+      padding: 6rem 2rem;
+      background: #0a0a0b;
+    }
+
+    .network-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-node {
+      position: relative;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(34, 211, 238, 0.02) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.1);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .service-node:hover {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%);
+      border-color: rgba(34, 211, 238, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .service-node.active {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(34, 211, 238, 0.08) 100%);
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-node h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+
+    .service-node p {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .service-tag {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      border-radius: 6px;
+      color: #22d3ee;
+    }
+
+    /* Media Preview Section */
+    .media-preview {
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, #0a0a0b 0%, #141416 100%);
+    }
+
+    .preview-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .preview-card {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1c;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-card img,
+    .preview-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(0deg, rgba(10, 10, 11, 0.95) 0%, transparent 100%);
+    }
+
+    .preview-overlay h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .preview-overlay p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .navbar-nav {
+        display: none;
+      }
+
+      .network-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
+
+    <div class="navbar-nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="services.html" class="nav-item">Services</a>
+      <a href="approach.html" class="nav-item">Our Approach</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="cta-button" onclick="window.location.href='contact.html'">
+        <span>Book a Call</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="services-hero">
+    <div class="services-hero-content">
+      <h1>Data Services<br>Built for AI</h1>
+      <p>
+        From image annotation to multimodal datasets, we handle the full spectrum of data preparation —
+        so your team can focus on model development, not labeling operations.
+      </p>
+    </div>
+  </section>
+
+  <!-- Service Network -->
+  <section class="service-network">
+    <div class="network-container">
+      <div class="network-grid">
+
+        <!-- Image & Video -->
+        <div class="service-node">
+          <div class="service-icon">📸</div>
+          <h3>Image & Video</h3>
+          <p>Computer vision data for autonomous systems, surveillance, and visual AI.</p>
+          <div class="service-tags">
+            <span class="service-tag">Bounding boxes</span>
+            <span class="service-tag">Segmentation</span>
+            <span class="service-tag">Tracking</span>
+            <span class="service-tag">Scene understanding</span>
+          </div>
+        </div>
+
+        <!-- 3D & Spatial -->
+        <div class="service-node">
+          <div class="service-icon">🎯</div>
+          <h3>3D, Spatial & Multiview</h3>
+          <p>Synchronized perspectives, volumetric data, and spatial intelligence.</p>
+          <div class="service-tags">
+            <span class="service-tag">Cuboids</span>
+            <span class="service-tag">Lane marking</span>
+            <span class="service-tag">Multi-camera</span>
+            <span class="service-tag">Point clouds</span>
+          </div>
+        </div>
+
+        <!-- Text & Documents -->
+        <div class="service-node">
+          <div class="service-icon">📄</div>
+          <h3>Text & Documents</h3>
+          <p>NLP, document understanding, and structured data extraction.</p>
+          <div class="service-tags">
+            <span class="service-tag">NER</span>
+            <span class="service-tag">Entity extraction</span>
+            <span class="service-tag">OCR</span>
+            <span class="service-tag">Layout analysis</span>
+          </div>
+        </div>
+
+        <!-- Audio & Multimodal -->
+        <div class="service-node">
+          <div class="service-icon">🎵</div>
+          <h3>Audio & Multimodal</h3>
+          <p>Speech, sound classification, and cross-modal annotation tasks.</p>
+          <div class="service-tags">
+            <span class="service-tag">Transcription</span>
+            <span class="service-tag">Diarization</span>
+            <span class="service-tag">Sound events</span>
+            <span class="service-tag">Cross-modal</span>
+          </div>
+        </div>
+
+        <!-- Data Operations -->
+        <div class="service-node">
+          <div class="service-icon">⚙️</div>
+          <h3>Data Operations & QA</h3>
+          <p>Collection, curation, quality assurance, and delivery at scale.</p>
+          <div class="service-tags">
+            <span class="service-tag">Collection</span>
+            <span class="service-tag">Curation</span>
+            <span class="service-tag">Review</span>
+            <span class="service-tag">Delivery</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Media Preview Section -->
+  <section class="media-preview">
+    <div class="preview-container">
+      <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 1rem;">Real Work Examples</h2>
+      <p style="font-size: 1.125rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 3rem;">Preview of annotation work across different modalities</p>
+
+      <div class="preview-grid">
+
+        <!-- FSD Example -->
+        <div class="preview-card">
+          <video autoplay loop muted playsinline>
+            <source src="assets/fsd-example.mp4" type="video/mp4">
+          </video>
+          <div class="preview-overlay">
+            <h4>Autonomous Driving</h4>
+            <p>Lane detection, vehicle tracking, scene segmentation</p>
+          </div>
+        </div>
+
+        <!-- NER Example -->
+        <div class="preview-card">
+          <video autoplay loop muted playsinline>
+            <source src="assets/ner-example.mp4" type="video/mp4">
+          </video>
+          <div class="preview-overlay">
+            <h4>Document Understanding</h4>
+            <p>Named entity recognition, layout analysis</p>
+          </div>
+        </div>
+
+        <!-- CCTV Example -->
+        <div class="preview-card">
+          <video autoplay loop muted playsinline>
+            <source src="assets/cctv-construction.mp4" type="video/mp4">
+          </video>
+          <div class="preview-overlay">
+            <h4>Surveillance & Monitoring</h4>
+            <p>Object detection, activity recognition</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Interactive service nodes
+    const serviceNodes = document.querySelectorAll('.service-node');
+
+    serviceNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        serviceNodes.forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
