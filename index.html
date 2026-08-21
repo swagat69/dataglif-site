@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DataGlif - Video Hero + Data Exhaustion</title>
+  <style>
+    :root {
+      --surface-deepest: #05070C;
+      --surface-deep: #0A0D12;
+      --surface-mid: #0F131C;
+      --accent-cyan: #38BDF8;
+
+      /* Chart theme variables */
+      --dex-ink: #e2e8f0;
+      --dex-blue: #38BDF8;
+      --dex-sky: #67c7eb;
+      --dex-band: rgba(56, 189, 248, 0.15);
+      --dex-warning: #f97316;
+      --dex-grid: rgba(255, 255, 255, 0.12);
+      --dex-muted: #94a3b8;
+      --dex-surface: var(--surface-mid);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--surface-deepest);
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Video Hero Styles */
+    .hero-container {
+      height: 200vh;
+      position: relative;
+    }
+
+    .hero-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .video-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 4rem;
+    }
+
+    .video-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      background: var(--surface-mid);
+      will-change: transform, opacity;
+    }
+
+    .video-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 900px;
+      padding: 2rem;
+      will-change: transform, opacity;
+    }
+
+    .brand {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .description {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Chart Section */
+    .chart-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem;
+      background: linear-gradient(180deg, var(--surface-deepest) 0%, var(--surface-deep) 50%, var(--surface-deepest) 100%);
+      position: relative;
+    }
+
+    .chart-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+    }
+
+    .chart-container {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .chart-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+
+    .chart-intro h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent-cyan);
+      letter-spacing: -0.02em;
+    }
+
+    .chart-intro p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Data Exhaustion Chart Styles */
+    .dex-chart {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      color: var(--dex-ink);
+      font: inherit;
+    }
+
+    .dex-chart__header {
+      display: grid;
+      gap: 6px;
+      margin: 0 0 14px;
+    }
+
+    .dex-chart__eyebrow {
+      margin: 0;
+      color: var(--accent-cyan);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dex-chart__title {
+      max-width: 38rem;
+      margin: 0;
+      color: #ffffff;
+      font-size: clamp(1.45rem, 3.2vw, 2.05rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.06;
+    }
+
+    .dex-chart__legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 14px;
+      margin: 0 0 14px;
+      padding: 0;
+      color: var(--dex-muted);
+      font-size: 0.72rem;
+      line-height: 1.25;
+      list-style: none;
+    }
+
+    .dex-chart__legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .dex-chart__legend-swatch {
+      display: inline-block;
+      width: 20px;
+      height: 10px;
+      flex: 0 0 auto;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .dex-chart__legend-swatch--actual {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--dex-ink);
+      border-radius: 50%;
+      background: var(--dex-sky);
+    }
+
+    .dex-chart__legend-swatch--historical {
+      background-image: repeating-linear-gradient(to right, var(--dex-blue) 0 6px, transparent 6px 10px);
+    }
+
+    .dex-chart__legend-swatch--projection {
+      height: 3px;
+      border-radius: 1px;
+      background: var(--dex-warning);
+    }
+
+    .dex-chart__legend-swatch--bounds {
+      height: 9px;
+      border-top: 2px dotted var(--dex-warning);
+      border-bottom: 2px dotted var(--dex-warning);
+      background: var(--dex-band);
+    }
+
+    .dex-chart__legend-swatch--current {
+      background-image: repeating-linear-gradient(to right, var(--dex-blue) 0 5px, transparent 5px 9px);
+    }
+
+    .dex-chart__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .dex-chart__grid line {
+      stroke: var(--dex-grid);
+      stroke-dasharray: 3 6;
+      stroke-width: 1;
+    }
+
+    .dex-chart__stock-band {
+      fill: var(--dex-band);
+      transform-box: fill-box;
+      transform-origin: left center;
+    }
+
+    .dex-chart__bound {
+      stroke: var(--dex-warning);
+      stroke-dasharray: 2.5 6;
+      stroke-linecap: round;
+      stroke-width: 2.2;
+    }
+
+    .dex-chart__historical {
+      stroke: var(--dex-blue);
+      stroke-dasharray: 8 7;
+      stroke-linecap: round;
+      stroke-width: 3.5;
+    }
+
+    .dex-chart__projection {
+      stroke: var(--dex-warning);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 5.5;
+    }
+
+    .dex-chart__current-marker {
+      stroke: var(--dex-blue);
+      stroke-dasharray: 7 7;
+      stroke-linecap: round;
+      stroke-width: 2.5;
+    }
+
+    .dex-chart__model-dot {
+      fill: var(--dex-sky);
+      stroke: var(--dex-ink);
+      stroke-width: 1.6;
+    }
+
+    .dex-chart__leader {
+      fill: none;
+      stroke: var(--dex-muted);
+      stroke-width: 1;
+    }
+
+    .dex-chart__model-label,
+    .dex-chart__current-label,
+    .dex-chart__tick-label,
+    .dex-chart__axis-title,
+    .dex-chart__callout text {
+      fill: var(--dex-ink);
+      font-family: inherit;
+    }
+
+    .dex-chart__model-label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .dex-chart__current-label {
+      fill: var(--dex-blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dex-chart__callout rect {
+      fill: var(--surface-mid);
+      stroke: var(--dex-warning);
+      stroke-width: 1.5;
+    }
+
+    .dex-chart__callout text {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dex-chart__exhaustion-dot {
+      fill: var(--dex-warning);
+      stroke: var(--dex-surface);
+      stroke-width: 2;
+    }
+
+    .dex-chart__exhaustion-pulse {
+      fill: none;
+      opacity: 0;
+      stroke: var(--dex-warning);
+      stroke-width: 2;
+    }
+
+    .dex-chart__frame {
+      fill: none;
+      stroke: var(--dex-ink);
+      stroke-width: 1.25;
+    }
+
+    .dex-chart__tick {
+      stroke: var(--dex-ink);
+      stroke-width: 1.25;
+    }
+
+    .dex-chart__tick-label {
+      fill: var(--dex-muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .dex-chart__axis-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .dex-chart__caption {
+      margin-top: 10px;
+      color: var(--dex-muted);
+      font-size: 0.73rem;
+      line-height: 1.45;
+    }
+
+    .dex-chart__caption a {
+      color: var(--accent-cyan);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    /* Chart Animations */
+    .dex-chart[data-animation-state="idle"] .dex-chart__grid,
+    .dex-chart[data-animation-state="idle"] .dex-chart__axes {
+      opacity: 0;
+    }
+
+    .dex-chart[data-animation-state="idle"] .dex-chart__stock-band {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .dex-chart[data-animation-state="idle"] .dex-chart__model-point,
+    .dex-chart[data-animation-state="idle"] .dex-chart__annotations,
+    .dex-chart[data-animation-state="idle"] .dex-chart__legend {
+      opacity: 0;
+    }
+
+    .dex-chart[data-animation-state="playing"] .dex-chart__grid,
+    .dex-chart[data-animation-state="playing"] .dex-chart__axes {
+      animation: dex-fade-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .dex-chart[data-animation-state="playing"] .dex-chart__stock-band {
+      animation: dex-band-in 500ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+    }
+
+    .dex-chart[data-animation-state="playing"] .dex-chart__model-point {
+      animation: dex-point-in 410ms cubic-bezier(0.19, 1, 0.22, 1) 720ms both;
+    }
+
+    .dex-chart[data-animation-state="playing"] .dex-chart__annotations,
+    .dex-chart[data-animation-state="playing"] .dex-chart__legend {
+      animation: dex-fade-rise 430ms cubic-bezier(0.22, 1, 0.36, 1) 1200ms both;
+    }
+
+    .dex-chart[data-animation-state="playing"] .dex-chart__exhaustion-pulse {
+      animation: dex-pulse 560ms cubic-bezier(0.22, 1, 0.36, 1) 1500ms both;
+    }
+
+    @keyframes dex-fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes dex-band-in {
+      from { opacity: 0; transform: scaleX(0); }
+      to { opacity: 1; transform: scaleX(1); }
+    }
+
+    @keyframes dex-point-in {
+      from { opacity: 0; transform: scale(0.45); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes dex-fade-rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes dex-pulse {
+      0% { opacity: 0; transform: scale(0.5); }
+      35% { opacity: 0.9; }
+      100% { opacity: 0; transform: scale(2.7); }
+    }
+
+    @media (max-width: 768px) {
+      .chart-section {
+        padding: 4rem 1.5rem;
+      }
+      .dex-chart__title {
+        font-size: 1.35rem;
+      }
+      .dex-chart__legend {
+        gap: 6px 10px;
+        font-size: 0.68rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video Hero Section -->
+  <div class="hero-container">
+    <div class="hero-sticky">
+      <div class="video-wrapper">
+        <div class="video-card" data-video="1">
+          <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="video-card" data-video="2">
+          <video src="./videos/city_drone_.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="video-card" data-video="3">
+          <video src="./videos/people_walking_official.mp4" autoplay loop muted playsinline></video>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <div class="brand">DataGlif</div>
+        <h1 class="tagline">Where Data Evolves</h1>
+        <p class="description">
+          DataGlif transforms raw, unstructured information into clean, validated, and production-ready datasets.
+          We power AI and Agentic systems with high-quality, human-validated data.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Exhaustion Chart Section -->
+  <div class="chart-section">
+    <div class="chart-container">
+      <div class="chart-intro">
+        <h2>The Data Exhaustion Challenge</h2>
+        <p>
+          As AI models grow exponentially, we're approaching a critical inflection point:
+          the world's supply of training data. See how compute-optimal demand projects to
+          meet available data stocks by 2027.
+        </p>
+      </div>
+      <div id="chart-root"></div>
+    </div>
+  </div>
+
+  <!-- GSAP & Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <script src="./chart-component.js"></script>
+
+  <script>
+    // Video Hero Animation
+    const lenis = new Lenis({
+      duration: 0.8,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+      smoothTouch: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    const videoCards = gsap.utils.toArray('.video-card');
+    gsap.set(videoCards, {
+      width: '100%',
+      height: '100%',
+      borderRadius: 0,
+      opacity: 0,
+      zIndex: 1
+    });
+
+    let currentVideoIndex = 0;
+    let isScrolling = false;
+
+    const videoCycleTl = gsap.timeline({
+      repeat: -1,
+      onUpdate: function() {
+        if (!isScrolling) {
+          const progress = this.progress();
+          const totalDuration = this.duration();
+          const singleVideoDuration = 4.9;
+          currentVideoIndex = Math.floor((progress * totalDuration) / singleVideoDuration) % 3;
+        }
+      }
+    });
+
+    videoCards.forEach((card, i) => {
+      videoCycleTl
+        .to(card, { opacity: 1, duration: 1.2, ease: 'power3.inOut' }, i * 4.9)
+        .to(card, { opacity: 1, duration: 2.5 }, i * 4.9 + 1.2)
+        .to(card, { opacity: 0, duration: 1.2, ease: 'power3.inOut' }, i * 4.9 + 3.7);
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hero-container',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.8,
+        onEnter: () => {
+          isScrolling = true;
+          videoCycleTl.pause();
+          videoCards.forEach((card, i) => {
+            if (i !== currentVideoIndex) {
+              gsap.set(card, { opacity: 0 });
+            } else {
+              gsap.set(card, { opacity: 1, zIndex: 3 });
+            }
+          });
+        },
+        onLeaveBack: () => {
+          isScrolling = false;
+          videoCycleTl.play();
+        },
+      }
+    });
+
+    const getPositions = (centerIndex) => {
+      const positions = [-500, 0, 500];
+      const rotations = [-8, 0, 8];
+      const result = [];
+      const order = [
+        (centerIndex + 2) % 3,
+        centerIndex,
+        (centerIndex + 1) % 3
+      ];
+      order.forEach((videoIndex, posIndex) => {
+        result[videoIndex] = {
+          x: positions[posIndex],
+          rotateY: rotations[posIndex],
+          zIndex: posIndex === 1 ? 3 : 2
+        };
+      });
+      return result;
+    };
+
+    const positions = getPositions(currentVideoIndex);
+
+    tl.to(videoCards, {
+      width: '400px',
+      height: '280px',
+      borderRadius: '24px',
+      scale: 0.95,
+      duration: 0.3,
+      ease: 'power3.inOut'
+    }, 0);
+
+    videoCards.forEach((card, i) => {
+      const pos = positions[i];
+      tl.to(card, {
+        x: pos.x,
+        scale: 1,
+        rotateY: pos.rotateY,
+        z: pos.zIndex === 3 ? 50 : 0,
+        opacity: 1,
+        zIndex: pos.zIndex,
+        duration: 0.6,
+        ease: 'expo.out'
+      }, 0.2 + (i === currentVideoIndex ? 0.05 : Math.abs(i - currentVideoIndex) * 0.05));
+    });
+
+    tl.to('.hero-content', {
+      opacity: 0,
+      scale: 0.85,
+      y: -80,
+      filter: 'blur(10px)',
+      ease: 'power3.inOut'
+    }, 0);
+  </script>
+
+</body>
+</html>
