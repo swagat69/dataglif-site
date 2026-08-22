@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Booklet</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #eef0f2;
+    }
+    .debug {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .debug h2 {
+      margin-top: 0;
+    }
+    .debug pre {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    .status.ok {
+      background: #4caf50;
+      color: white;
+    }
+    .status.fail {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="debug">
+    <h2>Booklet Debug Report</h2>
+    <p>Element #blogBookletShell: <span id="check1" class="status">checking...</span></p>
+    <p>Element #blogBookletMobile: <span id="check2" class="status">checking...</span></p>
+    <p>Element #blogBookletPrev: <span id="check3" class="status">checking...</span></p>
+    <p>Page images path: <span id="check4" class="status">checking...</span></p>
+    <p>JavaScript execution: <span id="check5" class="status">checking...</span></p>
+    <div id="error-log"></div>
+  </div>
+
+  <div class="debug">
+    <h2>Test Image Load</h2>
+    <img src="./pages/page-01.png" width="200"
+      onload="updateStatus('check4', true)"
+      onerror="updateStatus('check4', false)"
+      style="display: block; border: 1px solid #ccc;" />
+  </div>
+
+  <script>
+    function updateStatus(id, success) {
+      const el = document.getElementById(id);
+      el.textContent = success ? 'OK ✓' : 'FAIL ✗';
+      el.className = 'status ' + (success ? 'ok' : 'fail');
+    }
+
+    // Check if elements exist by reading from main index.html
+    const checks = [
+      { id: 'check1', selector: '#blogBookletShell', name: 'blogBookletShell' },
+      { id: 'check2', selector: '#blogBookletMobile', name: 'blogBookletMobile' },
+      { id: 'check3', selector: '#blogBookletPrev', name: 'blogBookletPrev' }
+    ];
+
+    // Load index.html in an iframe to check elements
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = './index.html';
+    iframe.onload = () => {
+      checks.forEach(check => {
+        const el = iframe.contentDocument.querySelector(check.selector);
+        updateStatus(check.id, !!el);
+        console.log(`${check.name}:`, el ? 'FOUND' : 'NOT FOUND');
+      });
+    };
+    document.body.appendChild(iframe);
+
+    updateStatus('check5', true);
+  </script>
+</body>
+</html>

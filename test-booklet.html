@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Booklet</title>
+  <style>
+    body { margin: 0; padding: 20px; background: #eef0f2; }
+    #test { padding: 20px; background: white; }
+  </style>
+</head>
+<body>
+  <div id="test">
+    <h1>Booklet Test</h1>
+    <p>Shell element: <span id="shellCheck">checking...</span></p>
+    <p>Pages folder: <span id="pagesCheck">checking...</span></p>
+    <img src="./pages/page-01.png" width="200" onload="document.getElementById('pagesCheck').textContent = 'FOUND ✓'" onerror="document.getElementById('pagesCheck').textContent = 'NOT FOUND ✗'" />
+  </div>
+  
+  <script>
+    const shell = document.getElementById('blogBookletShell');
+    document.getElementById('shellCheck').textContent = shell ? 'FOUND ✓' : 'NOT FOUND ✗';
+  </script>
+</body>
+</html>
