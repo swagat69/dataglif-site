@@ -54,47 +54,50 @@
       overflow-x: hidden;
     }
 
-    /* Navbar - Compact and transparent */
+    /* Navbar - Clean and balanced */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 0.75rem 3rem;
+      padding: 0.5rem 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: transparent;
-      backdrop-filter: none;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
       border-bottom: none;
     }
 
     .navbar-logo {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: 1.125rem;
+      font-weight: 700;
       color: #000000;
       letter-spacing: -0.02em;
+      flex-shrink: 0;
     }
 
     .navbar-nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 2rem;
-      flex: 1;
-      justify-content: center;
+      gap: 2.5rem;
     }
 
     .nav-item {
       position: relative;
       font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 400;
+      font-size: 0.9375rem;
+      font-weight: 500;
       color: #000000;
       cursor: pointer;
       transition: color 200ms ease;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     .nav-item:hover {
@@ -104,6 +107,7 @@
     .navbar-actions {
       display: flex;
       align-items: center;
+      flex-shrink: 0;
     }
 
     /* CTA Button - Stable (no movement on hover) */
@@ -111,18 +115,14 @@
       display: inline-flex;
       align-items: center;
       gap: clamp(0.3rem, 1vw, 0.5rem);
-      border: 2px solid rgba(0, 0, 0, 0.2);
+      border: none;
       border-radius: 9999px;
-      padding: clamp(0.3rem, 0.8vw, 0.4rem);
+      padding: 0;
       background: transparent;
       cursor: pointer;
       outline: none;
       transition: all 300ms ease;
       font-family: 'DM Sans', sans-serif;
-    }
-
-    .cta-button:hover {
-      border-color: rgba(0, 0, 0, 0.4);
     }
 
     .cta-button:active {
@@ -135,11 +135,11 @@
       justify-content: center;
       border-radius: 9999px;
       background: #000000;
-      padding: clamp(0.4rem, 1.5vw, 0.65rem) clamp(1rem, 4vw, 1.75rem);
+      padding: 0.65rem 1.5rem;
       font-weight: 700;
-      font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+      font-size: 0.8125rem;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.05em;
       color: #FFFFFF;
       transition: all 300ms ease;
       white-space: nowrap;
@@ -157,7 +157,7 @@
       aspect-ratio: 1;
       border-radius: 9999px;
       background: #000000;
-      padding: clamp(0.4rem, 1.8vw, 0.65rem);
+      padding: 0.65rem;
       transition: all 300ms ease;
     }
 
@@ -166,8 +166,8 @@
     }
 
     .cta-button-arrow svg {
-      width: clamp(0.75rem, 3vw, 1rem);
-      height: clamp(0.75rem, 3vw, 1rem);
+      width: 0.875rem;
+      height: 0.875rem;
       color: #FFFFFF;
       transition: all 300ms ease-out;
     }
@@ -181,7 +181,7 @@
     .hero-container {
       height: 200vh;
       position: relative;
-      padding-top: 60px;
+      padding-top: 0;
       background: #FFFFFF;
     }
 
@@ -192,8 +192,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      padding: 2rem;
+      overflow: visible;
+      padding: 58px 0.5rem 0.5rem 0.5rem;
     }
 
     .video-wrapper {
@@ -204,10 +204,10 @@
       align-items: center;
       justify-content: center;
       gap: 2rem;
-      padding: 2rem;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 16px;
-      overflow: hidden;
+      padding: 0;
+      border: none;
+      border-radius: 20px;
+      overflow: visible;
       background: #FFFFFF;
     }
 
@@ -215,16 +215,17 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 0;
+      border-radius: 20px;
       overflow: hidden;
-      background: #FFFFFF;
+      background: transparent;
       will-change: transform, opacity;
-      border: 3px solid rgba(0, 0, 0, 0);
-      transition: border-color 400ms ease;
+      border: none;
+      transition: border-color 400ms ease, border-radius 400ms ease;
     }
 
     .video-card.separated {
-      border-color: rgba(0, 0, 0, 0.2);
+      border: none;
+      border-radius: 18px;
     }
 
     .video-card::before {
@@ -237,12 +238,31 @@
       background: rgba(0, 0, 0, 0.35);
       z-index: 1;
       pointer-events: none;
+      opacity: 1;
+      transition: opacity 600ms ease;
+    }
+
+    .video-card.separated::before {
+      opacity: 0;
+      display: none;
+    }
+
+    .video-card.separated {
+      background: transparent;
     }
 
     .video-card video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
+      transform: scale(1.05);
+      transition: transform 600ms ease, object-fit 600ms ease;
+    }
+
+    .video-card.separated video {
+      object-fit: contain;
+      transform: scale(1);
     }
 
     .video-label-overlay {
@@ -257,6 +277,7 @@
       text-transform: uppercase;
       letter-spacing: -0.01em;
       opacity: 0;
+      display: none;
       transition: opacity 400ms ease;
     }
 
@@ -266,21 +287,43 @@
 
     .video-description {
       position: absolute;
-      bottom: -5rem;
+      bottom: -160px;
       left: 0;
       right: 0;
       text-align: center;
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(0.875rem, 1.8vw, 1rem);
-      color: rgba(0, 0, 0, 0.7);
+      padding: 0 1.5rem;
       opacity: 0;
-      transition: opacity 600ms ease;
-      padding: 0 1rem;
-      line-height: 1.5;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 600ms ease;
+      transform: translateY(20px);
+      z-index: 999;
+      background: white;
     }
 
     .video-card.separated .video-description {
       opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .video-description-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0a0a0b;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .video-description-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #6b6b70;
+      max-width: 42ch;
+      margin: 0 auto;
     }
 
     .hero-content {
@@ -318,13 +361,13 @@
 
     .description {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1rem, 2vw, 1.5rem); /* Reduced from 64px to ~24px */
+      font-size: clamp(0.75rem, 1.2vw, 0.95rem); /* Much smaller: 12px to 15px */
       font-weight: 400; /* Regular */
-      line-height: 1.6;
+      line-height: 1.4;
       color: rgba(255, 255, 255, 0.95);
-      max-width: 900px;
+      max-width: 1300px;
       margin: 0 auto 2.5rem;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.005em;
       text-align: center;
     }
 
@@ -807,7 +850,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      padding: 8rem 1.5rem;
+      padding: 6rem 1.5rem 5.5rem;
       background: #f6f5f3;
     }
 
@@ -817,10 +860,13 @@
     }
 
     .pipeline-header {
-      max-width: 48rem;
+      max-width: 100%;
+      text-align: center;
+      margin: 0 auto;
     }
 
     .pipeline-eyebrow {
+      display: block;
       font-family: 'IBM Plex Sans', monospace;
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -830,24 +876,28 @@
 
     .pipeline-title {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
       font-weight: 800;
-      line-height: 1.04;
+      line-height: 1.06;
       letter-spacing: -0.03em;
       color: #0a0a0b;
-      margin-top: 1.25rem;
+      margin-top: 0.85rem;
     }
 
     .pipeline-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
-      margin-top: 4rem;
+      margin-top: 3rem;
     }
 
     @media (min-width: 1000px) {
       .pipeline-grid {
         grid-template-columns: repeat(3, 1fr);
+      }
+
+      .pipeline-title {
+        white-space: nowrap;
       }
     }
 
@@ -1004,6 +1054,10 @@
       .pipeline-section {
         padding: 4rem 1.5rem;
       }
+
+      .pipeline-grid {
+        margin-top: 2.25rem;
+      }
     }
 
     /* Chart Animations */
@@ -1088,7 +1142,11 @@
 
     @media (max-width: 768px) {
       .navbar {
-        padding: 0.75rem 1.5rem;
+        padding: 0.5rem 1.5rem;
+      }
+
+      .navbar-nav {
+        gap: 2rem;
       }
 
       .navbar-actions {
@@ -1147,21 +1205,30 @@
         <div class="video-card" data-video="1">
           <video src="./videos/city_drone_.mp4" autoplay loop muted playsinline></video>
           <div class="video-label-overlay">Aerial / Geo</div>
-          <div class="video-description">High-altitude surveillance and geographic mapping data for spatial intelligence</div>
+          <div class="video-description">
+            <div class="video-description-title">Aerial / Geo</div>
+            <div class="video-description-text">High-altitude surveillance and geographic mapping data</div>
+          </div>
         </div>
 
         <!-- Video 2: CCTV -->
         <div class="video-card" data-video="2">
           <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
           <div class="video-label-overlay">Scene / Object</div>
-          <div class="video-description">Real-world scene understanding and object detection from fixed camera feeds</div>
+          <div class="video-description">
+            <div class="video-description-title">Scene / Object</div>
+            <div class="video-description-text">Real-world scene understanding and object detection</div>
+          </div>
         </div>
 
         <!-- Video 3: People -->
         <div class="video-card" data-video="3">
           <video src="./videos/people_walking_official.mp4" autoplay loop muted playsinline></video>
           <div class="video-label-overlay">Segmentation</div>
-          <div class="video-description">Precise instance segmentation for human activity analysis and crowd dynamics</div>
+          <div class="video-description">
+            <div class="video-description-title">Segmentation</div>
+            <div class="video-description-text">Precise instance segmentation for human activity analysis</div>
+          </div>
         </div>
       </div>
 
@@ -1213,8 +1280,7 @@
       <div class="pipeline-header">
         <span class="pipeline-eyebrow">End-to-End Data Solution</span>
         <h2 class="pipeline-title">
-          From requirements to<br>
-          reliable data.
+          From requirements to reliable data.
         </h2>
       </div>
 
@@ -1491,7 +1557,7 @@
     });
 
     const getPositions = (centerIndex) => {
-      const positions = [-680, 0, 680];
+      const positions = [-544, 0, 544]; // 520px card + 24px gap
       const rotations = [-6, 0, 6];
       const result = [];
       const order = [
@@ -1511,12 +1577,13 @@
 
     const positions = getPositions(currentVideoIndex);
 
-    // Bigger video cards with less spacing
+    // Bigger video cards with minimal spacing - positioned higher up
     tl.to(videoCards, {
-      width: '560px',
-      height: '400px',
-      borderRadius: '20px',
+      width: '520px',
+      height: '380px',
+      borderRadius: '18px',
       scale: 0.92,
+      y: -80,
       duration: 0.35,
       ease: 'power2.inOut'
     }, 0);
@@ -1576,35 +1643,55 @@
 
     // Pipeline Section Animations
     const pipelinePanels = gsap.utils.toArray('.pipeline-panel');
+    const pipelineStacked = () => window.matchMedia('(max-width: 999px)').matches;
 
     pipelinePanels.forEach((panel, index) => {
+      // Entry reveal — staggers across the row on desktop, fires per-panel when stacked
       gsap.from(panel, {
         opacity: 0,
-        y: 64,
-        duration: 0.9,
-        ease: 'power3.out',
-        delay: index * 0.12,
+        y: 44,
+        duration: 0.75,
+        ease: 'power2.out',
+        delay: pipelineStacked() ? 0 : index * 0.08,
         scrollTrigger: {
-          trigger: panel,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
+          trigger: pipelineStacked() ? panel : '.pipeline-grid',
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
 
-      // Parallax effect for card inside panel
+      // Parallax on the card inside the panel — symmetric so it rests neutral at centre
       const cardContainer = panel.querySelector('.panel-card-container');
       if (cardContainer) {
-        gsap.to(cardContainer, {
-          y: -46,
-          scrollTrigger: {
-            trigger: panel,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1
+        gsap.fromTo(cardContainer,
+          { y: 24 },
+          {
+            y: -24,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panel,
+              start: 'top 92%',
+              end: 'bottom 8%',
+              scrub: 0.5,
+              invalidateOnRefresh: true
+            }
           }
-        });
+        );
       }
     });
+
+    // Recalibrate trigger positions once fonts/images settle and on resize
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+    let pipelineResizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(pipelineResizeTimer);
+      pipelineResizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    });
+
+    // Inner card animations are anchored to their parent panel, not to themselves —
+    // the cards sit inside a parallaxed container, so self-triggering drifts on scroll.
+    const panelOf = (el) => el.closest('.pipeline-panel') || el;
 
     // Animate bars in Collect card
     const barFills = document.querySelectorAll('.bar-fill');
@@ -1612,13 +1699,14 @@
       const targetWidth = bar.getAttribute('data-width');
       gsap.to(bar, {
         width: `${targetWidth}%`,
-        duration: 0.9,
-        ease: 'power3.out',
-        delay: 0.15 + (i * 0.1),
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.28 + (i * 0.08),
         scrollTrigger: {
-          trigger: bar,
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          trigger: panelOf(bar),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
     });
@@ -1631,13 +1719,14 @@
       gsap.to(annotationBox, {
         scale: 1,
         opacity: 1,
-        duration: 0.7,
-        ease: 'power3.out',
-        delay: 0.25,
+        duration: 0.65,
+        ease: 'power2.out',
+        delay: 0.3,
         scrollTrigger: {
-          trigger: annotationBox,
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          trigger: panelOf(annotationBox),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
     }
@@ -1646,13 +1735,14 @@
       gsap.to(tokenBox, {
         scale: 1,
         opacity: 1,
-        duration: 0.6,
-        ease: 'power3.out',
-        delay: 0.42,
+        duration: 0.55,
+        ease: 'power2.out',
+        delay: 0.45,
         scrollTrigger: {
-          trigger: tokenBox,
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          trigger: panelOf(tokenBox),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
     }
@@ -1663,13 +1753,14 @@
       gsap.to(row, {
         opacity: row.style.opacity || 1,
         x: 0,
-        duration: 0.5,
-        ease: 'power3.out',
-        delay: 0.2 + (i * 0.08),
+        duration: 0.45,
+        ease: 'power2.out',
+        delay: 0.3 + (i * 0.07),
         scrollTrigger: {
-          trigger: row,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
+          trigger: panelOf(row),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
     });
@@ -1680,13 +1771,14 @@
       const targetWidth = bar.getAttribute('data-width');
       gsap.to(bar, {
         width: `${targetWidth}%`,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 0.5 + (i * 0.12),
+        duration: 0.7,
+        ease: 'power2.out',
+        delay: 0.55 + (i * 0.1),
         scrollTrigger: {
-          trigger: bar,
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          trigger: panelOf(bar),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
         }
       });
     });
@@ -1694,275 +1786,195 @@
 
   <!-- Blog Section -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Instrument+Serif:ital@0;1&display=swap');
-
     .blog-section {
-      --bg: #eef0f2;
-      --card: #ffffff;
-      --ink: #111214;
-      --muted: #8a8f96;
-      --tag: #f2f3f5;
+      --blog-bg: #f6f5f3;
+      --blog-card: #ffffff;
+      --blog-ink: #0a0a0b;
+      --blog-muted: #6b6b70;
+      --blog-line: rgba(10, 10, 11, 0.08);
     }
 
     .blog-section {
-      min-height: 100vh;
       width: 100%;
-      background: var(--bg);
-      font-family: 'Inter', system-ui, sans-serif;
-      color: var(--ink);
-      padding: 3rem 1.25rem;
+      background: var(--blog-bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--blog-ink);
+      padding: 6rem 1.5rem 5.5rem;
     }
 
     .blog-container {
       margin: 0 auto;
       width: 100%;
-      max-width: 1160px;
+      max-width: 1220px;
     }
 
     .blog-heading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
     .blog-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 9999px;
-      background: var(--tag);
-      padding: 0.375rem 1rem;
-      font-size: 13px;
-      font-weight: 500;
-      color: #3a3d42;
+      display: block;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--blog-muted);
     }
 
     .blog-title {
-      margin-top: 2rem;
-      max-width: 15ch;
-      font-size: 40px;
+      margin-top: 0.85rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
       font-weight: 800;
-      line-height: 1.02;
+      line-height: 1.06;
       letter-spacing: -0.03em;
-      color: var(--ink);
-    }
-
-    .blog-title-italic {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-weight: 400;
-      letter-spacing: -0.01em;
+      color: var(--blog-ink);
     }
 
     .blog-featured {
-      margin-top: 2.25rem;
+      margin-top: 3rem;
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.625rem;
-      border-radius: 26px;
-      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--blog-line);
+      background: var(--blog-card);
       padding: 0.625rem;
-      box-shadow: 0 1px 3px rgba(17, 18, 20, 0.06);
-    }
-
-    .blog-featured:hover .blog-featured-img {
-      transform: scale(1.03);
     }
 
     .blog-featured-img-wrap {
       position: relative;
       overflow: hidden;
-      border-radius: 20px;
-      background: #e7e9ec;
+      border-radius: 12px;
+      background: #e7e6e3;
     }
 
     .blog-featured-img {
+      display: block;
       width: 100%;
       height: 100%;
       min-height: 300px;
       object-fit: cover;
-      transition: transform 0.7s ease-out;
     }
 
     .blog-featured-content {
       display: flex;
       flex-direction: column;
-      padding: 1.5rem;
+      padding: 1.5rem 1.5rem 1.25rem;
     }
 
     .blog-tag {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 9999px;
-      background: var(--tag);
-      padding: 0.375rem 0.875rem;
-      font-size: 13px;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
       font-weight: 500;
-      color: #3a3d42;
-      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--blog-muted);
     }
 
     .blog-featured-title {
-      margin-top: 1.5rem;
-      font-size: 28px;
+      margin-top: 1.25rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
       font-weight: 700;
-      line-height: 1.08;
+      line-height: 1.1;
       letter-spacing: -0.02em;
-      color: var(--ink);
+      color: var(--blog-ink);
     }
 
     .blog-featured-excerpt {
-      margin-top: 1.25rem;
+      margin-top: 1rem;
       max-width: 48ch;
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--blog-muted);
     }
 
     .blog-featured-footer {
       margin-top: auto;
-      padding-top: 2.5rem;
+      padding-top: 2rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
-
-    .blog-read-time {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 13px;
-      font-weight: 500;
-      color: #3a3d42;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--blog-muted);
     }
 
     .blog-read-dot {
-      width: 7px;
-      height: 7px;
+      width: 4px;
+      height: 4px;
       border-radius: 9999px;
-      background: var(--ink);
-    }
-
-    .blog-author {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-size: 22px;
-      color: var(--ink);
+      background: rgba(10, 10, 11, 0.35);
+      flex-shrink: 0;
     }
 
     .blog-grid {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .blog-card {
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      border-radius: 22px;
-      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--blog-line);
+      background: var(--blog-card);
       padding: 0.625rem;
-      box-shadow: 0 1px 2px rgba(17, 18, 20, 0.05);
-    }
-
-    .blog-card:hover .blog-card-img {
-      transform: scale(1.04);
     }
 
     .blog-card-img-wrap {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
-      background: #e7e9ec;
-    }
-
-    .blog-card-tag {
-      position: absolute;
-      left: 0.75rem;
-      top: 0.75rem;
-      z-index: 10;
-      display: inline-flex;
-      align-items: center;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 0.375rem 0.75rem;
-      font-size: 12px;
-      font-weight: 500;
-      color: #3a3d42;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      background: #e7e6e3;
     }
 
     .blog-card-img {
-      aspect-ratio: 16/13;
+      display: block;
+      aspect-ratio: 16/10;
       width: 100%;
       object-fit: cover;
-      transition: transform 0.7s ease-out;
     }
 
     .blog-card-content {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      padding: 1rem 0.75rem 1rem;
+      gap: 0.625rem;
+      padding: 1.25rem 0.875rem 1rem;
+    }
+
+    .blog-card-tag {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.625rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--blog-muted);
     }
 
     .blog-card-title {
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.3;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.2;
       letter-spacing: -0.01em;
-      color: var(--ink);
+      color: var(--blog-ink);
     }
 
     .blog-card-excerpt {
-      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
       line-height: 1.6;
-      color: var(--muted);
-    }
-
-    .blog-search {
-      margin-top: 2.5rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .blog-search-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      width: 100%;
-      max-width: 520px;
-      border-radius: 9999px;
-      background: var(--card);
-      padding: 0.875rem 1.25rem;
-      box-shadow: 0 1px 3px rgba(17, 18, 20, 0.06);
-      transition: box-shadow 0.2s ease;
-    }
-
-    .blog-search-wrap:focus-within {
-      box-shadow: 0 2px 10px rgba(17, 18, 20, 0.1);
-    }
-
-    .blog-search-icon {
-      flex-shrink: 0;
-      color: var(--muted);
-    }
-
-    .blog-search-input {
-      width: 100%;
-      background: transparent;
-      font-size: 15px;
-      color: var(--ink);
-      border: none;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .blog-search-input::placeholder {
-      color: var(--muted);
+      color: var(--blog-muted);
     }
 
     /* Scroll reveal animation */
@@ -1980,37 +1992,39 @@
     }
 
     /* Responsive */
-    @media (min-width: 640px) {
-      .blog-section {
-        padding: 4rem 2rem;
-      }
-
-      .blog-title {
-        font-size: 54px;
-      }
-
-      .blog-featured-title {
-        font-size: 34px;
-      }
-
-      .blog-featured-content {
-        padding: 2.25rem;
-      }
-    }
-
     @media (min-width: 768px) {
       .blog-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
 
+    @media (min-width: 1000px) {
+      .blog-title {
+        white-space: nowrap;
+      }
+    }
+
     @media (min-width: 1024px) {
       .blog-featured {
-        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       }
 
       .blog-featured-img {
         min-height: 420px;
+      }
+
+      .blog-featured-content {
+        padding: 2.25rem 2.25rem 1.75rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .blog-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .blog-featured {
+        margin-top: 2.25rem;
       }
     }
 
@@ -2023,14 +2037,14 @@
     }
   </style>
 
-  <section class="blog-section">
+  <section class="blog-section" id="blog">
     <div class="blog-container">
       <!-- Heading -->
       <div class="blog-heading blog-reveal" data-reveal>
-        <span class="blog-eyebrow">Blog</span>
-        <h1 class="blog-title">
-          Practical reads to help you move <span class="blog-title-italic">faster.</span>
-        </h1>
+        <span class="blog-eyebrow">Field Notes</span>
+        <h2 class="blog-title">
+          What we learn building datasets.
+        </h2>
       </div>
 
       <!-- Featured Article -->
@@ -2038,31 +2052,28 @@
         <div class="blog-featured-img-wrap">
           <img
             src="https://images.unsplash.com/photo-1623418371013-4baaf507be2b?w=1000&h=1100&fit=crop&auto=format"
-            alt="Blurred, ghostly silhouette of a person in motion"
+            alt="Long-exposure photograph of a figure in motion, rendered as overlapping silhouettes"
             class="blog-featured-img"
             loading="lazy"
           />
         </div>
 
         <div class="blog-featured-content">
-          <div>
-            <span class="blog-tag">Strategy</span>
-          </div>
-          <h2 class="blog-featured-title">
-            Why Most Startups Keep Getting Design Wrong
-          </h2>
+          <span class="blog-tag">Annotation Quality</span>
+          <h3 class="blog-featured-title">
+            Why inter-annotator agreement is the only QA metric that matters
+          </h3>
           <p class="blog-featured-excerpt">
-            Many teams move fast on product but fall behind on design. This
-            post breaks down why that happens, how it holds you back, and what
-            to do instead if you want to stay clear and competitive.
+            Accuracy against a gold set tells you how well annotators match one
+            reviewer's judgement. Agreement across independent passes tells you whether
+            your labelling guidelines are actually unambiguous — and that is what
+            determines how a model behaves on data it has never seen.
           </p>
 
           <div class="blog-featured-footer">
-            <span class="blog-read-time">
-              <span class="blog-read-dot"></span>
-              5 min read
-            </span>
-            <span class="blog-author">by Whenver</span>
+            <span>8 min read</span>
+            <span class="blog-read-dot"></span>
+            <span>Data Operations</span>
           </div>
         </div>
       </article>
@@ -2071,92 +2082,397 @@
       <div class="blog-grid">
         <article class="blog-card blog-reveal" data-reveal data-delay="0">
           <div class="blog-card-img-wrap">
-            <span class="blog-card-tag">Growth</span>
             <img
               src="https://images.unsplash.com/photo-1651154872905-b0f53800de90?w=800&h=700&fit=crop&auto=format"
-              alt="Macro photograph of a soft white flower with a warm center"
+              alt="Macro photograph of a pale flower with a warm center"
               class="blog-card-img"
               loading="lazy"
             />
           </div>
           <div class="blog-card-content">
+            <span class="blog-card-tag">Data Supply</span>
             <h3 class="blog-card-title">
-              The Real Cost of Bad Design (It's Not What You Think)
+              The 2027 data wall, and what it means for training budgets
             </h3>
             <p class="blog-card-excerpt">
-              Poor design slows down decisions, clutters your message and stalls growth.
+              Compute-optimal demand is on track to overtake the stock of public text.
+              Curation stops being an optimisation and becomes the constraint.
             </p>
           </div>
         </article>
 
         <article class="blog-card blog-reveal" data-reveal data-delay="110">
           <div class="blog-card-img-wrap">
-            <span class="blog-card-tag">Operations</span>
             <img
               src="https://images.unsplash.com/photo-1678366633407-7f49da199a42?w=800&h=700&fit=crop&auto=format"
-              alt="Glossy black abstract sculpture on a dark background"
+              alt="Glossy black abstract form on a dark background"
               class="blog-card-img"
               loading="lazy"
             />
           </div>
           <div class="blog-card-content">
+            <span class="blog-card-tag">Pipelines</span>
             <h3 class="blog-card-title">
-              How to Get More Done Without Hiring a Full Design Team
+              Edge cases belong in your spec, not your backlog
             </h3>
             <p class="blog-card-excerpt">
-              Lean teams are using design subscriptions to stay fast without hiring.
+              Occlusion, truncation, and ambiguous class boundaries decide label
+              consistency. Resolve them before the first batch, not after the audit.
             </p>
           </div>
         </article>
 
         <article class="blog-card blog-reveal" data-reveal data-delay="220">
           <div class="blog-card-img-wrap">
-            <span class="blog-card-tag">Workflow</span>
             <img
               src="https://images.unsplash.com/photo-1586726370832-3440a511e479?w=800&h=700&fit=crop&auto=format"
-              alt="Two hands reaching toward each other"
+              alt="Two hands reaching toward one another"
               class="blog-card-img"
               loading="lazy"
             />
           </div>
           <div class="blog-card-content">
+            <span class="blog-card-tag">Human in the Loop</span>
             <h3 class="blog-card-title">
-              What Working With a Design Subscription Actually Looks Like
+              Synthetic data scales volume. Humans still set the ceiling.
             </h3>
             <p class="blog-card-excerpt">
-              A behind the scenes look at how founders use design subscriptions to move faster.
+              Generated data compounds the biases of the model that produced it. Human
+              validation is what keeps a dataset anchored to the real distribution.
             </p>
           </div>
         </article>
       </div>
+    </div>
+  </section>
 
-      <!-- Search -->
-      <div class="blog-search blog-reveal" data-reveal>
-        <div class="blog-search-wrap">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            class="blog-search-icon"
-          >
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-            <path
-              d="m20 20-3.2-3.2"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search articles"
-            class="blog-search-input"
-          />
-        </div>
+  <!-- CTA + Footer -->
+  <style>
+    /* ===== CTA ===== */
+    .cta-section {
+      width: 100%;
+      background: var(--surface-deep);
+      padding: 7rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(60% 80% at 50% 0%, rgba(56, 189, 248, 0.14) 0%, transparent 70%);
+    }
+
+    .cta-inner {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-eyebrow {
+      display: block;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .cta-heading {
+      margin-top: 0.85rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+    }
+
+    .cta-body {
+      margin: 1.25rem auto 0;
+      max-width: 54ch;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    .cta-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 9999px;
+      padding: 0.7rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #FFFFFF;
+      text-decoration: none;
+      line-height: 1;
+      transition: border-color 250ms ease, background 250ms ease;
+    }
+
+    .cta-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .cta-meta {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.42);
+    }
+
+    .cta-meta-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.28);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 4.5rem 1.5rem;
+      }
+    }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      width: 100%;
+      background: var(--surface-deepest);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 4.5rem 1.5rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .footer-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .footer-brand-line {
+      margin-top: 0.875rem;
+      max-width: 34ch;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-nav-groups {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem 1.5rem;
+    }
+
+    .footer-group-title {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    .footer-links {
+      list-style: none;
+      margin-top: 1.125rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a,
+    .footer-links span {
+      font-size: 0.9375rem;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.68);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      margin-top: 4rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.34);
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.34);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer-legal a:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (min-width: 900px) {
+      .footer-top {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+        gap: 4rem;
+      }
+
+      .footer-nav-groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-footer {
+        padding: 3.5rem 1.5rem 2rem;
+      }
+
+      .footer-bottom {
+        margin-top: 3rem;
+      }
+    }
+  </style>
+
+  <section class="cta-section" id="contact">
+    <div class="cta-inner">
+      <span class="cta-eyebrow">Start a Project</span>
+      <h2 class="cta-heading">Tell us what your model is missing.</h2>
+      <p class="cta-body">
+        Send us the task, the modality, and the volume you need. We will come back
+        with a labelling spec, a quality plan, and a pilot batch you can evaluate
+        before committing to scale.
+      </p>
+
+      <div class="cta-actions">
+        <button class="cta-button" onclick="window.location.href='contact.html'">
+          <span class="cta-button-label">Request a Dataset</span>
+          <span class="cta-button-arrow">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+        <a class="cta-secondary" href="mailto:hello@dataglif.com">Email the team</a>
+      </div>
+
+      <div class="cta-meta">
+        <span>Pilot batch in 5 days</span>
+        <span class="cta-meta-dot"></span>
+        <span>NDA on request</span>
+        <span class="cta-meta-dot"></span>
+        <span>Reply within 24 hours</span>
       </div>
     </div>
   </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-logo">DataGlif</div>
+          <p class="footer-brand-line">
+            Human-validated training data for AI and agentic systems. Collection,
+            annotation, and quality operations across image, video, 3D, text, and audio.
+          </p>
+        </div>
+
+        <div class="footer-nav-groups">
+          <div>
+            <div class="footer-group-title">Services</div>
+            <ul class="footer-links">
+              <li><a href="services.html">Image &amp; Video</a></li>
+              <li><a href="services.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="services.html">Text &amp; Documents</a></li>
+              <li><a href="services.html">Audio &amp; Multimodal</a></li>
+              <li><a href="services.html">Data Operations &amp; QA</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-group-title">Company</div>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="approach.html">Our Approach</a></li>
+              <li><a href="#blog">Field Notes</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-group-title">Get in Touch</div>
+            <ul class="footer-links">
+              <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
+              <li><span>San Francisco, CA</span></li>
+              <li><span>Replies within 24 hours</span></li>
+              <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 DataGlif. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+          <a href="#security">Data Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Blog scroll-reveal animation
@@ -2185,6 +2501,11 @@
         revealObserver.observe(el);
       });
     })();
+
+    // CTA + footer add page height after the pinned hero was measured — recalculate.
+    if (window.ScrollTrigger) {
+      ScrollTrigger.refresh();
+    }
   </script>
 
 </body>
