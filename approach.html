@@ -16,6 +16,8 @@
       --surface-deep: #0A0D12;
       --surface-mid: #0F131C;
       --accent-cyan: #38BDF8;
+      --accent-lime: #d4ff00;
+      --gray-900: #111827;
       --white: #ffffff;
       --gray-300: #d1d5db;
     }
@@ -125,8 +127,8 @@
     }
 
     .cta-button:hover .cta-button-label {
-      background: var(--accent-cyan);
-      color: #000000;
+      background: var(--accent-lime);
+      color: var(--gray-900);
     }
 
     .cta-button-arrow {
@@ -140,7 +142,7 @@
     }
 
     .cta-button:hover .cta-button-arrow {
-      background: var(--accent-cyan);
+      background: var(--accent-lime);
     }
 
     .cta-button-arrow svg {
@@ -151,8 +153,8 @@
     }
 
     .cta-button:hover .cta-button-arrow svg {
+      color: var(--gray-900);
       transform: rotate(45deg);
-      color: #000000;
     }
 
     /* Hero Section */
@@ -265,7 +267,7 @@
     .workflow-track {
       display: flex;
       gap: 1.5rem;
-      padding: 0 3rem;
+      padding: 0 calc(50vw - 160px);
       width: max-content;
       will-change: transform;
     }
@@ -279,6 +281,7 @@
       height: 340px;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .workflow-card h3 {
@@ -302,20 +305,46 @@
     .card-icon {
       margin-top: auto;
       align-self: flex-start;
-      width: 44px;
-      height: 44px;
-      background-color: #F5F5F7;
-      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #000000;
+      color: #FFFFFF;
+      background-size: cover;
+      background-position: center;
     }
 
     .card-icon svg {
-      width: 20px;
-      height: 20px;
-      stroke-width: 1.5px;
+      width: 22px;
+      height: 22px;
+      stroke-width: 2px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .workflow-card:nth-child(1) .card-icon {
+      background: radial-gradient(120% 120% at 85% 15%, #d66b9a 0%, #a8456e 38%, #6b2844 72%, #2d1220 100%);
+    }
+
+    .workflow-card:nth-child(2) .card-icon {
+      background: radial-gradient(120% 120% at 18% 12%, #5b8abd 0%, #3f6b99 38%, #254261 72%, #122033 100%);
+    }
+
+    .workflow-card:nth-child(3) .card-icon {
+      background: radial-gradient(120% 120% at 8% 85%, #7aad8c 0%, #5a8569 40%, #3a5544 76%, #1c2a22 100%);
+    }
+
+    .workflow-card:nth-child(4) .card-icon {
+      background: radial-gradient(120% 120% at 92% 88%, #e5a84a 0%, #c88d35 38%, #8a5f24 72%, #3d2a12 100%);
+    }
+
+    .workflow-card:nth-child(5) .card-icon {
+      background: radial-gradient(120% 120% at 88% 85%, #9d85c8 0%, #7d69a5 38%, #4e4270 72%, #252035 100%);
+    }
+
+    .workflow-card:nth-child(6) .card-icon {
+      background: radial-gradient(120% 120% at 15% 20%, #4a9fd8 0%, #3a7fa8 38%, #255070 72%, #122838 100%);
     }
 
     .workflow-timeline {
@@ -369,7 +398,7 @@
     /* Use Cases Section */
     .use-cases-section {
       padding: 6rem 3rem;
-      background: #FFFFFF;
+      background: #F5F5F7;
     }
 
     .use-cases-container {
@@ -383,60 +412,75 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: -0.03em;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
       color: #000000;
+      text-align: center;
     }
 
     .use-cases-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
     }
 
     .use-case-card {
       background: #FFFFFF;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 16px;
-      padding: 2.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+      padding: 3rem;
+      transition: all 300ms ease;
+    }
+
+    .use-case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
     }
 
     .use-case-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: #000000;
+      letter-spacing: -0.02em;
     }
 
     .use-case-card ul {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.25rem;
     }
 
     .use-case-card li {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
+      font-size: 1.0625rem;
       line-height: 1.6;
-      color: #808080;
-      padding-left: 1.5rem;
+      color: #4A4A4A;
+      padding-left: 2rem;
       position: relative;
     }
 
     .use-case-card li::before {
-      content: '•';
+      content: '';
       position: absolute;
       left: 0;
-      color: #000000;
-      font-weight: 600;
+      top: 0.5rem;
+      width: 8px;
+      height: 8px;
+      background: var(--surface-deep);
+      border-radius: 50%;
+    }
+
+    .use-cases-cta {
+      text-align: center;
     }
 
     .cta-button {
       display: inline-block;
-      padding: 1rem 3rem;
+      padding: 1.125rem 3.5rem;
       background: var(--surface-deep);
       color: #FFFFFF;
       font-family: 'DM Sans', sans-serif;
@@ -450,6 +494,7 @@
     .cta-button:hover {
       background: #1a1f2e;
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
     /* Why Choose Section */
@@ -501,33 +546,64 @@
 
     /* Final CTA Section */
     .final-cta-section {
-      padding: 6rem 3rem;
-      background: #F5F5F7;
-      text-align: center;
+      width: 100%;
+      background: var(--surface-deep);
+      padding: 7rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(60% 80% at 50% 0%, rgba(56, 189, 248, 0.14) 0%, transparent 70%);
     }
 
     .final-cta-container {
-      max-width: 1000px;
+      position: relative;
+      max-width: 860px;
       margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-eyebrow {
+      display: block;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .final-cta-section .section-heading {
-      margin-bottom: 2rem;
+      margin-top: 0.85rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+      text-align: center;
     }
 
     .cta-description {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.5rem;
-      color: #000000;
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.76);
       margin-bottom: 0.5rem;
     }
 
     .cta-highlight {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 600;
-      color: var(--surface-deep);
-      margin-bottom: 3rem;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 2.5rem;
+      display: block;
     }
 
     .cta-buttons {
@@ -540,40 +616,160 @@
     .cta-btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 2rem;
-      background: var(--surface-deep);
-      color: #FFFFFF;
+      gap: 0.625rem;
+      padding: 1rem 2.5rem;
+      background: var(--accent-cyan);
+      color: #000000;
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       text-decoration: none;
       border-radius: 8px;
-      transition: all 300ms ease;
+      transition: all 250ms ease;
+      border: none;
+      cursor: pointer;
     }
 
     .cta-btn-primary:hover {
-      background: #1a1f2e;
+      background: #FFFFFF;
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .cta-btn-primary svg {
+      width: 16px;
+      height: 16px;
     }
 
     .cta-btn-secondary {
       display: inline-block;
       padding: 1rem 2.5rem;
-      background: #FFFFFF;
-      color: var(--surface-deep);
+      background: transparent;
+      color: #FFFFFF;
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       text-decoration: none;
       border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transition: all 300ms ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 250ms ease;
+      cursor: pointer;
     }
 
     .cta-btn-secondary:hover {
-      background: #F5F5F5;
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--surface-deepest);
+      padding: 4rem 3rem 2.5rem;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      gap: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-branding h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+
+    .footer-branding p {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.58);
+      max-width: 360px;
+    }
+
+    .footer-nav-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .footer-group-title {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    .footer-links {
+      list-style: none;
+      margin-top: 1.125rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a,
+    .footer-links span {
+      font-size: 0.9375rem;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.68);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      margin-top: 4rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.34);
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.34);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer-legal a:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (min-width: 900px) {
+      .footer-top {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+        gap: 4rem;
+      }
+
+      .footer-nav-groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 768px) {
@@ -592,6 +788,14 @@
       .workflow-header {
         flex-direction: column;
         gap: 2rem;
+      }
+
+      .site-footer {
+        padding: 3.5rem 1.5rem 2rem;
+      }
+
+      .footer-bottom {
+        margin-top: 3rem;
       }
     }
 
@@ -1045,6 +1249,29 @@
 </head>
 <body>
 
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
+
+    <div class="navbar-nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="services.html" class="nav-item">Services</a>
+      <a href="approach.html" class="nav-item">Our Approach</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="cta-button" onclick="window.location.href='contact.html'">
+        <span class="cta-button-label">Book a Call</span>
+        <span class="cta-button-arrow">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-container">
@@ -1175,7 +1402,9 @@
           </ul>
         </div>
       </div>
-      <a href="contact.html" class="cta-button">Book a Call</a>
+      <div class="use-cases-cta">
+        <a href="contact.html" class="cta-button">Book a Call</a>
+      </div>
     </div>
   </section>
 
@@ -1203,13 +1432,14 @@
   <!-- Final CTA Section -->
   <section class="final-cta-section">
     <div class="final-cta-container">
+      <span class="cta-eyebrow">Start a Project</span>
       <h2 class="section-heading">Ready to Build Better Data?</h2>
       <p class="cta-description">Request a custom dataset scoping within</p>
-      <p class="cta-highlight">48 hours</p>
+      <span class="cta-highlight">48 hours</span>
       <div class="cta-buttons">
         <a href="contact.html" class="cta-btn-primary">
           Request a Dataset
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
@@ -1217,6 +1447,57 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-branding">
+          <h3>DataGlif</h3>
+          <p>High-quality training data for AI teams. From pilot projects to production scale.</p>
+        </div>
+
+        <div class="footer-nav-groups">
+          <div>
+            <div class="footer-group-title">Company</div>
+            <ul class="footer-links">
+              <li><a href="services.html">Services</a></li>
+              <li><a href="approach.html">Our Approach</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-group-title">Resources</div>
+            <ul class="footer-links">
+              <li><a href="#case-studies">Case Studies</a></li>
+              <li><a href="#documentation">Documentation</a></li>
+              <li><a href="#blog">Blog</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-group-title">Get in Touch</div>
+            <ul class="footer-links">
+              <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
+              <li><span>San Francisco, CA</span></li>
+              <li><span>Replies within 24 hours</span></li>
+              <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 DataGlif. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+          <a href="#security">Data Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -1242,52 +1523,70 @@
       const cards = document.querySelectorAll('.workflow-card');
       const pills = document.querySelectorAll('.indicator-pill');
 
+      // Calculate total scroll distance needed to show all cards centered
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 24;
+      const viewportCenter = window.innerWidth / 2;
+      const cardCenter = cardWidth / 2;
+
+      // Total distance to scroll: move from first card centered to last card centered
+      const totalScrollDistance = (cards.length - 1) * (cardWidth + gap);
+
       // Horizontal scroll animation
       gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth + 96),
+        x: () => -totalScrollDistance,
         ease: 'none',
         scrollTrigger: {
           trigger: '.workflow-section',
           start: 'top top',
-          end: () => `+=${track.scrollWidth}`,
+          end: () => `+=${totalScrollDistance * 2}`,
           scrub: 1,
           pin: true,
           anticipatePin: 1
         }
       });
 
-      // Update active pill on scroll
+      // Update active pill and scale center card on scroll
       ScrollTrigger.create({
         trigger: '.workflow-section',
         start: 'top top',
-        end: () => `+=${track.scrollWidth}`,
+        end: () => `+=${totalScrollDistance * 2}`,
         onUpdate: (self) => {
           const progress = self.progress;
-          const index = Math.min(Math.floor(progress * cards.length), cards.length - 1);
+          // Calculate which card is currently centered
+          const index = Math.round(progress * (cards.length - 1));
 
           pills.forEach(pill => pill.classList.remove('active'));
           if (pills[index]) {
             pills[index].classList.add('active');
           }
+
+          // Scale cards based on position
+          cards.forEach((card, i) => {
+            const distance = Math.abs(i - progress * (cards.length - 1));
+            const scale = distance < 0.5 ? 1.08 : 1;
+            const opacity = distance < 0.5 ? 1 : 0.7;
+
+            gsap.to(card, {
+              scale: scale,
+              opacity: opacity,
+              duration: 0.3,
+              ease: 'power2.out'
+            });
+          });
         }
       });
 
-      // Navigation buttons
+      // Navigation buttons - snap to each card position
       const btnPrev = document.getElementById('btnPrev');
       const btnNext = document.getElementById('btnNext');
 
-      const scrollByCard = () => {
-        const cardWidth = cards[0].offsetWidth;
-        const gap = 24;
-        return cardWidth + gap;
-      };
-
       btnNext.addEventListener('click', () => {
-        lenis.scrollTo(window.scrollY + scrollByCard(), { lock: false });
+        lenis.scrollTo(window.scrollY + (cardWidth + gap) * 2, { lock: false, duration: 1 });
       });
 
       btnPrev.addEventListener('click', () => {
-        lenis.scrollTo(window.scrollY - scrollByCard(), { lock: false });
+        lenis.scrollTo(window.scrollY - (cardWidth + gap) * 2, { lock: false, duration: 1 });
       });
     });
   </script>

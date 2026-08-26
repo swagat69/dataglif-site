@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DataGlif - AI-Ready Data at Scale</title>
+  <script>
+    // Prevent the browser from auto-scrolling to a hash section (e.g. #blog) on load.
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    // The browser re-applies anchor scrolling after images/iframes finish loading,
+    // so force the scroll position back to the top once more after full load.
+    window.addEventListener('load', function () {
+      window.scrollTo(0, 0);
+    });
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -206,7 +221,7 @@
       gap: 2rem;
       padding: 0;
       border: none;
-      border-radius: 32px;
+      border-radius: 12px;
       overflow: visible;
       background: #FFFFFF;
     }
@@ -215,21 +230,28 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 32px;
-      overflow: hidden;
       background: transparent;
       will-change: transform, opacity;
+    }
+
+    .video-media {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: transparent;
       border: none;
       transition: border-color 400ms ease, border-radius 400ms ease;
       -webkit-mask-image: -webkit-radial-gradient(white, black);
     }
 
-    .video-card.separated {
+    .video-card.separated .video-media {
       border: none;
-      border-radius: 18px;
+      border-radius: 0;
     }
 
-    .video-card::before {
+    .video-media::before {
       content: '';
       position: absolute;
       top: 0;
@@ -243,16 +265,16 @@
       transition: opacity 600ms ease;
     }
 
-    .video-card.separated::before {
+    .video-card.separated .video-media::before {
       opacity: 0;
       display: none;
     }
 
-    .video-card.separated {
+    .video-card.separated .video-media {
       background: transparent;
     }
 
-    .video-card video {
+    .video-media video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -261,7 +283,7 @@
       transition: transform 600ms ease, object-fit 600ms ease;
     }
 
-    .video-card.separated video {
+    .video-card.separated .video-media video {
       object-fit: contain;
       transform: scale(1);
     }
@@ -288,7 +310,7 @@
 
     .video-description {
       position: absolute;
-      bottom: -160px;
+      top: calc(100% + 24px);
       left: 0;
       right: 0;
       text-align: center;
@@ -297,9 +319,8 @@
       visibility: hidden;
       pointer-events: none;
       transition: all 600ms ease;
-      transform: translateY(20px);
-      z-index: 999;
-      background: white;
+      transform: translateY(-12px);
+      z-index: 5;
     }
 
     .video-card.separated .video-description {
@@ -1181,7 +1202,7 @@
 
     <div class="navbar-nav">
       <a href="#home" class="nav-item">Home</a>
-      <a href="#services" class="nav-item">Services</a>
+      <a href="services.html" class="nav-item">Services</a>
       <a href="approach.html" class="nav-item">Our Approach</a>
       <a href="#contact" class="nav-item">Contact</a>
     </div>
@@ -1199,36 +1220,42 @@
   </nav>
 
   <!-- Video Hero Section -->
-  <div class="hero-container">
+  <div class="hero-container" id="home">
     <div class="hero-sticky">
       <div class="video-wrapper">
         <!-- Video 1: Drone (plays first) -->
         <div class="video-card" data-video="1">
-          <video src="./videos/city_drone_.mp4" autoplay loop muted playsinline></video>
-          <div class="video-label-overlay">Aerial / Geo</div>
+          <div class="video-media">
+            <video src="./videos/city_drone_.mp4" autoplay loop muted playsinline></video>
+            <div class="video-label-overlay">Aerial / Geo</div>
+          </div>
           <div class="video-description">
-            <div class="video-description-title">Aerial / Geo</div>
-            <div class="video-description-text">High-altitude surveillance and geographic mapping data</div>
+            <div class="video-description-title">Aerial Intelligence</div>
+            <div class="video-description-text">Drone footage annotation for urban planning, infrastructure monitoring, and geographic intelligence. From satellite imagery to low-altitude surveying—labeled at scale.</div>
           </div>
         </div>
 
         <!-- Video 2: CCTV -->
         <div class="video-card" data-video="2">
-          <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
-          <div class="video-label-overlay">Scene / Object</div>
+          <div class="video-media">
+            <video src="./videos/cctv-construction-zone.mp4" autoplay loop muted playsinline></video>
+            <div class="video-label-overlay">Scene / Object</div>
+          </div>
           <div class="video-description">
-            <div class="video-description-title">Scene / Object</div>
-            <div class="video-description-text">Real-world scene understanding and object detection</div>
+            <div class="video-description-title">Scene Understanding</div>
+            <div class="video-description-text">Real-world environments annotated for construction safety, industrial monitoring, and autonomous navigation. Multi-object detection with temporal consistency across frames.</div>
           </div>
         </div>
 
         <!-- Video 3: People -->
         <div class="video-card" data-video="3">
-          <video src="./videos/people_walking_official.mp4" autoplay loop muted playsinline></video>
-          <div class="video-label-overlay">Segmentation</div>
+          <div class="video-media">
+            <video src="./videos/people_walking_official.mp4" autoplay loop muted playsinline></video>
+            <div class="video-label-overlay">Segmentation</div>
+          </div>
           <div class="video-description">
-            <div class="video-description-title">Segmentation</div>
-            <div class="video-description-text">Precise instance segmentation for human activity analysis</div>
+            <div class="video-description-title">Human Activity Analysis</div>
+            <div class="video-description-text">Precise instance segmentation and pose estimation for crowd analytics, retail intelligence, and behavioral modeling. Frame-accurate tracking across occlusions and lighting conditions.</div>
           </div>
         </div>
       </div>
@@ -1582,7 +1609,7 @@
     tl.to(videoCards, {
       width: '520px',
       height: '380px',
-      borderRadius: '18px',
+      borderRadius: '0px',
       scale: 0.92,
       y: -80,
       duration: 0.35,
@@ -1937,6 +1964,7 @@
       overflow: hidden;
       border-radius: 12px;
       background: #e7e6e3;
+      aspect-ratio: 1 / 1;
     }
 
     .blog-card-img {
@@ -1944,6 +1972,23 @@
       aspect-ratio: 16/10;
       width: 100%;
       object-fit: cover;
+    }
+
+    .blog-card-img-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 1280px;
+      border: none;
+      display: block;
+      background: #ffffff;
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .blog-card-img-wrap:hover iframe {
+      pointer-events: auto;
     }
 
     .blog-card-content {
@@ -1976,6 +2021,60 @@
       font-size: 0.9375rem;
       line-height: 1.6;
       color: var(--blog-muted);
+    }
+
+    .demo-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-btn {
+      padding: 0.5rem 1rem;
+      background: var(--blog-card);
+      border: 1px solid var(--blog-line);
+      border-radius: 8px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--blog-ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .demo-btn:hover {
+      background: var(--blog-ink);
+      color: var(--blog-card);
+      transform: translateY(-2px);
+    }
+
+    .demo-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .demo-feature {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.65rem;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--blog-muted);
+    }
+
+    .demo-feature::before {
+      content: '✓';
+      color: var(--accent-cyan);
+      font-weight: 700;
     }
 
     /* Scroll reveal animation */
@@ -2083,64 +2182,91 @@
       <div class="blog-grid">
         <article class="blog-card blog-reveal" data-reveal data-delay="0">
           <div class="blog-card-img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1651154872905-b0f53800de90?w=800&h=700&fit=crop&auto=format"
-              alt="Macro photograph of a pale flower with a warm center"
-              class="blog-card-img"
+            <iframe
+              src="data-graph/index.html"
+              id="dataGraphFrame"
+              title="Data Exhaustion Projection Chart"
               loading="lazy"
-            />
+            ></iframe>
           </div>
           <div class="blog-card-content">
-            <span class="blog-card-tag">Data Supply</span>
+            <span class="blog-card-tag">Data Visualization</span>
             <h3 class="blog-card-title">
-              The 2027 data wall, and what it means for training budgets
+              AI Model Data Exhaustion Projection
             </h3>
             <p class="blog-card-excerpt">
-              Compute-optimal demand is on track to overtake the stock of public text.
-              Curation stops being an optimisation and becomes the constraint.
+              Interactive SVG chart showing when leading AI models will exhaust their training data sources. Features scroll-triggered animations and responsive design.
             </p>
+            <div class="demo-features">
+              <span class="demo-feature">Scroll Animation</span>
+              <span class="demo-feature">Fully Responsive</span>
+              <span class="demo-feature">Native SVG</span>
+              <span class="demo-feature">No Dependencies</span>
+            </div>
+            <div class="demo-controls">
+              <button class="demo-btn" onclick="document.getElementById('dataGraphFrame').src = document.getElementById('dataGraphFrame').src">↻ Reload</button>
+              <button class="demo-btn" onclick="window.open('data-graph/index.html', '_blank')">⤢ Full Screen</button>
+            </div>
           </div>
         </article>
 
         <article class="blog-card blog-reveal" data-reveal data-delay="110">
           <div class="blog-card-img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1678366633407-7f49da199a42?w=800&h=700&fit=crop&auto=format"
-              alt="Glossy black abstract form on a dark background"
-              class="blog-card-img"
+            <iframe
+              src="ner-annotation-FULL.html"
+              id="nerFrame"
+              title="NER Annotation Demo"
               loading="lazy"
-            />
+            ></iframe>
           </div>
           <div class="blog-card-content">
-            <span class="blog-card-tag">Pipelines</span>
+            <span class="blog-card-tag">Annotation Intelligence</span>
             <h3 class="blog-card-title">
-              Edge cases belong in your spec, not your backlog
+              Real-time Text Annotation Visualization
             </h3>
             <p class="blog-card-excerpt">
-              Occlusion, truncation, and ambiguous class boundaries decide label
-              consistency. Resolve them before the first batch, not after the audit.
+              Watch unstructured job posting text transform into structured annotations across 6 categories. Auto-plays 24-second demonstration with full playback controls.
             </p>
+            <div class="demo-features">
+              <span class="demo-feature">24s Animation</span>
+              <span class="demo-feature">6 Categories</span>
+              <span class="demo-feature">Play/Pause/Replay</span>
+              <span class="demo-feature">Smooth Scrolling</span>
+            </div>
+            <div class="demo-controls">
+              <button class="demo-btn" onclick="document.getElementById('nerFrame').src = document.getElementById('nerFrame').src">↻ Restart</button>
+              <button class="demo-btn" onclick="window.open('ner-annotation-FULL.html', '_blank')">⤢ Full Screen</button>
+            </div>
           </div>
         </article>
 
         <article class="blog-card blog-reveal" data-reveal data-delay="220">
           <div class="blog-card-img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1586726370832-3440a511e479?w=800&h=700&fit=crop&auto=format"
-              alt="Two hands reaching toward one another"
-              class="blog-card-img"
+            <iframe
+              src="dla-booklet-FULL.html"
+              id="bookletFrame"
+              title="DLA Interactive Booklet"
               loading="lazy"
-            />
+            ></iframe>
           </div>
           <div class="blog-card-content">
-            <span class="blog-card-tag">Human in the Loop</span>
+            <span class="blog-card-tag">Interactive Document</span>
             <h3 class="blog-card-title">
-              Synthetic data scales volume. Humans still set the ceiling.
+              28-Page Digital Flip Book Experience
             </h3>
             <p class="blog-card-excerpt">
-              Generated data compounds the biases of the model that produced it. Human
-              validation is what keeps a dataset anchored to the real distribution.
+              Full responsive page-turning booklet with all 28 actual document pages. Features auto-play, keyboard navigation (← →), and adapts from 2-page spreads to single-page view.
             </p>
+            <div class="demo-features">
+              <span class="demo-feature">28 Real Pages</span>
+              <span class="demo-feature">Auto-Play</span>
+              <span class="demo-feature">Keyboard Nav</span>
+              <span class="demo-feature">Mobile Optimized</span>
+            </div>
+            <div class="demo-controls">
+              <button class="demo-btn" onclick="document.getElementById('bookletFrame').src = document.getElementById('bookletFrame').src">↻ Reset</button>
+              <button class="demo-btn" onclick="window.open('dla-booklet-FULL.html', '_blank')">⤢ Full Screen</button>
+            </div>
           </div>
         </article>
       </div>
@@ -2476,6 +2602,22 @@
   </footer>
 
   <script>
+    // Scale embedded demo iframes (built full-size) down to fit their square preview tiles
+    (function() {
+      const IFRAME_SIZE = 1280;
+
+      function scaleFrames() {
+        document.querySelectorAll('.blog-card-img-wrap iframe').forEach((frame) => {
+          const wrap = frame.parentElement;
+          const scale = wrap.clientWidth / IFRAME_SIZE;
+          frame.style.transform = `scale(${scale})`;
+        });
+      }
+
+      scaleFrames();
+      window.addEventListener('resize', scaleFrames);
+    })();
+
     // Blog scroll-reveal animation
     (function() {
       const blogRevealElements = document.querySelectorAll('.blog-reveal[data-reveal]');
