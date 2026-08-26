@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Approach - DataGlif</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      position: relative;
+      padding: 40px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      z-index: 10;
+    }
+
+    .logo {
+      width: 79px;
+      height: 80px;
+      background: #344F90;
+      border-radius: 8px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .menu a {
+      font-size: 24px;
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: opacity 0.3s;
+    }
+
+    .menu a.active {
+      font-weight: 700;
+      font-size: 28px;
+    }
+
+    .menu a:hover {
+      opacity: 0.8;
+    }
+
+    .header-cta {
+      background: white;
+      color: #0F172A;
+      padding: 15px 40px;
+      border-radius: 5px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      padding: 80px 50px;
+      min-height: 500px;
+      background-image: url('https://www.figma.com/api/mcp/asset/1158cfe8-9d23-41af-8ea6-8bd53297baf0.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(-81.76deg, rgba(51, 79, 144, 0) 46.563%, rgba(15, 23, 42, 0.3) 49.052%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 660px;
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+      min-height: 500px;
+      justify-content: flex-end;
+    }
+
+    .hero-cta {
+      background: white;
+      color: #0F172A;
+      padding: 5px 5px 5px 20px;
+      border-radius: 5px;
+      font-size: 20px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      width: fit-content;
+      transition: transform 0.3s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero-cta svg {
+      width: 50px;
+      height: 50px;
+    }
+
+    /* Workflow Section */
+    .workflow-section {
+      background: #0F172A;
+      padding: 100px 50px;
+    }
+
+    .workflow-container {
+      display: flex;
+      gap: 214px;
+    }
+
+    .workflow-title {
+      font-size: 40px;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .workflow-steps {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 70px;
+    }
+
+    .workflow-step {
+      display: flex;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .step-number-title {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      width: 409px;
+      flex-shrink: 0;
+    }
+
+    .step-number {
+      font-size: 64px;
+      font-style: italic;
+      color: white;
+      line-height: 1.5;
+    }
+
+    .step-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      width: 307px;
+    }
+
+    .step-description {
+      font-size: 24px;
+      color: #808080;
+      flex: 1;
+    }
+
+    .workflow-divider {
+      height: 1px;
+      background: #808080;
+      margin: 30px 0;
+    }
+
+    /* Use Cases Section */
+    .use-cases-section {
+      padding: 100px 50px;
+    }
+
+    .section-title {
+      font-size: 40px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 70px;
+    }
+
+    .use-cases-container {
+      position: relative;
+      background-image: url('https://www.figma.com/api/mcp/asset/3a755d8c-92ef-4f48-a986-6bd8fc86b6aa.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 40px;
+      padding: 80px;
+      overflow: hidden;
+    }
+
+    .use-cases-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 40px;
+    }
+
+    .use-cases-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 65px;
+      align-items: center;
+    }
+
+    .use-cases-grid {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+    }
+
+    .use-case-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 40px;
+      padding: 40px 20px;
+      width: 600px;
+      color: white;
+    }
+
+    .use-case-card h3 {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 120px;
+    }
+
+    .use-case-card ul {
+      list-style: none;
+      font-size: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .use-case-card li {
+      padding-left: 42px;
+      position: relative;
+    }
+
+    .use-case-card li::before {
+      content: '•';
+      position: absolute;
+      left: 20px;
+    }
+
+    .cta-button {
+      background: white;
+      color: #0F172A;
+      padding: 15px 80px;
+      border-radius: 5px;
+      font-size: 24px;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Why Choose Section */
+    .why-choose-section {
+      padding: 100px 50px;
+    }
+
+    .cards-grid {
+      display: flex;
+      gap: 14px;
+      margin-top: 70px;
+    }
+
+    .feature-card {
+      flex: 1;
+      border: 1px solid #344F90;
+      border-radius: 20px;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .feature-card.primary {
+      background: #344F90;
+      color: white;
+      padding: 80px 30px;
+    }
+
+    .feature-card h3 {
+      font-size: 32px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .feature-card.primary h3 {
+      font-size: 36px;
+    }
+
+    .feature-card p {
+      font-size: 24px;
+      color: #808080;
+    }
+
+    .feature-card.primary p {
+      color: white;
+    }
+
+    /* Final CTA Section */
+    .final-cta-section {
+      background: #E7E7E7;
+      padding: 100px 50px;
+    }
+
+    .final-cta-content {
+      display: flex;
+      flex-direction: column;
+      gap: 70px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .final-cta-description {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .final-cta-description p {
+      font-size: 32px;
+    }
+
+    .final-cta-description .highlight {
+      font-size: 70px;
+      font-weight: 500;
+      color: #344F90;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cta-btn-primary {
+      background: #0F172A;
+      color: white;
+      padding: 15px 34px;
+      border-radius: 5px;
+      font-size: 24px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      transition: transform 0.3s;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      background: #0F172A;
+      color: white;
+      padding: 15px 71px;
+      border-radius: 5px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+
+    .cta-btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      background: #0F172A;
+      padding: 50px 50px 20px;
+      color: white;
+      position: relative;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 250px;
+    }
+
+    .footer-brand h2 {
+      font-size: 100px;
+      font-weight: 700;
+      letter-spacing: -4px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand p {
+      font-size: 24px;
+      line-height: 1.2;
+      max-width: 343px;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 115px;
+      padding-top: 73px;
+    }
+
+    .footer-column h3 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 16px;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-links a:hover {
+      opacity: 0.8;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+    }
+
+    .footer-bottom p {
+      font-size: 24px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 20px;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .workflow-container {
+        flex-direction: column;
+        gap: 50px;
+      }
+
+      .use-cases-grid {
+        flex-direction: column;
+      }
+
+      .cards-grid {
+        flex-direction: column;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo"></div>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="approach.html" class="active">Our Approach</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="contact.html" class="header-cta">Book a Call</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div></div>
+      <a href="contact.html" class="hero-cta">
+        Request a Dataset
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Workflow Section -->
+  <section class="workflow-section">
+    <div class="workflow-container">
+      <h2 class="workflow-title">Workflow</h2>
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">01</span>
+            <h3 class="step-title">Defining dataset requirements:</h3>
+          </div>
+          <p class="step-description">Agreeing on the scope, schema, format, and quality standards.</p>
+        </div>
+
+        <div class="workflow-divider"></div>
+
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">02</span>
+            <h3 class="step-title">Data collection or acquisition:</h3>
+          </div>
+          <p class="step-description">Collecting new data or importing data sets provided by the client.</p>
+        </div>
+
+        <div class="workflow-divider"></div>
+
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">03</span>
+            <h3 class="step-title">Annotate, Clean & Enrich:</h3>
+          </div>
+          <p class="step-description">Applying exactly the services your project requires.</p>
+        </div>
+
+        <div class="workflow-divider"></div>
+
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">04</span>
+            <h3 class="step-title">Quality control:</h3>
+          </div>
+          <p class="step-description">Multi-stage quality control, spot checks, expert review, and decision-making.</p>
+        </div>
+
+        <div class="workflow-divider"></div>
+
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">05</span>
+            <h3 class="step-title">Structured Data Delivery:</h3>
+          </div>
+          <p class="step-description">CSV, JSON, Parquet, SQL, API, or custom.</p>
+        </div>
+
+        <div class="workflow-divider"></div>
+
+        <div class="workflow-step">
+          <div class="step-number-title">
+            <span class="step-number">06</span>
+            <h3 class="step-title">Iterations based on feedback:</h3>
+          </div>
+          <p class="step-description">Continuous improvement through close collaboration with the client.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="use-cases-section">
+    <h2 class="section-title">Use Cases</h2>
+    <div class="use-cases-container">
+      <div class="use-cases-content">
+        <div class="use-cases-grid">
+          <div class="use-case-card">
+            <h3>AI & Computer Vision</h3>
+            <ul>
+              <li>AI Model Training Data (LLM Post-Training & RLHF)</li>
+              <li>Autonomous Mobility & LiDAR</li>
+              <li>Healthcare & Medical Imaging</li>
+            </ul>
+          </div>
+          <div class="use-case-card">
+            <h3>Language & Business Data</h3>
+            <ul>
+              <li>Document AI & OCR (contracts, forms, invoices)</li>
+              <li>Customer Support & Chatbot Training</li>
+              <li>Market Research & Lead Datasets</li>
+            </ul>
+          </div>
+        </div>
+        <a href="contact.html" class="cta-button">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Section -->
+  <section class="why-choose-section">
+    <h2 class="section-title">Why Choose DataGlif</h2>
+    <div class="cards-grid">
+      <div class="feature-card">
+        <h3>Human-in-the-Loop Expertise</h3>
+        <p>Real experts supported by AI workflows to ensure accurate, reliable annotations.</p>
+      </div>
+      <div class="feature-card primary">
+        <h3>Multi-Stage Quality Assurance</h3>
+        <p>Built-in QA, validation, transparent feedback, and consistent annotation standards.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Flexible & Workflow Ready</h3>
+        <p>Scale from pilot projects to millions of annotations, delivered in your preferred format.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="final-cta-section">
+    <div class="final-cta-content">
+      <h2 class="section-title">Ready to build better data?</h2>
+      <div class="final-cta-description">
+        <p>Request a custom dataset scoping within</p>
+        <p class="highlight">48 hours</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="contact.html" class="cta-btn-primary">
+          Request a Dataset
+          <svg width="10" height="19" viewBox="0 0 10 19" fill="none">
+            <path d="M1 1L9 9.5L1 18" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </a>
+        <a href="contact.html" class="cta-btn-secondary">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>DataGlif</h2>
+        <p>Transforming raw data into production-ready intelligence.</p>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home <span>→</span></a></li>
+            <li><a href="services.html">Services <span>→</span></a></li>
+            <li><a href="approach.html">Our Approach <span>→</span></a></li>
+            <li><a href="contact.html">Contact <span>→</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="#cookies">Cookies policy <span>→</span></a></li>
+            <li><a href="#terms">Terms & Conditions <span>→</span></a></li>
+            <li><a href="#privacy">Privacy policy <span>→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DataGlif. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#twitter">
+          <img src="https://www.figma.com/api/mcp/asset/996ba16d-e87d-426f-b38e-193823183c40.svg" alt="Twitter">
+        </a>
+        <a href="#linkedin">
+          <img src="https://www.figma.com/api/mcp/asset/65676ed9-8ce0-429a-b8fe-a256225bbf88.svg" alt="LinkedIn">
+        </a>
+        <a href="#email">
+          <img src="https://www.figma.com/api/mcp/asset/a4713f70-cbfe-44f3-9694-be361f296329.svg" alt="Email">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

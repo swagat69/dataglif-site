@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DataGlif Services - 6 Panel Graphics</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f6f5f3;
+      color: #0a0a0b;
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Services Section */
+    .services-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 6rem 1.5rem 5.5rem;
+      background: #f6f5f3;
+    }
+
+    .services-container {
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .services-header {
+      max-width: 100%;
+      text-align: center;
+      margin: 0 auto 3rem;
+    }
+
+    .services-eyebrow {
+      display: block;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: #6b6b70;
+    }
+
+    .services-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #0a0a0b;
+      margin-top: 0.85rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .service-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-panel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 12px;
+      will-change: transform;
+    }
+
+    .panel-texture-coarse {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.32;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-texture-fine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.2;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 12px;
+      box-shadow: inset 0 0 60px 12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .panel-card-container {
+      position: relative;
+      z-index: 10;
+    }
+
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      height: 288px;
+      width: 244px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .service-card.light {
+      background: #ffffff;
+      box-shadow: 0 18px 40px -12px rgba(0,0,0,0.35);
+      outline: 1px solid rgba(10,10,11,0.06);
+    }
+
+    .service-card.dark {
+      background: #141416;
+      box-shadow: 0 18px 40px -12px rgba(0,0,0,0.55);
+      outline: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-eyebrow {
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .card-eyebrow.light { color: #9a9a9f; }
+    .card-eyebrow.dark { color: #7a7a82; }
+
+    .card-pill {
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 3px 8px;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #059669;
+    }
+
+    .card-pill.cyan {
+      background: rgba(56, 189, 248, 0.15);
+      color: #0284c7;
+    }
+
+    .card-pill.violet {
+      background: rgba(139, 92, 246, 0.15);
+      color: #7c3aed;
+    }
+
+    .card-pill.amber {
+      background: rgba(251, 191, 36, 0.15);
+      color: #d97706;
+    }
+
+    .card-metric {
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .card-metric-value {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #0a0a0b;
+    }
+
+    .card-metric-unit {
+      font-size: 18px;
+      font-weight: 600;
+      color: #9a9a9f;
+      margin-left: 0.25rem;
+    }
+
+    .service-column h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0a0a0b;
+      margin-top: 1.5rem;
+    }
+
+    .service-column p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #6b6b70;
+      margin-top: 0.5rem;
+      max-width: 42ch;
+    }
+
+    /* Animation classes */
+    .bar-fill,
+    .segment-bar,
+    .waveform-bar,
+    .point-cloud-dot,
+    .audio-wave {
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bbox-indicator,
+    .text-highlight,
+    .depth-layer {
+      transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (max-width: 768px) {
+      .services-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .services-grid {
+        margin-top: 2.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <div class="services-container">
+      <!-- Header -->
+      <div class="services-header">
+        <span class="services-eyebrow">Our Services</span>
+        <h2 class="services-title">
+          End-to-end data solutions for AI.
+        </h2>
+      </div>
+
+      <!-- Grid -->
+      <div class="services-grid">
+
+        <!-- 1. Image & Video Annotation -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 18% 12%, #d66b9a 0%, #a8456e 38%, #6b2844 72%, #2d1220 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card dark">
+                <div class="card-header">
+                  <span class="card-eyebrow dark">Frame 2847 / 8640</span>
+                  <span class="card-pill">tracking</span>
+                </div>
+                <div style="position: relative; margin-top: 0.75rem; flex: 1; overflow: hidden; border-radius: 8px; background: radial-gradient(130% 130% at 30% 20%, #2a1a2a 0%, #14101c 100%);">
+                  <!-- Timeline scrubber at top -->
+                  <div style="position: absolute; top: 8px; left: 8px; right: 8px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 9999px; overflow: hidden;">
+                    <div class="timeline-progress" style="height: 100%; width: 0%; background: linear-gradient(90deg, #d66b9a 0%, #b85782 100%); border-radius: 9999px; opacity: 0;" data-width="33"></div>
+                  </div>
+
+                  <!-- Bounding box 1 with keypoints -->
+                  <div class="bbox-indicator" style="position: absolute; left: 12%; top: 24%; width: 42%; height: 44%; opacity: 0; transform: scale(0.8);">
+                    <div style="position: absolute; inset: 0; border-radius: 3px; border: 2px solid rgba(214, 107, 154, 0.85); background: rgba(214, 107, 154, 0.06);"></div>
+                    <span style="position: absolute; top: -15px; left: 0; border-radius: 3px; background: #d66b9a; padding: 1px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; font-weight: 600; color: #ffffff;">person #1 · 0.94</span>
+                    <!-- Keypoints -->
+                    <div style="position: absolute; left: 45%; top: 18%; width: 3px; height: 3px; border-radius: 50%; background: #f08fc0; border: 1px solid #fff;"></div>
+                    <div style="position: absolute; left: 38%; top: 32%; width: 3px; height: 3px; border-radius: 50%; background: #f08fc0; border: 1px solid #fff;"></div>
+                    <div style="position: absolute; left: 52%; top: 32%; width: 3px; height: 3px; border-radius: 50%; background: #f08fc0; border: 1px solid #fff;"></div>
+                    <!-- Track ID -->
+                    <span style="position: absolute; bottom: -12px; right: 0; font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.5);">ID:2847</span>
+                  </div>
+
+                  <!-- Bounding box 2 -->
+                  <div class="bbox-indicator" style="position: absolute; left: 60%; top: 52%; width: 26%; height: 28%; opacity: 0; transform: scale(0.8);">
+                    <div style="position: absolute; inset: 0; border-radius: 3px; border: 2px solid rgba(159, 112, 200, 0.8); background: rgba(159, 112, 200, 0.06);"></div>
+                    <span style="position: absolute; top: -15px; left: 0; border-radius: 3px; background: #9f70c8; padding: 1px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; font-weight: 600; color: #ffffff;">vehicle · 0.88</span>
+                    <span style="position: absolute; bottom: -12px; right: 0; font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.5);">ID:1523</span>
+                  </div>
+
+                  <!-- Small polygon outline (background object) -->
+                  <div class="bbox-indicator" style="position: absolute; left: 8%; top: 68%; width: 18%; height: 22%; opacity: 0; transform: scale(0.8);">
+                    <div style="position: absolute; inset: 0; border-radius: 3px; border: 1.5px dashed rgba(120, 140, 160, 0.65); background: rgba(120, 140, 160, 0.04);"></div>
+                    <span style="position: absolute; top: -13px; left: 0; font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.45);">sign</span>
+                  </div>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">bbox</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">tracking</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">keypoint</span>
+                  </div>
+                  <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.4);">3 obj</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Image & Video Annotation</h3>
+          <p>Bounding boxes, instance segmentation, polygon masks, keypoint annotation, and multi-frame object tracking for vision models.</p>
+        </div>
+
+        <!-- 2. 3D, Spatial & Multiview -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 85% 15%, #6b7fbd 0%, #4a5f95 38%, #2d3d62 72%, #15202f 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card dark">
+                <div class="card-header">
+                  <span class="card-eyebrow dark">outdoor_scene_14.pcd</span>
+                  <span class="card-pill cyan">labeled</span>
+                </div>
+                <div style="position: relative; margin-top: 0.75rem; flex: 1; overflow: hidden; border-radius: 8px; background: radial-gradient(140% 140% at 50% 40%, #1e293b 0%, #0f1419 100%);">
+                  <!-- Coordinate axes indicator -->
+                  <div style="position: absolute; left: 10px; top: 10px; opacity: 0.5;">
+                    <div style="position: relative; width: 24px; height: 24px;">
+                      <div style="position: absolute; left: 0; top: 12px; width: 18px; height: 1px; background: #6b95d8;"></div>
+                      <span style="position: absolute; right: -8px; top: 8px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: #6b95d8;">X</span>
+                      <div style="position: absolute; left: 12px; top: 0; width: 1px; height: 18px; background: #7ba5cd;"></div>
+                      <span style="position: absolute; left: 8px; top: -8px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: #7ba5cd;">Y</span>
+                    </div>
+                  </div>
+
+                  <!-- Point cloud visualization with density -->
+                  <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; perspective: 600px;">
+                    <div style="transform-style: preserve-3d; transform: rotateX(15deg) rotateY(-20deg);">
+                      <!-- Dense cluster 1 -->
+                      <div class="depth-layer" style="position: absolute; left: -20px; top: -15px; opacity: 0; transform: translateZ(25px) scale(0.85);">
+                        <div class="point-cloud-dot" style="position: absolute; left: 0; top: 0; width: 5px; height: 5px; border-radius: 50%; background: #6b95d8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 4px; top: 6px; width: 3px; height: 3px; border-radius: 50%; background: #5a84c0;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 8px; top: 2px; width: 4px; height: 4px; border-radius: 50%; background: #7ba5cd;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 14px; top: 8px; width: 3px; height: 3px; border-radius: 50%; background: #6b95d8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 18px; top: 4px; width: 4px; height: 4px; border-radius: 50%; background: #8aa5c8;"></div>
+                      </div>
+                      <!-- Mid layer - building structure -->
+                      <div class="depth-layer" style="position: absolute; left: 5px; top: 10px; opacity: 0; transform: translateZ(10px) scale(0.85);">
+                        <div class="point-cloud-dot" style="position: absolute; left: 8px; top: 2px; width: 6px; height: 6px; border-radius: 50%; background: #8aa5c8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: -5px; top: 12px; width: 4px; height: 4px; border-radius: 50%; background: #6b95d8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 3px; top: 8px; width: 3px; height: 3px; border-radius: 50%; background: #5a84c0;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 16px; top: 14px; width: 5px; height: 5px; border-radius: 50%; background: #7ba5cd;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 22px; top: 6px; width: 3px; height: 3px; border-radius: 50%; background: #5a84c0;"></div>
+                      </div>
+                      <!-- Ground plane -->
+                      <div class="depth-layer" style="position: absolute; left: -8px; top: 26px; opacity: 0; transform: translateZ(-8px) scale(0.85);">
+                        <div class="point-cloud-dot" style="position: absolute; left: 12px; top: 5px; width: 4px; height: 4px; border-radius: 50%; background: #7ba5cd;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 0; top: -2px; width: 3px; height: 3px; border-radius: 50%; background: #8aa5c8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 24px; top: 8px; width: 3px; height: 3px; border-radius: 50%; background: #6b95d8;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 6px; top: 10px; width: 4px; height: 4px; border-radius: 50%; background: #5a84c0;"></div>
+                        <div class="point-cloud-dot" style="position: absolute; left: 18px; top: 2px; width: 3px; height: 3px; border-radius: 50%; background: #7ba5cd;"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Point count overlay -->
+                  <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.5); padding: 3px 6px; border-radius: 4px;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.7);">2.4M pts</span>
+                  </div>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">3D bbox</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">depth</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">SLAM</span>
+                  </div>
+                  <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.4);">8 classes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>3D, Spatial & Multiview</h3>
+          <p>Point cloud labeling, depth map annotation, 3D bounding boxes, SLAM validation, and multi-view correspondence for spatial AI.</p>
+        </div>
+
+        <!-- 3. Text & Documents -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 8% 85%, #7aad8c 0%, #5a8569 40%, #3a5544 76%, #1c2a22 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card light">
+                <div class="card-header">
+                  <span class="card-eyebrow light">contract_8472.txt</span>
+                  <span class="card-pill">review complete</span>
+                </div>
+                <div style="margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+                  <!-- Text sample with NER highlights and confidence scores -->
+                  <div style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; line-height: 1.6; color: #3a3a40;">
+                    <span style="color: #6b6b70;">On </span>
+                    <span class="text-highlight" style="border-radius: 3px; background: rgba(229, 139, 90, 0.16); padding: 1px 4px; border-bottom: 2px solid #d9885a; opacity: 0; transform: translateY(-2px);">March 15, 2026</span>
+                    <span style="color: #6b6b70;">, the company </span>
+                    <span class="text-highlight" style="border-radius: 3px; background: rgba(85, 135, 190, 0.16); padding: 1px 4px; border-bottom: 2px solid #6a92c0; opacity: 0; transform: translateY(-2px);">Acme Corporation</span>
+                    <span style="color: #6b6b70;"> entered into a strategic partnership valued at </span>
+                    <span class="text-highlight" style="border-radius: 3px; background: rgba(159, 112, 200, 0.16); padding: 1px 4px; border-bottom: 2px solid #9f70c8; opacity: 0; transform: translateY(-2px);">$4.2 million</span>
+                    <span style="color: #6b6b70;"> with </span>
+                    <span class="text-highlight" style="border-radius: 3px; background: rgba(85, 135, 190, 0.16); padding: 1px 4px; border-bottom: 2px solid #6a92c0; opacity: 0; transform: translateY(-2px);">TechVentures Inc.</span>
+                    <span style="color: #6b6b70;"> in </span>
+                    <span class="text-highlight" style="border-radius: 3px; background: rgba(122, 173, 140, 0.16); padding: 1px 4px; border-bottom: 2px solid #6a9d7f; opacity: 0; transform: translateY(-2px);">San Francisco, CA</span>
+                    <span style="color: #6b6b70;">.</span>
+                  </div>
+
+                  <!-- Entity count summary -->
+                  <div style="margin-top: 4px; padding-top: 6px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; gap: 8px; flex-wrap: wrap;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">142 entities · 94.2% conf</span>
+                  </div>
+                </div>
+                <div style="margin-top: auto;">
+                  <div style="display: flex; height: 7px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                    <div class="segment-bar" style="background: #6a92c0; width: 0;" data-width="34"></div>
+                    <div class="segment-bar" style="background: #9f70c8; width: 0;" data-width="26"></div>
+                    <div class="segment-bar" style="background: #6a9d7f; width: 0;" data-width="24"></div>
+                    <div class="segment-bar" style="background: #d9885a; width: 0;" data-width="16"></div>
+                  </div>
+                  <div style="margin-top: 8px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;">
+                    <span style="display: flex; align-items: center; gap: 3px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #6a92c0;"></span>
+                      ORG · 48
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 3px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #9f70c8;"></span>
+                      MONEY · 37
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 3px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #6a9d7f;"></span>
+                      LOC · 34
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 3px; font-family: 'IBM Plex Sans', monospace; font-size: 7px; letter-spacing: 0.05em; color: #6b6b70;">
+                      <span style="height: 6px; width: 6px; border-radius: 2px; background: #d9885a;"></span>
+                      DATE · 23
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Text & Documents</h3>
+          <p>Named entity recognition, text classification, sentiment labeling, RLHF preference pairs, and document structure extraction.</p>
+        </div>
+
+        <!-- 4. Audio & Speech -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 92% 88%, #e5a84a 0%, #c88d35 38%, #8a5f24 72%, #3d2a12 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card dark">
+                <div class="card-header">
+                  <span class="card-eyebrow dark">podcast_ep_142.wav</span>
+                  <span class="card-pill amber">diarized</span>
+                </div>
+                <div style="position: relative; margin-top: 0.75rem; flex: 1; overflow: hidden; border-radius: 8px; background: radial-gradient(130% 130% at 70% 30%, #2a2419 0%, #14120f 100%); display: flex; flex-direction: column; padding: 0.75rem 0.65rem;">
+                  <!-- Waveform with speaker segments -->
+                  <div style="display: flex; align-items: flex-end; justify-content: center; gap: 2px; flex: 1;">
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="48"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="72"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="65"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #a8907a 0%, #8a7560 100%); border-radius: 9999px; opacity: 0;" data-height="42"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #a8907a 0%, #8a7560 100%); border-radius: 9999px; opacity: 0;" data-height="58"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #a8907a 0%, #8a7560 100%); border-radius: 9999px; opacity: 0;" data-height="68"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="85"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="92"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="78"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #a8907a 0%, #8a7560 100%); border-radius: 9999px; opacity: 0;" data-height="52"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #a8907a 0%, #8a7560 100%); border-radius: 9999px; opacity: 0;" data-height="48"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="82"></div>
+                    <div class="audio-wave waveform-bar" style="width: 2.5px; height: 0%; background: linear-gradient(180deg, #e5a84a 0%, #c88d35 100%); border-radius: 9999px; opacity: 0;" data-height="70"></div>
+                  </div>
+
+                  <!-- Speaker labels below waveform -->
+                  <div style="margin-top: 8px; display: flex; gap: 4px; align-items: center; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 3px;">
+                      <div style="width: 6px; height: 6px; border-radius: 2px; background: #e5a84a;"></div>
+                      <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.6);">SPK_1</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 3px;">
+                      <div style="width: 6px; height: 6px; border-radius: 2px; background: #a8907a;"></div>
+                      <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.6);">SPK_2</span>
+                    </div>
+                  </div>
+
+                  <!-- Audio stats -->
+                  <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.45);">24min 18s</span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: rgba(255,255,255,0.45);">98.4% WER</span>
+                  </div>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">ASR</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">diarize</span>
+                    <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">emotion</span>
+                  </div>
+                  <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.4);">2 spkr</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Audio & Speech</h3>
+          <p>Transcription, speaker diarization, emotion labeling, intent classification, and acoustic event annotation for speech models.</p>
+        </div>
+
+        <!-- 5. Custom Data Collection -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 15% 12%, #5ba5bd 0%, #3f8599 38%, #255361 72%, #122a33 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card light">
+                <div class="card-header">
+                  <span class="card-eyebrow light">Pipeline · Active</span>
+                  <span style="margin-bottom: 0.25rem; border-radius: 6px; background: rgba(16, 185, 129, 0.12); padding: 2px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 9px; font-weight: 500; color: #059669;">live</span>
+                </div>
+                <div class="card-metric">
+                  <span class="card-metric-value">842<span class="card-metric-unit">K</span></span>
+                  <div style="display: flex; flex-direction: column; gap: 2px; margin-left: 0.5rem;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: #059669;">+24% ↗</span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: #9a9a9f;">this week</span>
+                  </div>
+                </div>
+                <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>Web Scraping</span>
+                      <span>352K</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #6ab5c8; width: 0;" data-width="42"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>API Integration</span>
+                      <span>295K</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #5ba5bd; width: 0;" data-width="35"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Sans', monospace; font-size: 9px; letter-spacing: 0.05em; color: #6b6b70; margin-bottom: 4px;">
+                      <span>Synthetic Gen</span>
+                      <span>195K</span>
+                    </div>
+                    <div style="height: 6px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(0,0,0,0.06);">
+                      <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: #3f8599; width: 0;" data-width="23"></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-family: 'IBM Plex Sans', monospace; font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">AVG THROUGHPUT</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: #5ba5bd;">12.4K/hr</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Custom Data Collection</h3>
+          <p>Web scraping, API integration, synthetic data generation, crowdsourced capture, and custom acquisition pipelines at scale.</p>
+        </div>
+
+        <!-- 6. Data Operations & QA -->
+        <div class="service-column">
+          <div class="service-panel" style="background: radial-gradient(120% 120% at 88% 85%, #9d85c8 0%, #7d69a5 38%, #4e4270 72%, #252035 100%);">
+            <div class="panel-texture-coarse"></div>
+            <div class="panel-texture-fine"></div>
+            <div class="panel-vignette"></div>
+            <div class="panel-card-container">
+              <div class="service-card dark">
+                <div class="card-header">
+                  <span class="card-eyebrow dark">QA Report · v2.3.1</span>
+                  <span class="card-pill violet">approved</span>
+                </div>
+                <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: rgba(255,255,255,0.7);">Inter-annotator</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #b5a0d8;">94.2%</span>
+                  </div>
+                  <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                    <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #b5a0d8 0%, #9d85c8 100%); width: 0;" data-width="94"></div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: rgba(255,255,255,0.7);">Label Accuracy</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #c5b3e0;">96.8%</span>
+                  </div>
+                  <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                    <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #c5b3e0 0%, #b5a0d8 100%); width: 0;" data-width="97"></div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 10px; color: rgba(255,255,255,0.7);">Dataset Coverage</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #a58fc0;">99.1%</span>
+                  </div>
+                  <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                    <div class="bar-fill" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #a58fc0 0%, #8d7aad 100%); width: 0;" data-width="99"></div>
+                  </div>
+                </div>
+
+                <!-- Additional QA metrics -->
+                <div style="margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.5);">Samples reviewed</span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">14,782</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.5);">Edge cases flagged</span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">127</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.5);">Avg review time</span>
+                    <span style="font-family: 'IBM Plex Sans', monospace; font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">2.4s</span>
+                  </div>
+                </div>
+
+                <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">validate</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">version</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: 'IBM Plex Sans', monospace; font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">export</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Data Operations & QA</h3>
+          <p>Quality assurance, inter-annotator agreement, dataset versioning, delivery pipelines, and continuous validation workflows.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Helper function to get parent panel
+    const panelOf = (el) => el.closest('.service-panel') || el;
+
+    // Reveal panels on scroll
+    const servicePanels = gsap.utils.toArray('.service-panel');
+    const serviceStacked = () => window.matchMedia('(max-width: 1099px)').matches;
+
+    servicePanels.forEach((panel, index) => {
+      gsap.from(panel, {
+        opacity: 0,
+        y: 44,
+        duration: 0.75,
+        ease: 'power2.out',
+        delay: serviceStacked() ? 0 : (index % 3) * 0.08,
+        scrollTrigger: {
+          trigger: serviceStacked() ? panel : '.services-grid',
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+
+      // Parallax on card container
+      const cardContainer = panel.querySelector('.panel-card-container');
+      if (cardContainer) {
+        gsap.fromTo(cardContainer,
+          { y: 24 },
+          {
+            y: -24,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panel,
+              start: 'top 92%',
+              end: 'bottom 8%',
+              scrub: 0.5,
+              invalidateOnRefresh: true
+            }
+          }
+        );
+      }
+    });
+
+    // 1. Image & Video - Bounding boxes and timeline
+    const bboxIndicators = document.querySelectorAll('.bbox-indicator');
+    bboxIndicators.forEach((bbox, i) => {
+      gsap.to(bbox, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.65,
+        ease: 'power2.out',
+        delay: 0.3 + (i * 0.15),
+        scrollTrigger: {
+          trigger: panelOf(bbox),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // Timeline progress animation
+    const timelineProgress = document.querySelector('.timeline-progress');
+    if (timelineProgress) {
+      const targetWidth = timelineProgress.getAttribute('data-width');
+      gsap.to(timelineProgress, {
+        width: `${targetWidth}%`,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power2.out',
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: panelOf(timelineProgress),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    }
+
+    // 2. 3D - Point cloud layers
+    const depthLayers = document.querySelectorAll('.depth-layer');
+    depthLayers.forEach((layer, i) => {
+      gsap.to(layer, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.25 + (i * 0.18),
+        scrollTrigger: {
+          trigger: panelOf(layer),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // 3. Text - Entity highlights
+    const textHighlights = document.querySelectorAll('.text-highlight');
+    textHighlights.forEach((highlight, i) => {
+      gsap.to(highlight, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        delay: 0.35 + (i * 0.12),
+        scrollTrigger: {
+          trigger: panelOf(highlight),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // 4. Audio - Waveform bars
+    const waveformBars = document.querySelectorAll('.waveform-bar');
+    waveformBars.forEach((bar, i) => {
+      const targetHeight = bar.getAttribute('data-height');
+      gsap.to(bar, {
+        height: `${targetHeight}%`,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+        delay: 0.3 + (i * 0.05),
+        scrollTrigger: {
+          trigger: panelOf(bar),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // All bar fills (collection + QA)
+    const barFills = document.querySelectorAll('.bar-fill');
+    barFills.forEach((bar, i) => {
+      const targetWidth = bar.getAttribute('data-width');
+      gsap.to(bar, {
+        width: `${targetWidth}%`,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.28 + ((i % 3) * 0.08),
+        scrollTrigger: {
+          trigger: panelOf(bar),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // Segment bars
+    const segmentBars = document.querySelectorAll('.segment-bar');
+    segmentBars.forEach((bar, i) => {
+      const targetWidth = bar.getAttribute('data-width');
+      gsap.to(bar, {
+        width: `${targetWidth}%`,
+        duration: 0.7,
+        ease: 'power2.out',
+        delay: 0.55 + (i * 0.1),
+        scrollTrigger: {
+          trigger: panelOf(bar),
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // Refresh on load and resize
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    });
+  </script>
+
+</body>
+</html>

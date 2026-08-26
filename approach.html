@@ -157,7 +157,7 @@
 
     /* Hero Section */
     .hero-section {
-      padding: 10rem 3rem 6rem;
+      padding: 8rem 3rem 6rem;
       background: var(--surface-deep);
     }
 
@@ -175,9 +175,424 @@
       line-height: 1.15;
       letter-spacing: -0.03em;
       color: var(--white);
-      margin-bottom: 0;
+      margin-bottom: 1rem;
       max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-container p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 720px;
       margin: 0 auto;
+    }
+
+    /* Workflow Section */
+    .workflow-section {
+      background: #FFFFFF;
+      padding: 6rem 0;
+      overflow: hidden;
+    }
+
+    .workflow-container {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .workflow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4rem;
+      padding: 0 3rem;
+    }
+
+    .workflow-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #000000;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-nav {
+      width: 56px;
+      height: 56px;
+      border-radius: 50px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.5px;
+    }
+
+    .btn-prev {
+      background-color: #FFFFFF;
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-prev:hover {
+      background-color: #F5F5F5;
+    }
+
+    .btn-next {
+      background-color: var(--surface-deep);
+      color: #FFFFFF;
+    }
+
+    .btn-next:hover {
+      background-color: #1a1f2e;
+    }
+
+    .workflow-track {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0 3rem;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .workflow-card {
+      width: 320px;
+      background-color: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .workflow-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: #000000;
+    }
+
+    .workflow-card p {
+      font-family: 'DM Sans', sans-serif;
+      color: #808080;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .card-icon {
+      margin-top: auto;
+      align-self: flex-start;
+      width: 44px;
+      height: 44px;
+      background-color: #F5F5F7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+    }
+
+    .card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.5px;
+    }
+
+    .workflow-timeline {
+      position: relative;
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 50%;
+      left: 3rem;
+      right: 3rem;
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .timeline-indicators {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .indicator-pill {
+      width: 54px;
+      height: 36px;
+      background-color: #FFFFFF;
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .indicator-pill.active {
+      background-color: var(--surface-deep);
+      color: #FFFFFF;
+      border-color: var(--surface-deep);
+    }
+
+    /* Use Cases Section */
+    .use-cases-section {
+      padding: 6rem 3rem;
+      background: #FFFFFF;
+    }
+
+    .use-cases-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+      color: #000000;
+    }
+
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .use-case-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+
+    .use-case-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      color: #000000;
+    }
+
+    .use-case-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .use-case-card li {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #808080;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .use-case-card li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: var(--surface-deep);
+      color: #FFFFFF;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 300ms ease;
+    }
+
+    .cta-button:hover {
+      background: #1a1f2e;
+      transform: translateY(-2px);
+    }
+
+    /* Why Choose Section */
+    .why-choose-section {
+      padding: 6rem 3rem;
+      background: var(--surface-deep);
+    }
+
+    .why-choose-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .why-choose-section .section-heading {
+      color: #FFFFFF;
+    }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Final CTA Section */
+    .final-cta-section {
+      padding: 6rem 3rem;
+      background: #F5F5F7;
+      text-align: center;
+    }
+
+    .final-cta-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .final-cta-section .section-heading {
+      margin-bottom: 2rem;
+    }
+
+    .cta-description {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.5rem;
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-highlight {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: var(--surface-deep);
+      margin-bottom: 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: var(--surface-deep);
+      color: #FFFFFF;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 300ms ease;
+    }
+
+    .cta-btn-primary:hover {
+      background: #1a1f2e;
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #FFFFFF;
+      color: var(--surface-deep);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: all 300ms ease;
+    }
+
+    .cta-btn-secondary:hover {
+      background: #F5F5F5;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .use-cases-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+
+      .workflow-header {
+        flex-direction: column;
+        gap: 2rem;
+      }
     }
 
     /* Workflow Section */
@@ -630,313 +1045,252 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
-
-    <div class="navbar-nav">
-      <a href="index.html" class="nav-item">Home</a>
-      <a href="services.html" class="nav-item">Services</a>
-      <a href="approach.html" class="nav-item">Our Approach</a>
-      <a href="contact.html" class="nav-item">Contact</a>
-    </div>
-
-    <div class="navbar-actions">
-      <button class="cta-button" onclick="window.location.href='contact.html'">
-        <span class="cta-button-label">Book a Call</span>
-        <span class="cta-button-arrow">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </button>
-    </div>
-  </nav>
-
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-container">
-      <h1>From raw data to production intelligence — structured, transparent, and reliable.</h1>
+      <h1>Our Approach</h1>
+      <p>From raw data to production intelligence — structured, transparent, and reliable.</p>
     </div>
   </section>
 
   <!-- Workflow Section -->
   <section class="workflow-section">
     <div class="workflow-container">
-      <div class="workflow-intro">
-        <h2>End-to-End Pipeline</h2>
-        <p>Every project follows a structured workflow designed to deliver consistent quality at scale.</p>
+      <div class="workflow-header">
+        <h2 class="workflow-title">Workflow</h2>
+        <div class="nav-buttons">
+          <button class="btn-nav btn-prev" id="btnPrev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="btn-nav btn-next" id="btnNext" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <div class="workflow-stages">
+      <div id="trackWrapper" class="workflow-track-wrapper">
+        <div id="track" class="workflow-track">
+          <div class="workflow-card">
+            <h3>Defining dataset requirements</h3>
+            <p>Agreeing on the scope, schema, format, and quality standards.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
 
-        <div class="workflow-stage">
-          <div class="stage-content">
-            <div class="stage-number">Stage One</div>
-            <h3>Discovery & Requirements</h3>
-            <p>
-              We start by understanding your model architecture, target use cases, and existing data landscape.
-              Together we define annotation schemas, edge cases, and success metrics.
-            </p>
-            <div class="stage-details">
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 11l3 3L22 4"/>
-                  <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Annotation Guidelines</strong>
-                  <span>We draft schemas and labeling instructions with your team, then iterate based on real samples.</span>
-                </div>
-              </div>
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Timeline & Milestones</strong>
-                  <span>Fixed scope with delivery checkpoints. Pilot batch in 5 business days.</span>
-                </div>
-              </div>
+          <div class="workflow-card">
+            <h3>Data collection or acquisition</h3>
+            <p>Collecting new data or importing data sets provided by the client.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="workflow-card">
+            <h3>Annotate, Clean & Enrich</h3>
+            <p>Applying exactly the services your project requires.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="workflow-card">
+            <h3>Quality control</h3>
+            <p>Multi-stage quality control, spot checks, expert review, and decision-making.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="workflow-card">
+            <h3>Structured Data Delivery</h3>
+            <p>CSV, JSON, Parquet, SQL, API, or custom.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="workflow-card">
+            <h3>Iterations based on feedback</h3>
+            <p>Continuous improvement through close collaboration with the client.</p>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M1 4v6h6M23 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
           </div>
         </div>
-
-        <div class="workflow-stage">
-          <div class="stage-content">
-            <div class="stage-number">Stage Two</div>
-            <h3>Team Recruitment & Training</h3>
-            <p>
-              We assemble a team with the right domain expertise. For medical imaging, we recruit radiologists.
-              For legal documents, we bring in paralegals. Every annotator passes qualification tests before production work.
-            </p>
-            <div class="stage-details">
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Domain Specialists</strong>
-                  <span>We match annotators to your content. Medical, legal, geospatial, multilingual.</span>
-                </div>
-              </div>
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                  <path d="M22 4L12 14.01l-3-3"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Qualification Process</strong>
-                  <span>Gold-standard test sets with known-correct answers. Minimum pass rate: 92%.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="workflow-stage">
-          <div class="stage-content">
-            <div class="stage-number">Stage Three</div>
-            <h3>Annotation & Quality Control</h3>
-            <p>
-              Multi-pass workflows with automated validation and human review. Continuous monitoring of inter-annotator
-              agreement and feedback loops to catch drift early.
-            </p>
-            <div class="stage-details">
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Multi-Pass Review</strong>
-                  <span>First-pass annotation, automated checks, second-pass validation, final QA spot-check.</span>
-                </div>
-              </div>
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                  <path d="M7 10l5 5 5-5"/>
-                  <path d="M12 15V3"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Real-Time Dashboards</strong>
-                  <span>Track progress, agreement scores, and quality metrics as work proceeds.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="workflow-stage">
-          <div class="stage-content">
-            <div class="stage-number">Stage Four</div>
-            <h3>Delivery & Handoff</h3>
-            <p>
-              Final validation pass, format conversion to your pipeline spec, and delivery with comprehensive quality reports.
-              NDA on request. All annotator data handled under strict confidentiality agreements.
-            </p>
-            <div class="stage-details">
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                  <path d="M14 2v6h6"/>
-                  <path d="M12 18v-6"/>
-                  <path d="M9 15h6"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Format Flexibility</strong>
-                  <span>COCO, Pascal VOC, YOLO, custom JSON schemas. S3, GCS, or direct API.</span>
-                </div>
-              </div>
-              <div class="detail-item">
-                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0110 0v4"/>
-                </svg>
-                <div class="detail-text">
-                  <strong>Security & Compliance</strong>
-                  <span>SOC 2 Type II in progress. NDA standard. Data wiped post-delivery on request.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Quality Section -->
-  <section class="quality-section">
-    <div class="quality-container">
-      <div class="section-header">
-        <h2>Quality Standards</h2>
-        <p>We measure what matters and build feedback loops into every stage of the workflow.</p>
       </div>
 
-      <div class="quality-grid">
-        <div class="quality-card">
-          <h3>Inter-Annotator Agreement</h3>
-          <p>Target IAA > 0.85 for classification tasks, IoU > 0.90 for segmentation. Continuous monitoring with automatic flagging of disagreement clusters.</p>
-        </div>
-
-        <div class="quality-card">
-          <h3>Gold-Standard Validation</h3>
-          <p>Every batch includes 8-12% known-correct samples. Annotators who fall below accuracy threshold are automatically routed to retraining or removed from the project.</p>
-        </div>
-
-        <div class="quality-card">
-          <h3>Edge Case Coverage</h3>
-          <p>We actively source rare classes, adversarial examples, and boundary conditions to prevent model blind spots.</p>
-        </div>
-
-        <div class="quality-card">
-          <h3>Continuous Feedback</h3>
-          <p>Weekly guideline updates based on new edge cases. Model-in-the-loop pipelines to catch annotation drift early.</p>
+      <div class="workflow-timeline">
+        <div class="timeline-line"></div>
+        <div class="timeline-indicators">
+          <div class="indicator-pill active">01</div>
+          <div class="indicator-pill">02</div>
+          <div class="indicator-pill">03</div>
+          <div class="indicator-pill">04</div>
+          <div class="indicator-pill">05</div>
+          <div class="indicator-pill">06</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats-section">
-    <div class="stats-container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">97.2%</div>
-          <div class="stat-label">Average validation<br>pass rate</div>
+  <!-- Use Cases Section -->
+  <section class="use-cases-section">
+    <div class="use-cases-container">
+      <h2 class="section-heading">Use Cases</h2>
+      <div class="use-cases-grid">
+        <div class="use-case-card">
+          <h3>AI & Computer Vision</h3>
+          <ul>
+            <li>AI Model Training Data (LLM Post-Training & RLHF)</li>
+            <li>Autonomous Mobility & LiDAR</li>
+            <li>Healthcare & Medical Imaging</li>
+          </ul>
         </div>
-
-        <div class="stat-item">
-          <div class="stat-number">1.24M</div>
-          <div class="stat-label">Images & videos<br>annotated to date</div>
+        <div class="use-case-card">
+          <h3>Language & Business Data</h3>
+          <ul>
+            <li>Document AI & OCR (contracts, forms, invoices)</li>
+            <li>Customer Support & Chatbot Training</li>
+            <li>Market Research & Lead Datasets</li>
+          </ul>
         </div>
+      </div>
+      <a href="contact.html" class="cta-button">Book a Call</a>
+    </div>
+  </section>
 
-        <div class="stat-item">
-          <div class="stat-number">5 days</div>
-          <div class="stat-label">Pilot batch<br>turnaround</div>
+  <!-- Why Choose Section -->
+  <section class="why-choose-section">
+    <div class="why-choose-container">
+      <h2 class="section-heading">Why Choose DataGlif</h2>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <h3>Human-in-the-Loop Expertise</h3>
+          <p>Real experts supported by AI workflows to ensure accurate, reliable annotations.</p>
         </div>
-
-        <div class="stat-item">
-          <div class="stat-number">24h</div>
-          <div class="stat-label">Reply time for<br>new requests</div>
+        <div class="feature-card">
+          <h3>Enterprise-Grade Quality</h3>
+          <p>Built-in QA, validation, transparent feedback, and consistent annotation standards.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Flexible & Workflow Ready</h3>
+          <p>Scale from pilot projects to millions of annotations, delivered in your preferred format.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="cta-container">
-      <h2>Start with a Pilot Batch</h2>
-      <p>Send us sample data and annotation requirements. We'll deliver a pilot batch in 5 business days so you can evaluate quality firsthand.</p>
+  <!-- Final CTA Section -->
+  <section class="final-cta-section">
+    <div class="final-cta-container">
+      <h2 class="section-heading">Ready to Build Better Data?</h2>
+      <p class="cta-description">Request a custom dataset scoping within</p>
+      <p class="cta-highlight">48 hours</p>
       <div class="cta-buttons">
-        <a href="contact.html" class="btn-primary">Request Pilot Batch</a>
-        <a href="contact.html" class="btn-secondary">Book a Call</a>
+        <a href="contact.html" class="cta-btn-primary">
+          Request a Dataset
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="contact.html" class="cta-btn-secondary">Book a Call</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <div class="footer-brand-logo">DataGlif</div>
-          <p class="footer-brand-line">
-            Human-validated training data for AI and agentic systems. Collection,
-            annotation, and quality operations across image, video, 3D, text, and audio.
-          </p>
-        </div>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Lenis
+      const lenis = new Lenis({
+        lerp: 0.1,
+        smoothWheel: true
+      });
 
-        <div class="footer-nav-groups">
-          <div>
-            <div class="footer-group-title">Services</div>
-            <ul class="footer-links">
-              <li><a href="services.html">Image & Video</a></li>
-              <li><a href="services.html">3D, Spatial & Multiview</a></li>
-              <li><a href="services.html">Text & Documents</a></li>
-              <li><a href="services.html">Audio & Multimodal</a></li>
-              <li><a href="services.html">Data Operations & QA</a></li>
-            </ul>
-          </div>
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
 
-          <div>
-            <div class="footer-group-title">Company</div>
-            <ul class="footer-links">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="approach.html">Our Approach</a></li>
-              <li><a href="index.html#blog">Field Notes</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
+      // GSAP ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger);
 
-          <div>
-            <div class="footer-group-title">Get in Touch</div>
-            <ul class="footer-links">
-              <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
-              <li><span>San Francisco, CA</span></li>
-              <li><span>Replies within 24 hours</span></li>
-              <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      const track = document.getElementById('track');
+      const cards = document.querySelectorAll('.workflow-card');
+      const pills = document.querySelectorAll('.indicator-pill');
 
-      <div class="footer-bottom">
-        <span>&copy; 2026 DataGlif. All rights reserved.</span>
-        <div class="footer-legal">
-          <a href="#privacy">Privacy</a>
-          <a href="#terms">Terms</a>
-          <a href="#security">Data Security</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+      // Horizontal scroll animation
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth + 96),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.workflow-section',
+          start: 'top top',
+          end: () => `+=${track.scrollWidth}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1
+        }
+      });
+
+      // Update active pill on scroll
+      ScrollTrigger.create({
+        trigger: '.workflow-section',
+        start: 'top top',
+        end: () => `+=${track.scrollWidth}`,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const index = Math.min(Math.floor(progress * cards.length), cards.length - 1);
+
+          pills.forEach(pill => pill.classList.remove('active'));
+          if (pills[index]) {
+            pills[index].classList.add('active');
+          }
+        }
+      });
+
+      // Navigation buttons
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+
+      const scrollByCard = () => {
+        const cardWidth = cards[0].offsetWidth;
+        const gap = 24;
+        return cardWidth + gap;
+      };
+
+      btnNext.addEventListener('click', () => {
+        lenis.scrollTo(window.scrollY + scrollByCard(), { lock: false });
+      });
+
+      btnPrev.addEventListener('click', () => {
+        lenis.scrollTo(window.scrollY - scrollByCard(), { lock: false });
+      });
+    });
+  </script>
 
 </body>
 </html>

@@ -177,7 +177,7 @@
       transform: rotate(45deg);
     }
 
-    /* Video Hero Styles */
+    /* Video Hero Styles v2 - Updated border-radius */
     .hero-container {
       height: 200vh;
       position: relative;
@@ -206,7 +206,7 @@
       gap: 2rem;
       padding: 0;
       border: none;
-      border-radius: 24px;
+      border-radius: 32px;
       overflow: visible;
       background: #FFFFFF;
     }
@@ -215,12 +215,13 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 24px;
+      border-radius: 32px;
       overflow: hidden;
       background: transparent;
       will-change: transform, opacity;
       border: none;
       transition: border-color 400ms ease, border-radius 400ms ease;
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
     }
 
     .video-card.separated {
