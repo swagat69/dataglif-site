@@ -8,7 +8,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -18,6 +19,29 @@
       --accent-cyan: #38BDF8;
       --white: #ffffff;
       --gray-300: #d1d5db;
+
+      /* DataGlif colors */
+      --bg: #f0ede8;
+      --bg-2: #e8e4de;
+      --surface: #ffffff;
+      --surface-2: #f4f1ec;
+      --ink: #111210;
+      --ink-2: #3a3a38;
+      --ink-dim: #6b6b68;
+      --ink-faint: #aea9a2;
+      --line: #dedad4;
+      --line-2: #c5c0b8;
+      --blue: #2563eb;
+      --blue-soft: rgba(37,99,235,0.08);
+      --font-d: 'Bricolage Grotesque', sans-serif;
+      --font-b: 'Satoshi', system-ui, -apple-system, sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
+
+      /* Network Map colors */
+      --ring-color: #dbe4e4;
+      --line-base: #e0e6e6;
+      --line-glow: #00a699;
+      --shadow-color: rgba(0, 0, 0, 0.15);
     }
 
     * {
@@ -157,35 +181,705 @@
 
     /* Hero Section */
     .hero-section {
-      min-height: 100vh;
+      min-height: 500px;
       display: flex;
-      align-items: center;
-      padding: 8rem 3rem 4rem;
+      align-items: flex-end;
+      padding: 5rem 3.125rem;
       background: var(--surface-deep);
     }
 
     .hero-container {
-      max-width: 1400px;
-      margin: 0 auto;
+      max-width: 660px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6.25rem;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
     }
 
     .hero-container h1 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(3rem, 9vw, 6.5rem);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.375rem);
+      font-weight: 500;
+      line-height: 0.82;
+      letter-spacing: 0;
       color: var(--white);
-      margin-bottom: 2rem;
+      text-transform: uppercase;
+      margin: 0;
     }
 
     .hero-container p {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      font-weight: 400;
+      line-height: normal;
+      color: var(--white);
+      margin: 0;
+      max-width: 468px;
+    }
+
+    .hero-cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.3125rem 0.3125rem 0.3125rem 1.25rem;
+      background: var(--white);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 300ms ease;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .hero-cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-cta-text {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #0F172A;
+      white-space: nowrap;
+    }
+
+    .hero-cta-icon {
+      width: 50.97px;
+      height: 50.97px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-cta-icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Intro Section */
+    .intro-section {
+      padding: 4rem 3rem 2rem;
+      background: #FFFFFF;
+      text-align: center;
+    }
+
+    .intro-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .intro-container h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 600;
+      color: #000000;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .intro-container p {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1.125rem, 2vw, 1.25rem);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      font-weight: 400;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 680px;
+      color: rgba(0, 0, 0, 0.65);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Interactive Services Map */
+    .scroll-wrapper {
+      height: 700vh;
+      position: relative;
+    }
+
+    .sticky-layout {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr minmax(550px, 750px) 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 4rem;
+      overflow: hidden;
+      z-index: 1;
+      background: var(--bg);
+    }
+
+    .left-col {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .text-panel {
+      position: absolute;
+      width: 100%;
+      max-width: 480px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .text-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .service-heading {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .service-description {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink-2);
+      margin-bottom: 2rem;
+    }
+
+    .service-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--blue-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--blue);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .feature-text h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .center-col {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .network-map {
+      position: relative;
+      width: 750px;
+      height: 750px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .connectors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .base-line {
+      stroke: var(--line-base);
+      stroke-width: 2;
+    }
+
+    .glow-line {
+      stroke: var(--line-glow);
+      stroke-width: 3;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px dashed var(--ring-color);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .ring-1 {
+      width: 300px;
+      height: 300px;
+    }
+
+    .ring-2 {
+      width: 550px;
+      height: 550px;
+    }
+
+    .center-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .center-node::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: var(--bg);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .center-image {
+      width: 120%;
+      height: 120%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 3;
+    }
+
+    .node {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px var(--shadow-color);
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      z-index: 10;
+      opacity: 0.3;
+      transition: opacity 0.6s ease, box-shadow 0.6s ease, filter 0.3s ease;
+      cursor: pointer;
+    }
+
+    .node:hover {
+      filter: brightness(1.08) contrast(1.02);
+    }
+
+    .node span {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 20px;
+      z-index: 1;
+    }
+
+    .node svg {
+      position: relative;
+      z-index: 10;
+    }
+
+    .node-1 {
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-2 {
+      top: 32.5%;
+      left: 82%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-3 {
+      top: 67.5%;
+      left: 82%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-4 {
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-5 {
+      top: 67.5%;
+      left: 18%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-6 {
+      top: 32.5%;
+      left: 18%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node.active {
+      opacity: 1;
+      box-shadow: 0 8px 24px var(--shadow-color);
+    }
+
+    .node::before {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 16px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background-color: #2c2c2e;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      z-index: 20;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .node::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      border-width: 12px 12px 0 12px;
+      border-style: solid;
+      border-color: #2c2c2e transparent transparent transparent;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
+    }
+
+    .node:hover::before,
+    .node:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .right-col {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .graphic-wrapper {
+      position: absolute;
+      width: 100%;
+      max-width: 480px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .graphic-wrapper.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .service-panel-container {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .service-panel-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+    }
+
+    .panel-texture-coarse {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.32;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-texture-fine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.2;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 16px;
+      box-shadow: inset 0 0 60px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .service-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      height: 320px;
+      width: 280px;
+      border-radius: 14px;
+      padding: 1.5rem;
+      z-index: 10;
+    }
+
+    .service-card.light {
+      background: #ffffff;
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.38);
+      outline: 1px solid rgba(10, 10, 11, 0.06);
+    }
+
+    .service-card.dark {
+      background: #141416;
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.58);
+      outline: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-eyebrow {
+      font-family: var(--font-m);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .card-eyebrow.light {
+      color: #9a9a9f;
+    }
+
+    .card-eyebrow.dark {
+      color: #7a7a82;
+    }
+
+    .card-pill {
+      border-radius: 9999px;
+      padding: 3px 8px;
+      font-family: var(--font-m);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    .card-pill.cyan {
+      background: rgba(91, 165, 189, 0.15);
+      color: #3f8599;
+    }
+
+    .card-pill.violet {
+      background: rgba(157, 133, 200, 0.15);
+      color: #7d69a5;
+    }
+
+    .card-pill.amber {
+      background: rgba(229, 168, 74, 0.15);
+      color: #c88d35;
+    }
+
+    .card-pill.rose {
+      background: rgba(225, 29, 72, 0.15);
+      color: #be1d48;
+    }
+
+    @media (max-width: 1400px) {
+      .sticky-layout {
+        grid-template-columns: 1fr 500px 1fr;
+        padding: 0 2rem;
+        gap: 1rem;
+      }
+
+      .network-map {
+        width: 500px;
+        height: 500px;
+      }
+
+      .ring-1 {
+        width: 200px;
+        height: 200px;
+      }
+
+      .ring-2 {
+        width: 380px;
+        height: 380px;
+      }
+
+      .service-heading {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .sticky-layout {
+        grid-template-columns: 1fr 450px 1fr;
+        padding: 0 1.5rem;
+        gap: 1rem;
+      }
+
+      .network-map {
+        width: 450px;
+        height: 450px;
+      }
+
+      .ring-1 {
+        width: 180px;
+        height: 180px;
+      }
+
+      .ring-2 {
+        width: 340px;
+        height: 340px;
+      }
+
+      .text-panel {
+        max-width: 400px;
+      }
+
+      .graphic-wrapper {
+        max-width: 400px;
+      }
+
+      .service-heading {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .sticky-layout {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        position: relative;
+        height: auto;
+        padding: 2rem 1rem;
+      }
+
+      .scroll-wrapper {
+        height: auto;
+      }
+
+      .left-col,
+      .right-col {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 0;
+      }
+
+      .text-panel,
+      .graphic-wrapper {
+        position: relative;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        margin-bottom: 2rem;
+      }
+
+      .center-col {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sticky-layout {
+        padding: 1.5rem 1rem;
+      }
+
+      .left-col,
+      .right-col {
+        padding: 1.5rem 0;
+      }
+
+      .service-heading {
+        font-size: 1.75rem;
+      }
+
+      .service-description {
+        font-size: 15px;
+      }
+
+      .service-card {
+        width: 100%;
+        height: auto;
+        min-height: 280px;
+      }
+
+      .service-panel-container {
+        max-width: 100%;
+      }
     }
 
     /* Services Grid Section */
@@ -608,169 +1302,634 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-container">
-      <h1>Data Services<br>Built for AI</h1>
-      <p>
-        From image annotation to multimodal datasets, we handle the full spectrum of data preparation,
-        so your team can focus on model development, not labeling operations.
-      </p>
+      <div class="hero-content">
+        <h1>Our Services</h1>
+        <p>Comprehensive data solutions for AI and enterprise</p>
+      </div>
+      <a href="contact.html" class="hero-cta-button">
+        <span class="hero-cta-text">Request a Dataset</span>
+        <span class="hero-cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </span>
+      </a>
     </div>
   </section>
 
-  <!-- Services Grid -->
-  <section class="services-section">
-    <div class="services-container">
-      <div class="services-grid">
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <path d="M21 15l-5-5L5 21"/>
-            </svg>
-          </div>
-          <h3>Image & Video</h3>
-          <p>Computer vision datasets with pixel-perfect annotation quality.</p>
-          <ul class="service-features">
-            <li>Bounding boxes, polygons, keypoints</li>
-            <li>Semantic & instance segmentation</li>
-            <li>Video frame annotation</li>
-            <li>OCR & document scanning</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5"/>
-              <path d="M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          <h3>3D, Spatial & Multiview</h3>
-          <p>Annotation for robotics, AR/VR, and spatial intelligence models.</p>
-          <ul class="service-features">
-            <li>3D bounding boxes & cuboids</li>
-            <li>Point cloud annotation</li>
-            <li>LiDAR & sensor fusion</li>
-            <li>Multi-camera scene labeling</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 7h16M4 12h16M4 17h10"/>
-            </svg>
-          </div>
-          <h3>Text & Documents</h3>
-          <p>NLP datasets with linguistic precision and domain expertise.</p>
-          <ul class="service-features">
-            <li>Named entity recognition (NER)</li>
-            <li>Sentiment & intent classification</li>
-            <li>Translation & transcription</li>
-            <li>Document layout analysis</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 18V5l12-2v13"/>
-              <circle cx="6" cy="18" r="3"/>
-              <circle cx="18" cy="16" r="3"/>
-            </svg>
-          </div>
-          <h3>Audio & Multimodal</h3>
-          <p>Speech, sound, and cross-modal dataset preparation.</p>
-          <ul class="service-features">
-            <li>Audio transcription & timestamping</li>
-            <li>Speaker diarization</li>
-            <li>Sound event detection</li>
-            <li>Audio-visual alignment</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-              <path d="M14 2v6h6"/>
-              <path d="M12 18v-6"/>
-              <path d="M9 15h6"/>
-            </svg>
-          </div>
-          <h3>Data Operations & QA</h3>
-          <p>End-to-end pipeline management and quality assurance.</p>
-          <ul class="service-features">
-            <li>Multi-pass validation workflows</li>
-            <li>Inter-annotator agreement tracking</li>
-            <li>Automated quality checks</li>
-            <li>Pipeline monitoring & reporting</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-              <path d="M7.5 4.21l4.5 2.6 4.5-2.6"/>
-              <path d="M7.5 19.79V14.6L3 12"/>
-              <path d="M21 12l-4.5 2.6v5.19"/>
-              <path d="M3.27 6.96L12 12.01l8.73-5.05"/>
-              <path d="M12 22.08V12"/>
-            </svg>
-          </div>
-          <h3>Custom Pipelines</h3>
-          <p>Bespoke workflows for unique data requirements.</p>
-          <ul class="service-features">
-            <li>Domain-specific ontologies</li>
-            <li>RLHF & preference data</li>
-            <li>Synthetic data generation</li>
-            <li>Active learning integration</li>
-          </ul>
-        </div>
-
-      </div>
+  <!-- Intro Section -->
+  <section class="intro-section">
+    <div class="intro-container">
+      <h2>Choose the data services you need. Already have data?</h2>
+      <p>Bring your own dataset and we'll clean, enrich, annotate, QA, or review it.</p>
     </div>
   </section>
 
-  <!-- Process Section -->
-  <section class="process-section">
-    <div class="process-container">
-      <div class="section-header">
-        <h2>How We Work</h2>
-        <p>From initial scoping to final delivery, we handle every stage of the data preparation pipeline.</p>
+<div class="scroll-wrapper">
+  <div class="sticky-layout">
+    
+    <!-- ==================== LEFT COLUMN: TEXT CONTENT ==================== -->
+    <div class="left-col">
+      <!-- 01 Annotation Text -->
+      <div class="text-panel" id="text-0">
+        <h2 class="service-heading">Data Annotation</h2>
+        <p class="service-description">Expert labeling for NLP, vision, video, and multimodal models using your guidelines or creating them from scratch.</p>
+        <div class="service-features" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div class="feature-text"><h3>NER</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div class="feature-text"><h3>Bounding boxes</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0-5-3-8-9-8s-9 3-9 8M3 10h18M12 2v8"/></svg></div><div class="feature-text"><h3>Polygons</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><div class="feature-text"><h3>Sentiment</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div><div class="feature-text"><h3>RLHF</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="feature-text"><h3>Segmentation</h3></div></div>
+        </div>
       </div>
 
-      <div class="process-steps">
-        <div class="process-step">
-          <div class="step-number">Discover</div>
-          <h3>Requirements & Scoping</h3>
-          <p>We learn your model requirements, review sample data, and define annotation guidelines with your team.</p>
+      <!-- 02 Collection Text -->
+      <div class="text-panel" id="text-1">
+        <h2 class="service-heading">Data Collection</h2>
+        <p class="service-description">Targeted sourcing from public, licensed, and API sources. Custom surveys and data harvesting.</p>
+        <div class="service-features">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="feature-text"><h3>Web extraction</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feature-text"><h3>Surveys</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div><div class="feature-text"><h3>Schema mapping</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div class="feature-text"><h3>API harvesting</h3></div></div>
         </div>
+      </div>
 
-        <div class="process-step">
-          <div class="step-number">Build</div>
-          <h3>Team Assembly</h3>
-          <p>We recruit domain experts, run qualification tests, and train annotators on your specific guidelines.</p>
+      <!-- 03 Cleaning Text -->
+      <div class="text-panel" id="text-2">
+        <h2 class="service-heading">Data Cleaning</h2>
+        <p class="service-description">Remove noise, fix inconsistencies, deduplicate, and normalize your existing datasets.</p>
+        <div class="service-features">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="feature-text"><h3>Deduplication</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="feature-text"><h3>Validation</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feature-text"><h3>Missing value resolution</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div><div class="feature-text"><h3>Normalization</h3></div></div>
         </div>
+      </div>
 
-        <div class="process-step">
-          <div class="step-number">Execute</div>
-          <h3>Annotation & QA</h3>
-          <p>Multi-pass workflows with automated checks, human review, and continuous feedback loops.</p>
+      <!-- 04 Enrichment Text -->
+      <div class="text-panel" id="text-3">
+        <h2 class="service-heading">Data Enrichment</h2>
+        <p class="service-description">Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.</p>
+        <div class="service-features">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div><div class="feature-text"><h3>Metadata Enrichment</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 3a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="feature-text"><h3>Categorization</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><div class="feature-text"><h3>Taxonomy Mapping</h3></div></div>
         </div>
+      </div>
 
-        <div class="process-step">
-          <div class="step-number">Deliver</div>
-          <h3>Validation & Handoff</h3>
-          <p>Final validation pass, format conversion, and delivery with comprehensive quality reports.</p>
+      <!-- 05 QA Text -->
+      <div class="text-panel" id="text-4">
+        <h2 class="service-heading">Dataset QA</h2>
+        <p class="service-description">Rigorous quality assurance, sampling, inter-annotator agreement, and adjudication.</p>
+        <div class="service-features">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10zM2 12h20"/></svg></div><div class="feature-text"><h3>Accuracy Audit</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feature-text"><h3>Consistency Checks</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="feature-text"><h3>Gold Set Creation</h3></div></div>
+        </div>
+      </div>
+
+      <!-- 06 Review Text -->
+      <div class="text-panel" id="text-5">
+        <h2 class="service-heading">Human Review</h2>
+        <p class="service-description">Deep human-in-the-loop verification for edge cases, subjective labels, and high-stakes decisions.</p>
+        <div class="service-features">
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="feature-text"><h3>Edge Cases</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="feature-text"><h3>Escalation</h3></div></div>
+          <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="feature-text"><h3>Nuance Validation</h3></div></div>
         </div>
       </div>
     </div>
-  </section>
 
+
+    <!-- ==================== CENTER COLUMN: RADIAL NETWORK MAP ==================== -->
+    <div class="center-col">
+      <div class="network-map">
+        <svg class="connectors">
+          <g class="desktop-lines">
+            <!-- Lines adjusted to stop at node edges, accounting for 80px node size -->
+            <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="base-line" />
+            <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="glow-line" id="line-0" />
+
+            <line x1="50%" y1="50%" x2="77%" y2="36%" class="base-line" />
+            <line x1="50%" y1="50%" x2="77%" y2="36%" class="glow-line" id="line-1" />
+
+            <line x1="50%" y1="50%" x2="77%" y2="64%" class="base-line" />
+            <line x1="50%" y1="50%" x2="77%" y2="64%" class="glow-line" id="line-2" />
+
+            <line x1="50%" y1="50%" x2="50%" y2="79.7%" class="base-line" />
+            <line x1="50%" y1="50%" x2="50%" y2="79.7%" class="glow-line" id="line-3" />
+
+            <line x1="50%" y1="50%" x2="23%" y2="64%" class="base-line" />
+            <line x1="50%" y1="50%" x2="23%" y2="64%" class="glow-line" id="line-4" />
+
+            <line x1="50%" y1="50%" x2="23%" y2="36%" class="base-line" />
+            <line x1="50%" y1="50%" x2="23%" y2="36%" class="glow-line" id="line-5" />
+          </g>
+        </svg>
+
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+
+        <div class="center-node">
+          <img src="assets/network-images/center-logo-2.png" alt="Center Hub" class="center-image">
+        </div>
+
+        <div class="node node-1" id="node-0" data-label="Data Annotation" style="background-image: url('assets/network-images/Applying_gradient_to_image_2K_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        </div>
+        <div class="node node-2" id="node-1" data-label="Data Collection" style="background-image: url('assets/network-images/Adding_forest_green_yellow_gradient_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </div>
+        <div class="node node-3" id="node-2" data-label="Data Cleaning" style="background-image: url('assets/network-images/Applying_purple_and_violet_gradient_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+        </div>
+        <div class="node node-4" id="node-3" data-label="Data Enrichment" style="background-image: url('assets/network-images/Image_with_blue_teal_gradient_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="3" width="6" height="6" rx="1"></rect><rect x="2" y="9" width="6" height="6" rx="1"></rect><rect x="16" y="15" width="6" height="6" rx="1"></rect><path d="M8 12h8"></path><path d="M16 6h-2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+        </div>
+        <div class="node node-5" id="node-4" data-label="Dataset QA" style="background-image: url('assets/network-images/Image_with_red_black_gradient_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>
+        </div>
+        <div class="node node-6" id="node-5" data-label="Human Review" style="background-image: url('assets/network-images/Image_with_sunset_gradient_2K_202608241322.jpeg');">
+          <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== RIGHT COLUMN: GRAPHICS ==================== -->
+    <div class="right-col">
+      
+      <!-- 01 Annotation Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-0">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 85% 15%, #d66b9a 0%, #a8456e 38%, #6b2844 72%, #2d1220 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card dark">
+            <div class="card-header">
+              <span class="card-eyebrow dark">Multi-Modal Labeling</span>
+              <span class="card-pill">annotated</span>
+            </div>
+            <!-- Split view showing different annotation types -->
+            <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 6px;">
+              <!-- Vision: Bounding box -->
+              <div style="flex: 1; border-radius: 6px; background: radial-gradient(130% 130% at 30% 20%, #2a1a2a 0%, #14101c 100%); padding: 6px; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 4px; left: 4px; font-family: var(--font-m); font-size: 6px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em;">VISION</div>
+                <div style="position: absolute; left: 8px; top: 16px; width: 34px; height: 28px;">
+                  <div style="position: absolute; inset: 0; border-radius: 2px; border: 1.5px solid rgba(214, 107, 154, 0.85);"></div>
+                  <span style="position: absolute; top: -9px; left: 0; border-radius: 2px; background: #d66b9a; padding: 0px 3px; font-family: var(--font-m); font-size: 6px; font-weight: 600; color: #fff;">person</span>
+                </div>
+                <div style="position: absolute; right: 10px; top: 20px; width: 24px; height: 20px;">
+                  <div style="position: absolute; inset: 0; border-radius: 2px; border: 1.5px solid rgba(159, 112, 200, 0.75);"></div>
+                  <span style="position: absolute; top: -9px; left: 0; border-radius: 2px; background: #9f70c8; padding: 0px 3px; font-family: var(--font-m); font-size: 6px; font-weight: 600; color: #fff;">car</span>
+                </div>
+              </div>
+              <!-- NLP: Entity tags -->
+              <div style="flex: 1; border-radius: 6px; background: linear-gradient(135deg, #1a1a20 0%, #12121a 100%); padding: 6px; position: relative;">
+                <div style="position: absolute; top: 4px; left: 4px; font-family: var(--font-m); font-size: 6px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em;">NLP</div>
+                <div style="margin-top: 10px; font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: rgba(255,255,255,0.5);">
+                  <span style="border-bottom: 1.5px solid #6a92c0; color: rgba(255,255,255,0.7);">Apple Inc.</span>
+                  <span> announced a </span>
+                  <span style="border-bottom: 1.5px solid #9f70c8; color: rgba(255,255,255,0.7);">$2.4M</span>
+                  <span> deal in </span>
+                  <span style="border-bottom: 1.5px solid #6a9d7f; color: rgba(255,255,255,0.7);">NYC</span>
+                </div>
+              </div>
+              <!-- Segmentation preview -->
+              <div style="flex: 1; border-radius: 6px; background: radial-gradient(130% 130% at 70% 30%, #1a1624 0%, #0f0e1a 100%); padding: 6px; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 4px; left: 4px; font-family: var(--font-m); font-size: 6px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em;">SEGMENT</div>
+                <svg style="position: absolute; left: 10px; top: 14px; width: 50px; height: 32px;" viewBox="0 0 50 32">
+                  <path d="M 5 15 L 15 8 L 30 10 L 42 14 L 45 22 L 35 28 L 18 26 L 8 22 Z" fill="rgba(214, 107, 154, 0.15)" stroke="rgba(214, 107, 154, 0.7)" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">bbox</span>
+                <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">NER</span>
+                <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">segment</span>
+              </div>
+              <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.4);">+6 types</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 Collection Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-1">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 18% 12%, #5b8abd 0%, #3f6b99 38%, #254261 72%, #122033 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card light">
+            <div class="card-header">
+              <span class="card-eyebrow light">Collection Pipeline</span>
+              <span class="card-pill">active</span>
+            </div>
+            <!-- Data sources flowing in -->
+            <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 8px;">
+              <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #5b8abd 0%, #4a7aad 100%); display: flex; align-items: center; justify-content: center;">
+                  <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10zM2 12h20"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Web Scraping</div>
+                  <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">487K records/day</div>
+                </div>
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+              </div>
+              <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #6b95d8 0%, #5a84c0 100%); display: flex; align-items: center; justify-content: center;">
+                  <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">API Harvest</div>
+                  <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">294K records/day</div>
+                </div>
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+              </div>
+              <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #7ba5cd 0%, #6a92c0 100%); display: flex; align-items: center; justify-content: center;">
+                  <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Survey Data</div>
+                  <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">68K responses/day</div>
+                </div>
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+              </div>
+              <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #8aa5c8 0%, #7a95b8 100%); display: flex; align-items: center; justify-content: center;">
+                  <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Public Datasets</div>
+                  <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">142K records/day</div>
+                </div>
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+              </div>
+              <!-- Central collection indicator -->
+              <div style="margin-top: 4px; padding: 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">TOTAL INGESTED</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: #16a34a;">991K/day</span>
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
+              <span style="border-radius: 4px; background: rgba(0,0,0,0.04); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">schema</span>
+              <span style="border-radius: 4px; background: rgba(0,0,0,0.04); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">pipeline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 Cleaning Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-2">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 8% 85%, #7aad8c 0%, #5a8569 40%, #3a5544 76%, #1c2a22 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card light">
+            <div class="card-header">
+              <span class="card-eyebrow light">customer_data.csv</span>
+              <span class="card-pill">cleaned</span>
+            </div>
+            <div style="margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 10px;">
+              <!-- Before section -->
+              <div>
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #e11d48; letter-spacing: 0.05em;">BEFORE</span>
+                  <div style="flex: 1; height: 1px; background: rgba(225, 29, 72, 0.2);"></div>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.7; color: #6b6b70; background: rgba(225, 29, 72, 0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(225, 29, 72, 0.15);">
+                  <div>john@email..com <span style="background: rgba(225, 29, 72, 0.12); padding: 1px 3px; border-radius: 2px; color: #e11d48;">invalid</span></div>
+                  <div style="margin-top: 2px;">john@email..com <span style="background: rgba(225, 29, 72, 0.12); padding: 1px 3px; border-radius: 2px; color: #e11d48;">dup</span></div>
+                  <div style="margin-top: 2px;">sarah@site.co | <span style="color: #9a9a9f;">null</span> <span style="background: rgba(217, 119, 6, 0.12); padding: 1px 3px; border-radius: 2px; color: #d97706;">missing</span></div>
+                  <div style="margin-top: 2px;">mike.smith@CO.UK <span style="background: rgba(217, 119, 6, 0.12); padding: 1px 3px; border-radius: 2px; color: #d97706;">format</span></div>
+                </div>
+              </div>
+              <!-- After section -->
+              <div>
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">AFTER</span>
+                  <div style="flex: 1; height: 1px; background: rgba(22, 163, 74, 0.2);"></div>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.7; color: #3a3a40; background: rgba(22, 163, 74, 0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(22, 163, 74, 0.15);">
+                  <div>john@email.com <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                  <div style="margin-top: 2px;">sarah@site.co | +1-555-0142 <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                  <div style="margin-top: 2px;">mike.smith@co.uk <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">ISSUES RESOLVED</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: #16a34a;">1,847</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 Enrichment Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-3">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 92% 88%, #e5a84a 0%, #c88d35 38%, #8a5f24 72%, #3d2a12 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card dark">
+            <div class="card-header">
+              <span class="card-eyebrow dark">product_catalog.json</span>
+              <span class="card-pill amber">enriched</span>
+            </div>
+            <!-- Data record with expanding metadata -->
+            <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+              <div style="padding: 8px; border-radius: 6px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.2);">
+                <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.45); margin-bottom: 4px;">BASE RECORD</div>
+                <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.75); line-height: 1.6;">
+                  <div>"name": "Wireless Headphones"</div>
+                  <div>"price": 149.99</div>
+                  <div>"sku": "WH-2847"</div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #e5a84a;"></div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">CATEGORY</div>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.85); margin-left: 10px;">Electronics › Audio › Headphones</div>
+                </div>
+                <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #d9a05a;"></div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">TAGS</div>
+                  </div>
+                  <div style="display: flex; gap: 3px; flex-wrap: wrap; margin-left: 10px;">
+                    <span style="border-radius: 3px; background: rgba(229, 168, 74, 0.2); padding: 1px 4px; font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.75);">wireless</span>
+                    <span style="border-radius: 3px; background: rgba(229, 168, 74, 0.2); padding: 1px 4px; font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.75);">bluetooth</span>
+                    <span style="border-radius: 3px; background: rgba(229, 168, 74, 0.2); padding: 1px 4px; font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.75);">noise-cancel</span>
+                  </div>
+                </div>
+                <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #c88d35;"></div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">GEO</div>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.85); margin-left: 10px;">US, CA, UK, DE +18</div>
+                </div>
+                <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #b87a2a;"></div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">SENTIMENT</div>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.85); margin-left: 10px;">4.6/5 (8,472 reviews)</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">metadata</span>
+                <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">taxonomy</span>
+              </div>
+              <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.4);">+12 fields</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 QA Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-4">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 88% 85%, #9d85c8 0%, #7d69a5 38%, #4e4270 72%, #252035 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card dark">
+            <div class="card-header">
+              <span class="card-eyebrow dark">QA Report · v2.3.1</span>
+              <span class="card-pill violet">approved</span>
+            </div>
+            <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Inter-annotator</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #b5a0d8;">94.2%</span>
+              </div>
+              <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #b5a0d8 0%, #9d85c8 100%); width: 94%;"></div>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Label Accuracy</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #c5b3e0;">96.8%</span>
+              </div>
+              <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #c5b3e0 0%, #b5a0d8 100%); width: 97%;"></div>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Dataset Coverage</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #a58fc0;">99.1%</span>
+              </div>
+              <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #a58fc0 0%, #8d7aad 100%); width: 99%;"></div>
+              </div>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.5);">Samples reviewed</span>
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">14,782</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.5);">Edge cases flagged</span>
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">127</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.5);">Avg review time</span>
+                <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">2.4s</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
+              <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">validate</span>
+              <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">version</span>
+              <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">export</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 Review Exact Graphic -->
+      <div class="graphic-wrapper" id="graphic-5">
+        <div class="service-panel-container">
+          <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 15% 12%, #5ba5bd 0%, #3f8599 38%, #255361 72%, #122a33 100%);">
+            <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+          </div>
+          <div class="service-card light">
+            <div class="card-header">
+              <span class="card-eyebrow light">Review Queue</span>
+              <span style="border-radius: 6px; background: rgba(217, 119, 6, 0.12); padding: 2px 6px; font-family: var(--font-m); font-size: 9px; font-weight: 500; color: #d97706;">pending</span>
+            </div>
+            <!-- Review items -->
+            <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+              <!-- Edge case item 1 -->
+              <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(225, 29, 72, 0.06); border: 1px solid rgba(225, 29, 72, 0.15);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #e11d48; letter-spacing: 0.05em;">EDGE CASE #2847</span>
+                  <span style="border-radius: 3px; background: rgba(225, 29, 72, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #e11d48;">HIGH</span>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Ambiguous label: "vehicle" vs "bicycle"</div>
+              </div>
+              <!-- Escalation item -->
+              <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(217, 119, 6, 0.06); border: 1px solid rgba(217, 119, 6, 0.15);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #d97706; letter-spacing: 0.05em;">ESCALATED #1523</span>
+                  <span style="border-radius: 3px; background: rgba(217, 119, 6, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #d97706;">MED</span>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Low confidence score (0.68) requires verification</div>
+              </div>
+              <!-- Subjective label item -->
+              <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(91, 165, 189, 0.06); border: 1px solid rgba(91, 165, 189, 0.15);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #3f8599; letter-spacing: 0.05em;">SUBJECTIVE #0942</span>
+                  <span style="border-radius: 3px; background: rgba(91, 165, 189, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #3f8599;">LOW</span>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Sentiment: "positive" vs "neutral" (contextual)</div>
+              </div>
+              <!-- Approved item -->
+              <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(22, 163, 74, 0.06); border: 1px solid rgba(22, 163, 74, 0.15);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">REVIEWED #0821</span>
+                  <span style="border-radius: 3px; background: rgba(22, 163, 74, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #16a34a;">✓</span>
+                </div>
+                <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Validated by expert reviewer</div>
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">IN QUEUE</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: #5ba5bd;">147</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollWrapper = document.querySelector('.scroll-wrapper');
+  const lines = document.querySelectorAll('.glow-line');
+  const nodes = [];
+  const textPanels = [];
+  const graphics = [];
+
+  // Setup lengths for drawing animation
+  lines.forEach((line, index) => {
+    const length = line.getTotalLength();
+    line.style.strokeDasharray = length;
+    line.style.strokeDashoffset = length;
+    line.dataset.length = length;
+
+    nodes.push(document.getElementById(`node-${index}`));
+    textPanels.push(document.getElementById(`text-${index}`));
+    graphics.push(document.getElementById(`graphic-${index}`));
+  });
+
+  // Keep first item active by default
+  nodes[0].classList.add('active');
+  textPanels[0].classList.add('active');
+  graphics[0].classList.add('active');
+
+  // Add click handlers to nodes for smooth scroll navigation
+  nodes.forEach((node, index) => {
+    node.addEventListener('click', () => {
+      const wrapperRect = scrollWrapper.getBoundingClientRect();
+      const wrapperTop = scrollWrapper.offsetTop;
+      const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
+      const segmentSize = 1 / lines.length;
+      // Scroll to end of segment to complete the line
+      const targetScrollFraction = (index + 1) * segmentSize;
+      const targetScroll = wrapperTop + (targetScrollFraction * wrapperHeight);
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    // Disable if stacked on mobile
+    if (window.innerWidth < 1024) return;
+
+    const scrollPosition = window.scrollY;
+    const wrapperTop = scrollWrapper.offsetTop;
+    const wrapperBottom = wrapperTop + scrollWrapper.offsetHeight;
+
+    // Only animate within the scroll-wrapper bounds
+    if (scrollPosition < wrapperTop || scrollPosition > wrapperBottom) {
+      return;
+    }
+
+    const wrapperScroll = scrollPosition - wrapperTop;
+    const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
+    const scrollFraction = Math.min(Math.max(wrapperScroll / wrapperHeight, 0), 1);
+
+    const segmentSize = 1 / lines.length;
+    let currentActiveIndex = 0;
+
+    lines.forEach((line, index) => {
+      const length = parseFloat(line.dataset.length);
+      const lineStartScroll = index * segmentSize;
+      const lineEndScroll = (index + 1) * segmentSize;
+
+      if (scrollFraction <= lineStartScroll) {
+        line.style.strokeDashoffset = length;
+      } else if (scrollFraction >= lineEndScroll) {
+        line.style.strokeDashoffset = 0;
+        currentActiveIndex = index;
+      } else {
+        const lineProgress = (scrollFraction - lineStartScroll) / segmentSize;
+        line.style.strokeDashoffset = length - (length * lineProgress);
+
+        if (lineProgress >= 0.85) {
+          currentActiveIndex = index;
+        } else if (index > 0) {
+          currentActiveIndex = index - 1;
+        }
+      }
+
+      // Update active classes
+      if (index <= currentActiveIndex) {
+        nodes[index].classList.add('active');
+      } else {
+        nodes[index].classList.remove('active');
+      }
+    });
+
+    // Update text and graphics based on currentActiveIndex
+    textPanels.forEach((panel, index) => {
+      if (index === currentActiveIndex) {
+        panel.classList.add('active');
+      } else {
+        panel.classList.remove('active');
+      }
+    });
+
+    graphics.forEach((graphic, index) => {
+      if (index === currentActiveIndex) {
+        graphic.classList.add('active');
+      } else {
+        graphic.classList.remove('active');
+      }
+    });
+  });
+
+  window.dispatchEvent(new Event('scroll'));
+});
+</script>
   <!-- CTA Section -->
   <section class="cta-section">
     <div class="cta-container">
