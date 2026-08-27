@@ -31,7 +31,7 @@
     body {
       background: #FFFFFF;
       color: #000000;
-      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       overflow-x: hidden;
     }
 
@@ -71,7 +71,7 @@
     }
 
     .nav-item {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
       color: #000000;
@@ -383,7 +383,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 500;
       font-size: 0.95rem;
       transition: all 0.3s ease;
@@ -478,7 +478,7 @@
       text-align: center;
     }
 
-    .cta-button {
+    .use-cases-cta-button {
       display: inline-block;
       padding: 1.125rem 3.5rem;
       background: var(--surface-deep);
@@ -491,7 +491,7 @@
       transition: all 300ms ease;
     }
 
-    .cta-button:hover {
+    .use-cases-cta-button:hover {
       background: #1a1f2e;
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -545,7 +545,7 @@
     }
 
     /* Final CTA Section */
-    .final-cta-section {
+    .cta-section {
       width: 100%;
       background: var(--surface-deep);
       padding: 7rem 1.5rem;
@@ -553,7 +553,7 @@
       overflow: hidden;
     }
 
-    .final-cta-section::before {
+    .cta-section::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -561,40 +561,30 @@
       background: radial-gradient(60% 80% at 50% 0%, rgba(56, 189, 248, 0.14) 0%, transparent 70%);
     }
 
-    .final-cta-container {
+    .cta-inner {
       position: relative;
       max-width: 860px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .cta-eyebrow {
-      display: block;
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .final-cta-section .section-heading {
-      margin-top: 0.85rem;
-      margin-bottom: 1.5rem;
+    .cta-heading {
+      margin-top: 0;
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.03em;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       color: #FFFFFF;
-      text-align: center;
+      text-transform: uppercase;
     }
 
-    .cta-description {
+    .cta-subheading {
+      margin: 1.5rem auto 0.5rem;
       font-family: 'DM Sans', sans-serif;
       font-size: clamp(1rem, 1.5vw, 1.125rem);
       line-height: 1.65;
       color: rgba(255, 255, 255, 0.76);
-      margin-bottom: 0.5rem;
     }
 
     .cta-highlight {
@@ -606,59 +596,93 @@
       display: block;
     }
 
-    .cta-buttons {
+    .cta-actions {
+      margin-top: 2.5rem;
       display: flex;
-      gap: 1rem;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
+      gap: clamp(0.3rem, 1vw, 0.5rem);
     }
 
-    .cta-btn-primary {
-      display: inline-flex;
+    .cta-text-link {
+      display: flex;
       align-items: center;
-      gap: 0.625rem;
-      padding: 1rem 2.5rem;
-      background: var(--accent-cyan);
-      color: #000000;
+      justify-content: center;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      padding: 0.65rem 1.5rem;
       font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
       font-weight: 700;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #000000;
       text-decoration: none;
-      border-radius: 8px;
-      transition: all 250ms ease;
+      white-space: nowrap;
+      line-height: 1;
+      transition: all 300ms ease;
+      cursor: pointer;
+    }
+
+    .cta-text-link:hover {
+      background: var(--accent-lime);
+      color: var(--gray-900);
+    }
+
+    .cta-shared-pill {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      padding: 0.65rem;
       border: none;
       cursor: pointer;
+      transition: all 300ms ease;
+      flex-shrink: 0;
+      pointer-events: none;
     }
 
-    .cta-btn-primary:hover {
-      background: #FFFFFF;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    .cta-pill-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .cta-btn-primary svg {
-      width: 16px;
-      height: 16px;
+    .cta-pill-arrow svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      color: #000000;
     }
 
-    .cta-btn-secondary {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background: transparent;
-      color: #FFFFFF;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 250ms ease;
-      cursor: pointer;
+    .cta-meta {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Sans', monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.42);
     }
 
-    .cta-btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
+    .cta-meta-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.28);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 4.5rem 1.5rem;
+      }
     }
 
     /* Footer */
@@ -781,10 +805,6 @@
         grid-template-columns: 1fr;
       }
 
-      .cta-buttons {
-        flex-direction: column;
-      }
-
       .workflow-header {
         flex-direction: column;
         gap: 2rem;
@@ -899,7 +919,7 @@
     }
 
     .detail-text strong {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       font-weight: 600;
       color: #000000;
@@ -1005,89 +1025,10 @@
     }
 
     .stat-label {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       color: rgba(0, 0, 0, 0.6);
       line-height: 1.4;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 6rem 3rem;
-      background: var(--surface-deep);
-      text-align: center;
-    }
-
-    .cta-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .cta-container h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 1.5rem;
-    }
-
-    .cta-container p {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.125rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 2.5rem;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem;
-      background: var(--white);
-      color: #000000;
-      border: none;
-      border-radius: 9999px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      cursor: pointer;
-      transition: all 300ms ease;
-      text-decoration: none;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-cyan);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem;
-      background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 9999px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      cursor: pointer;
-      transition: all 300ms ease;
-      text-decoration: none;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-      transform: translateY(-2px);
     }
 
     /* Footer */
@@ -1238,11 +1179,6 @@
 
       .footer-bottom {
         margin-top: 3rem;
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-        align-items: stretch;
       }
     }
   </style>
@@ -1403,7 +1339,7 @@
         </div>
       </div>
       <div class="use-cases-cta">
-        <a href="contact.html" class="cta-button">Book a Call</a>
+        <a href="contact.html" class="use-cases-cta-button">Book a Call</a>
       </div>
     </div>
   </section>
@@ -1430,20 +1366,31 @@
   </section>
 
   <!-- Final CTA Section -->
-  <section class="final-cta-section">
-    <div class="final-cta-container">
-      <span class="cta-eyebrow">Start a Project</span>
-      <h2 class="section-heading">Ready to Build Better Data?</h2>
-      <p class="cta-description">Request a custom dataset scoping within</p>
+  <section class="cta-section" id="contact">
+    <div class="cta-inner">
+      <h2 class="cta-heading">Ready to Build Better Data?</h2>
+      <p class="cta-subheading">Request a custom dataset scoping within</p>
       <span class="cta-highlight">48 hours</span>
-      <div class="cta-buttons">
-        <a href="contact.html" class="cta-btn-primary">
-          Request a Dataset
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a href="contact.html" class="cta-btn-secondary">Book a Call</a>
+
+      <div class="cta-actions">
+        <a href="contact.html" class="cta-text-link cta-link-left">Request a Dataset</a>
+        <button class="cta-shared-pill" aria-label="Navigate">
+          <span class="cta-pill-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </span>
+        </button>
+        <a href="mailto:hello@dataglif.com" class="cta-text-link cta-link-right">Email the team</a>
+      </div>
+
+      <div class="cta-meta">
+        <span>Pilot batch in 5 days</span>
+        <span class="cta-meta-dot"></span>
+        <span>NDA on request</span>
+        <span class="cta-meta-dot"></span>
+        <span>Reply within 24 hours</span>
       </div>
     </div>
   </section>
@@ -1589,6 +1536,34 @@
         lenis.scrollTo(window.scrollY - (cardWidth + gap) * 2, { lock: false, duration: 1 });
       });
     });
+
+    // CTA shared pill arrow rotation
+    (function() {
+      const leftLink = document.querySelector('.cta-link-left');
+      const rightLink = document.querySelector('.cta-link-right');
+      const arrow = document.querySelector('.cta-pill-arrow');
+      const pill = document.querySelector('.cta-shared-pill');
+
+      if (leftLink && rightLink && arrow && pill) {
+        leftLink.addEventListener('mouseenter', () => {
+          arrow.style.transform = 'rotate(90deg)';
+          pill.style.background = 'var(--accent-lime)';
+        });
+        leftLink.addEventListener('mouseleave', () => {
+          arrow.style.transform = 'rotate(0deg)';
+          pill.style.background = '#FFFFFF';
+        });
+
+        rightLink.addEventListener('mouseenter', () => {
+          arrow.style.transform = 'rotate(-90deg)';
+          pill.style.background = 'var(--accent-lime)';
+        });
+        rightLink.addEventListener('mouseleave', () => {
+          arrow.style.transform = 'rotate(0deg)';
+          pill.style.background = '#FFFFFF';
+        });
+      }
+    })();
   </script>
 
 </body>

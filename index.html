@@ -65,7 +65,7 @@
     body {
       background: #FFFFFF;
       color: #000000;
-      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       overflow-x: hidden;
     }
 
@@ -105,7 +105,7 @@
 
     .nav-item {
       position: relative;
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
       color: #000000;
@@ -209,6 +209,31 @@
       justify-content: center;
       overflow: visible;
       padding: 58px 0.5rem 0.5rem 0.5rem;
+    }
+
+    .video-section-heading {
+      position: absolute;
+      top: 88px;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      text-align: center;
+      padding: 0 1.5rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #0a0a0b;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 500ms ease, transform 500ms ease;
+      pointer-events: none;
+    }
+
+    .hero-sticky.separated .video-section-heading {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .video-wrapper {
@@ -399,11 +424,10 @@
 
     /* Chart Section - Reversed Layout */
     .chart-section {
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8rem 3rem;
+      padding: 7rem 1.5rem;
       background: var(--surface-deep);
       position: relative;
     }
@@ -419,11 +443,11 @@
     }
 
     .chart-container {
-      max-width: 1400px;
+      max-width: 1220px;
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1.2fr;
-      gap: 6rem;
+      gap: 4.5rem;
       align-items: center;
     }
 
@@ -433,19 +457,19 @@
 
     .chart-intro h2 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      margin-bottom: 1.25rem;
       color: #FFFFFF;
       letter-spacing: -0.03em;
-      line-height: 1.1;
+      line-height: 1.06;
     }
 
     .chart-intro p {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+      font-size: 1.0625rem;
       line-height: 1.7;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.68);
       font-weight: 400;
       margin-bottom: 1rem;
     }
@@ -454,7 +478,7 @@
     .dex-chart {
       width: 100%;
       color: var(--dex-ink);
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .dex-chart__header {
@@ -491,7 +515,7 @@
       margin: 0 0 16px;
       padding: 0;
       color: var(--dex-muted);
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem;
       line-height: 1.3;
       list-style: none;
@@ -607,7 +631,7 @@
     .dex-chart__axis-title,
     .dex-chart__callout text {
       fill: var(--dex-ink);
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .dex-chart__model-label {
@@ -671,7 +695,7 @@
     .dex-chart__caption {
       margin-top: 12px;
       color: var(--dex-muted);
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem;
       line-height: 1.5;
     }
@@ -1222,6 +1246,7 @@
   <!-- Video Hero Section -->
   <div class="hero-container" id="home">
     <div class="hero-sticky">
+      <h2 class="video-section-heading">Every modality, annotated with precision.</h2>
       <div class="video-wrapper">
         <!-- Video 1: Drone (plays first) -->
         <div class="video-card" data-video="1">
@@ -1516,6 +1541,7 @@
     gsap.ticker.lagSmoothing(0);
 
     const videoCards = gsap.utils.toArray('.video-card');
+    const heroSticky = document.querySelector('.hero-sticky');
     gsap.set(videoCards, {
       width: '100%',
       height: '100%',
@@ -1569,6 +1595,7 @@
         onLeaveBack: () => {
           isScrolling = false;
           videoCycleTl.play();
+          heroSticky.classList.remove('separated');
           videoCards.forEach(card => {
             card.classList.remove('active', 'separated');
           });
@@ -1577,8 +1604,10 @@
           // Add white borders when cards start separating (after 20% scroll progress)
           if (self.progress > 0.2) {
             videoCards.forEach(card => card.classList.add('separated'));
+            heroSticky.classList.add('separated');
           } else {
             videoCards.forEach(card => card.classList.remove('separated'));
+            heroSticky.classList.remove('separated');
           }
         }
       }
@@ -1876,14 +1905,14 @@
       position: relative;
       overflow: hidden;
       border-radius: 12px;
-      background: #e7e6e3;
+      background: #0a0a0b;
+      aspect-ratio: 16 / 5;
     }
 
     .blog-featured-img {
       display: block;
       width: 100%;
       height: 100%;
-      min-height: 300px;
       object-fit: cover;
     }
 
@@ -1914,7 +1943,7 @@
 
     .blog-featured-excerpt {
       margin-top: 1rem;
-      max-width: 48ch;
+      max-width: 90ch;
       font-family: 'DM Sans', sans-serif;
       font-size: 1rem;
       line-height: 1.65;
@@ -2035,7 +2064,7 @@
       background: var(--blog-card);
       border: 1px solid var(--blog-line);
       border-radius: 8px;
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--blog-ink);
@@ -2105,14 +2134,6 @@
     }
 
     @media (min-width: 1024px) {
-      .blog-featured {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
-
-      .blog-featured-img {
-        min-height: 420px;
-      }
-
       .blog-featured-content {
         padding: 2.25rem 2.25rem 1.75rem;
       }
@@ -2150,30 +2171,33 @@
       <!-- Featured Article -->
       <article class="blog-featured blog-reveal" data-reveal data-delay="120">
         <div class="blog-featured-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1623418371013-4baaf507be2b?w=1000&h=1100&fit=crop&auto=format"
-            alt="Long-exposure photograph of a figure in motion, rendered as overlapping silhouettes"
+          <video
+            src="./videos/fsd-highway-merge-horizontal.mp4"
             class="blog-featured-img"
-            loading="lazy"
-          />
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
         </div>
 
         <div class="blog-featured-content">
-          <span class="blog-tag">Annotation Quality</span>
+          <span class="blog-tag">Autonomous Driving</span>
           <h3 class="blog-featured-title">
-            Why inter-annotator agreement is the only QA metric that matters
+            Annotating highway merges from a driver's-eye view
           </h3>
           <p class="blog-featured-excerpt">
-            Accuracy against a gold set tells you how well annotators match one
-            reviewer's judgement. Agreement across independent passes tells you whether
-            your labelling guidelines are actually unambiguous — and that is what
-            determines how a model behaves on data it has never seen.
+            POV footage of a three-lane highway merge, labeled frame-by-frame for lane
+            boundaries, vehicle trajectories, and merge intent. This is the kind of
+            edge-case sequence that separates a model that handles traffic from one
+            that only handles the highway.
           </p>
 
           <div class="blog-featured-footer">
-            <span>8 min read</span>
+            <span>POV / Highway</span>
             <span class="blog-read-dot"></span>
-            <span>Data Operations</span>
+            <span>Perception Data</span>
           </div>
         </div>
       </article>
@@ -2197,16 +2221,6 @@
             <p class="blog-card-excerpt">
               Interactive SVG chart showing when leading AI models will exhaust their training data sources. Features scroll-triggered animations and responsive design.
             </p>
-            <div class="demo-features">
-              <span class="demo-feature">Scroll Animation</span>
-              <span class="demo-feature">Fully Responsive</span>
-              <span class="demo-feature">Native SVG</span>
-              <span class="demo-feature">No Dependencies</span>
-            </div>
-            <div class="demo-controls">
-              <button class="demo-btn" onclick="document.getElementById('dataGraphFrame').src = document.getElementById('dataGraphFrame').src">↻ Reload</button>
-              <button class="demo-btn" onclick="window.open('data-graph/index.html', '_blank')">⤢ Full Screen</button>
-            </div>
           </div>
         </article>
 
@@ -2227,16 +2241,6 @@
             <p class="blog-card-excerpt">
               Watch unstructured job posting text transform into structured annotations across 6 categories. Auto-plays 24-second demonstration with full playback controls.
             </p>
-            <div class="demo-features">
-              <span class="demo-feature">24s Animation</span>
-              <span class="demo-feature">6 Categories</span>
-              <span class="demo-feature">Play/Pause/Replay</span>
-              <span class="demo-feature">Smooth Scrolling</span>
-            </div>
-            <div class="demo-controls">
-              <button class="demo-btn" onclick="document.getElementById('nerFrame').src = document.getElementById('nerFrame').src">↻ Restart</button>
-              <button class="demo-btn" onclick="window.open('ner-annotation-FULL.html', '_blank')">⤢ Full Screen</button>
-            </div>
           </div>
         </article>
 
@@ -2257,18 +2261,204 @@
             <p class="blog-card-excerpt">
               Full responsive page-turning booklet with all 28 actual document pages. Features auto-play, keyboard navigation (← →), and adapts from 2-page spreads to single-page view.
             </p>
-            <div class="demo-features">
-              <span class="demo-feature">28 Real Pages</span>
-              <span class="demo-feature">Auto-Play</span>
-              <span class="demo-feature">Keyboard Nav</span>
-              <span class="demo-feature">Mobile Optimized</span>
-            </div>
-            <div class="demo-controls">
-              <button class="demo-btn" onclick="document.getElementById('bookletFrame').src = document.getElementById('bookletFrame').src">↻ Reset</button>
-              <button class="demo-btn" onclick="window.open('dla-booklet-FULL.html', '_blank')">⤢ Full Screen</button>
-            </div>
           </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Scarcity Section -->
+  <style>
+    .scarcity-section {
+      position: relative;
+      width: 100%;
+      background: var(--surface-deep);
+      padding: 7rem 1.5rem;
+    }
+
+    .scarcity-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+
+    .scarcity-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .scarcity-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .scarcity-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+    }
+
+    .scarcity-body {
+      margin: 1.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      max-width: 56ch;
+    }
+
+    .scarcity-body p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .scarcity-body .accent {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .scarcity-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.625rem;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.625rem;
+      text-align: left;
+    }
+
+    .scarcity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.025);
+      padding: 0.9rem 1rem;
+    }
+
+    .scarcity-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+    }
+
+    .scarcity-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .scarcity-item-title {
+      margin-top: 0.4rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #FFFFFF;
+    }
+
+    .scarcity-item-desc {
+      margin-top: 0.35rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    @media (max-width: 768px) {
+      .scarcity-section {
+        padding: 4.5rem 1.5rem;
+      }
+
+      .scarcity-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scarcity-section .blog-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+
+  <section class="scarcity-section">
+    <div class="scarcity-container">
+      <div class="scarcity-grid">
+        <div class="scarcity-content blog-reveal" data-reveal>
+          <h2 class="scarcity-title">The data scarcity crisis is here.</h2>
+          <div class="scarcity-body">
+            <p>
+              High-quality web data is projected to run out between 2026 and 2028.
+              The era of scraping is ending, and the AI companies that win from here
+              will be the ones building deliberately engineered, human-validated datasets.
+            </p>
+            <p>
+              <span class="accent">DataGlif</span> is your end-to-end partner: from
+              collection and rich annotation to curation, QA, and delivery of
+              production-ready data.
+            </p>
+          </div>
+        </div>
+
+        <div class="scarcity-list blog-reveal" data-reveal data-delay="120">
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM88,160a8,8,0,1,1-8,8A8,8,0,0,1,88,160ZM48,48H80v97.38a24,24,0,1,0,16,0V115.31l48,48V208H48ZM208,208H160V160a8,8,0,0,0-2.34-5.66L96,92.69V48h32V72a8,8,0,0,0,2.34,5.66l16,16A23.74,23.74,0,0,0,144,104a24,24,0,1,0,24-24,23.74,23.74,0,0,0-10.34,2.35L144,68.69V48h64V208ZM168,96a8,8,0,1,1-8,8A8,8,0,0,1,168,96Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Human-in-the-Loop Expertise</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm109.94-52.79a8,8,0,0,0-3.89-5.4l-29.83-17-.12-33.62a8,8,0,0,0-2.83-6.08,111.91,111.91,0,0,0-36.72-20.67,8,8,0,0,0-6.46.59L128,41.85,97.88,25a8,8,0,0,0-6.47-.6A112.1,112.1,0,0,0,54.73,45.15a8,8,0,0,0-2.83,6.07l-.15,33.65-29.83,17a8,8,0,0,0-3.89,5.4,106.47,106.47,0,0,0,0,41.56,8,8,0,0,0,3.89,5.4l29.83,17,.12,33.62a8,8,0,0,0,2.83,6.08,111.91,111.91,0,0,0,36.72,20.67,8,8,0,0,0,6.46-.59L128,214.15,158.12,231a7.91,7.91,0,0,0,3.9,1,8.09,8.09,0,0,0,2.57-.42,112.1,112.1,0,0,0,36.68-20.73,8,8,0,0,0,2.83-6.07l.15-33.65,29.83-17a8,8,0,0,0,3.89-5.4A106.47,106.47,0,0,0,237.94,107.21Zm-15,34.91-28.57,16.25a8,8,0,0,0-3,3c-.58,1-1.19,2.06-1.81,3.06a7.94,7.94,0,0,0-1.22,4.21l-.15,32.25a95.89,95.89,0,0,1-25.37,14.3L134,199.13a8,8,0,0,0-3.91-1h-.19c-1.21,0-2.43,0-3.64,0a8.08,8.08,0,0,0-4.1,1l-28.84,16.1A96,96,0,0,1,67.88,201l-.11-32.2a8,8,0,0,0-1.22-4.22c-.62-1-1.23-2-1.8-3.06a8.09,8.09,0,0,0-3-3.06l-28.6-16.29a90.49,90.49,0,0,1,0-28.26L61.67,97.63a8,8,0,0,0,3-3c.58-1,1.19-2.06,1.81-3.06a7.94,7.94,0,0,0,1.22-4.21l.15-32.25a95.89,95.89,0,0,1,25.37-14.3L122,56.87a8,8,0,0,0,4.1,1c1.21,0,2.43,0,3.64,0a8.08,8.08,0,0,0,4.1-1l28.84-16.1A96,96,0,0,1,188.12,55l.11,32.2a8,8,0,0,0,1.22,4.22c.62,1,1.23,2,1.8,3.06a8.09,8.09,0,0,0,3,3.06l28.6,16.29A90.49,90.49,0,0,1,222.9,142.12Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Focus on Agentic &amp; Reasoning AI</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Fast Iteration and Transparent Metrics</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Enterprise-Grade QA &amp; Adjudication</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -2309,13 +2499,31 @@
     }
 
     .cta-heading {
-      margin-top: 0.85rem;
+      margin-top: 0;
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.03em;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .cta-subheading {
+      margin: 1.5rem auto 0.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .cta-highlight {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 2.5rem;
+      display: block;
     }
 
     .cta-body {
@@ -2332,26 +2540,60 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: clamp(0.3rem, 1vw, 0.5rem);
     }
 
-    .cta-secondary {
-      display: inline-flex;
+    .cta-text-link {
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      justify-content: center;
       border-radius: 9999px;
-      padding: 0.7rem 1.5rem;
+      background: #FFFFFF;
+      padding: 0.65rem 1.5rem;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.8125rem;
       font-weight: 700;
+      font-size: 0.8125rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #FFFFFF;
+      color: #000000;
       text-decoration: none;
+      white-space: nowrap;
       line-height: 1;
-      transition: border-color 250ms ease, background 250ms ease;
+      transition: all 300ms ease;
+      cursor: pointer;
+    }
+
+    .cta-text-link:hover {
+      background: var(--accent-lime);
+      color: var(--gray-900);
+    }
+
+    .cta-shared-pill {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      padding: 0.65rem;
+      border: none;
+      cursor: pointer;
+      transition: all 300ms ease;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    .cta-pill-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cta-pill-arrow svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      color: #000000;
     }
 
     .cta-secondary:hover {
@@ -2515,24 +2757,21 @@
 
   <section class="cta-section" id="contact">
     <div class="cta-inner">
-      <span class="cta-eyebrow">Start a Project</span>
-      <h2 class="cta-heading">Tell us what your model is missing.</h2>
-      <p class="cta-body">
-        Send us the task, the modality, and the volume you need. We will come back
-        with a labelling spec, a quality plan, and a pilot batch you can evaluate
-        before committing to scale.
-      </p>
+      <h2 class="cta-heading">Ready to Build Better Data?</h2>
+      <p class="cta-subheading">Request a custom dataset scoping within</p>
+      <span class="cta-highlight">48 hours</span>
 
       <div class="cta-actions">
-        <button class="cta-button" onclick="window.location.href='contact.html'">
-          <span class="cta-button-label">Request a Dataset</span>
-          <span class="cta-button-arrow">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <a href="contact.html" class="cta-text-link cta-link-left">Request a Dataset</a>
+        <button class="cta-shared-pill" aria-label="Navigate">
+          <span class="cta-pill-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
             </svg>
           </span>
         </button>
-        <a class="cta-secondary" href="mailto:hello@dataglif.com">Email the team</a>
+        <a href="mailto:hello@dataglif.com" class="cta-text-link cta-link-right">Email the team</a>
       </div>
 
       <div class="cta-meta">
@@ -2649,6 +2888,34 @@
     if (window.ScrollTrigger) {
       ScrollTrigger.refresh();
     }
+
+    // CTA shared pill arrow rotation
+    (function() {
+      const leftLink = document.querySelector('.cta-link-left');
+      const rightLink = document.querySelector('.cta-link-right');
+      const arrow = document.querySelector('.cta-pill-arrow');
+      const pill = document.querySelector('.cta-shared-pill');
+
+      if (leftLink && rightLink && arrow && pill) {
+        leftLink.addEventListener('mouseenter', () => {
+          arrow.style.transform = 'rotate(90deg)';
+          pill.style.background = 'var(--accent-lime)';
+        });
+        leftLink.addEventListener('mouseleave', () => {
+          arrow.style.transform = 'rotate(0deg)';
+          pill.style.background = '#FFFFFF';
+        });
+
+        rightLink.addEventListener('mouseenter', () => {
+          arrow.style.transform = 'rotate(-90deg)';
+          pill.style.background = 'var(--accent-lime)';
+        });
+        rightLink.addEventListener('mouseleave', () => {
+          arrow.style.transform = 'rotate(0deg)';
+          pill.style.background = '#FFFFFF';
+        });
+      }
+    })();
   </script>
 
 </body>
