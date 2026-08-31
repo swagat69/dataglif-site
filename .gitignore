@@ -1,16 +1,16 @@
-# Media files & folders
-videos/
-pages/
-assets/
-*.mp4
-*.webm
-*.mov
-*.avi
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.webp
+# Media files & folders (Removed from gitignore to allow website publishing)
+# videos/
+# pages/
+# assets/
+# *.mp4
+# *.webm
+# *.mov
+# *.avi
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.webp
 
 # Temporary, scratch, backups & research files
 .research/
