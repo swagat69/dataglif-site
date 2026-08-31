@@ -1,2 +1,23 @@
+# Media files & folders
 videos/
+pages/
+assets/
 *.mp4
+*.webm
+*.mov
+*.avi
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
+# Temporary, scratch, backups & research files
+.research/
+.research_tmp/
+.tmp-annores/
+.tmp_spectrum.cjs
+_sr/
+*.backup*
+*.backup
+*.before-*

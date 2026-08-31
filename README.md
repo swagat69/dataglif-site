@@ -1,34 +1,20 @@
-# DataGlif
+# DataGlif Website
 
-A modern landing page showcasing video hero animations and data visualization.
+Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
 
-## Features
+## Structure
+- `index.html` - Homepage with interactive video hero, data exhaustion model, and field notes.
+- `approach.html` - Our Approach and workflow execution stages.
+- `services.html` / `service.html` - Services overview and interactive service category exploration.
+- `contact.html` - Contact and data brief intake.
+- `chart-component.js` - Data exhaustion chart interactive module.
 
-- **Video Hero Section**: Smooth scroll-triggered video transitions with GSAP
-- **Data Exhaustion Chart**: Interactive visualization of AI training data projections
-- **Smooth Scrolling**: Implemented with Lenis for butter-smooth scroll experience
-
-## Technologies
-
-- HTML5, CSS3, JavaScript
-- GSAP (GreenSock Animation Platform)
-- Lenis (Smooth Scroll)
-- Custom Chart Component
-
-## Live Demo
-
-View the live site at: [Your GitHub Pages URL]
-
-## Local Development
-
-Simply open `index.html` in your browser or use a local server:
-
+## Setup & Running Locally
+Open `index.html` directly in a browser or serve using any static server:
 ```bash
-# Using Python
+# Example using Python
 python -m http.server 8000
 
-# Using Node.js
-npx serve
+# Example using Node
+npx serve .
 ```
-
-Then navigate to `http://localhost:8000`

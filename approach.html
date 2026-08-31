@@ -8,7 +8,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -17,9 +17,12 @@
       --surface-mid: #0F131C;
       --accent-cyan: #38BDF8;
       --accent-lime: #d4ff00;
+      --accent-emerald: #34D399;
       --gray-900: #111827;
       --white: #ffffff;
       --gray-300: #d1d5db;
+      --card-bg: rgba(255, 255, 255, 0.035);
+      --card-border: rgba(255, 255, 255, 0.09);
     }
 
     * {
@@ -29,26 +32,46 @@
     }
 
     body {
-      background: #FFFFFF;
-      color: #000000;
+      background: var(--surface-deep);
+      color: #FFFFFF;
       font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.6; /* 160% body leading */
+      letter-spacing: -0.02em; /* -2% body tracking */
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Navbar */
+    /* ═══════════════════════════════════════════════════════════════
+       NAVBAR (Preserved)
+       ═══════════════════════════════════════════════════════════════ */
+    /* Navbar - Consistent with all pages with smart scroll hide/show */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 100;
-      padding: 0.5rem 3rem;
+      z-index: 1000;
+      padding: 0.65rem 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transform: translateY(0);
+      will-change: transform;
+      /* Fast transition when showing on scroll up */
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Smooth hide when scrolling down */
+    .navbar.nav-hidden {
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .navbar-logo {
@@ -67,22 +90,74 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 2.5rem;
+      gap: 1.25rem;
     }
 
     .nav-item {
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       font-weight: 500;
-      color: #000000;
+      color: rgba(0, 0, 0, 0.65);
       cursor: pointer;
-      transition: color 200ms ease;
+      padding: 0.35rem 0.6rem;
+      background: transparent;
+      border-radius: 0;
+      transition: color 180ms ease;
       text-decoration: none;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      position: relative;
     }
 
+    .nav-item::before,
+    .nav-item::after {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #000000;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease, color 180ms ease;
+    }
+
+    .nav-item::before {
+      content: '[';
+      margin-right: 0.35rem;
+      transform: translateX(4px);
+    }
+
+    .nav-item::after {
+      content: ']';
+      margin-left: 0.35rem;
+      transform: translateX(-4px);
+    }
+
+    /* On hover: animate brackets in black */
     .nav-item:hover {
-      color: var(--accent-cyan);
+      color: #000000;
+      background: transparent;
+    }
+
+    .nav-item:hover::before,
+    .nav-item:hover::after {
+      opacity: 1;
+      color: #000000;
+      transform: translateX(0);
+    }
+
+    /* Active Page Indication - Precision Monospace Brackets [ ] in Blue */
+    .nav-item.active {
+      color: #2563EB;
+      font-weight: 600;
+      background: transparent;
+    }
+
+    .nav-item.active::before,
+    .nav-item.active::after {
+      opacity: 1;
+      color: #2563EB;
+      font-weight: 600;
+      transform: translateX(0);
     }
 
     .navbar-actions {
@@ -94,90 +169,156 @@
     .cta-button {
       display: inline-flex;
       align-items: center;
-      gap: clamp(0.3rem, 1vw, 0.5rem);
-      border: none;
-      border-radius: 9999px;
-      padding: 0;
-      background: transparent;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.6rem 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+      color: #000000;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 200ms ease;
       cursor: pointer;
-      outline: none;
-      transition: all 300ms ease;
-      font-family: 'DM Sans', sans-serif;
     }
 
-    .cta-button:active {
-      transform: scale(0.98);
+    .cta-button:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #080D1A;
     }
 
     .cta-button-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      background: #000000;
-      padding: 0.65rem 1.5rem;
-      font-weight: 700;
-      font-size: 0.8125rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #FFFFFF;
-      transition: all 300ms ease;
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    .cta-button:hover .cta-button-label {
-      background: var(--accent-lime);
-      color: var(--gray-900);
+      display: inline;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      transition: none;
     }
 
     .cta-button-arrow {
-      display: grid;
-      place-items: center;
-      aspect-ratio: 1;
-      border-radius: 9999px;
-      background: #000000;
-      padding: 0.65rem;
-      transition: all 300ms ease;
-    }
-
-    .cta-button:hover .cta-button-arrow {
-      background: var(--accent-lime);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      transition: none;
     }
 
     .cta-button-arrow svg {
-      width: 0.875rem;
-      height: 0.875rem;
-      color: #FFFFFF;
-      transition: all 300ms ease-out;
+      width: 0.8125rem;
+      height: 0.8125rem;
+      color: inherit;
+      transform-origin: center center;
+      transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
     }
 
     .cta-button:hover .cta-button-arrow svg {
-      color: var(--gray-900);
       transform: rotate(45deg);
+      color: #080D1A;
     }
 
-    /* Hero Section */
+    /* ═══════════════════════════════════════════════════════════════
+       MINIMAL HERO SECTION WITH AMBIENT LIGHTING & SUBTLE MASKED GRID
+       ═══════════════════════════════════════════════════════════════ */
     .hero-section {
-      padding: 8rem 3rem 6rem;
-      background: var(--surface-deep);
+      padding: 8.5rem 3rem 5.5rem;
+      background: var(--surface-deep, #0A0D12);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    /* Ambient top-center lighting bloom */
+    .hero-backdrop-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1100px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(56, 189, 248, 0.09) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 75%);
+    }
+
+    /* Ultra-subtle masked micro-grid */
+    .hero-micro-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, black 20%, transparent 80%);
     }
 
     .hero-container {
-      max-width: 1400px;
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
       margin: 0 auto;
       width: 100%;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Minimal Technical Eyebrow Badge */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-cyan, #38BDF8);
+      box-shadow: 0 0 8px var(--accent-cyan, #38BDF8);
+      animation: hero-dot-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes hero-dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
     .hero-container h1 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      margin-bottom: 1rem;
+      font-size: clamp(2.75rem, 5.5vw, 5rem); /* 80px */
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 1.25rem;
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
@@ -185,83 +326,111 @@
 
     .hero-container p {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1rem, 2vw, 1.125rem);
+      font-size: 1.125rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.6);
-      max-width: 720px;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 58ch; /* 50-60 chars */
       margin: 0 auto;
     }
 
-    /* Workflow Section */
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       VERY MINIMAL SECTION BORDER GRAPHIC (1px Hairline with Micro Notches)
+       ═══════════════════════════════════════════════════════════════ */
+    .section-border {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 12%, rgba(255, 255, 255, 0.08) 88%, transparent 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .section-border.light-theme {
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.07) 12%, rgba(0, 0, 0, 0.07) 88%, transparent 100%);
+    }
+
+    .section-border-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      height: 1px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .section-border-notch {
+      width: 5px;
+      height: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      transform: translateY(-50%) rotate(45deg);
+      top: 50%;
+      position: relative;
+    }
+
+    .section-border.light-theme .section-border-notch {
+      border-color: rgba(0, 0, 0, 0.16);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       WORKFLOW HORIZONTAL CAROUSEL SECTION (White Canvas & Blue Shaded Cards)
+       ═══════════════════════════════════════════════════════════════ */
     .workflow-section {
       background: #FFFFFF;
-      padding: 6rem 0;
+      padding: 6rem 0 5rem;
       overflow: hidden;
+      position: relative;
     }
 
     .workflow-container {
       width: 100%;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .workflow-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 4rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 3.5rem;
       padding: 0 3rem;
+      text-align: center;
+    }
+
+    .workflow-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.01em; /* ALL CAPS 1% */
+      text-transform: uppercase;
+      color: #2563EB;
+      margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
     }
 
     .workflow-title {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 4vw, 3.5rem);
-      font-weight: 600;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      color: #000000;
+      font-size: clamp(2.25rem, 4vw, 3.5rem); /* 56px */
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      color: #0F172A;
+      text-align: center;
+      margin-bottom: 0;
     }
 
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .btn-nav {
-      width: 56px;
-      height: 56px;
-      border-radius: 50px;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-nav svg {
-      width: 20px;
-      height: 20px;
-      stroke-width: 1.5px;
-    }
-
-    .btn-prev {
-      background-color: #FFFFFF;
-      color: #000000;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-prev:hover {
-      background-color: #F5F5F5;
-    }
-
-    .btn-next {
-      background-color: var(--surface-deep);
-      color: #FFFFFF;
-    }
-
-    .btn-next:hover {
-      background-color: #1a1f2e;
+    .workflow-track-wrapper {
+      width: 100%;
+      overflow: visible;
+      padding: 1.5rem 0;
     }
 
     .workflow-track {
@@ -270,55 +439,89 @@
       padding: 0 calc(50vw - 160px);
       width: max-content;
       will-change: transform;
+      align-items: center;
     }
 
     .workflow-card {
       width: 320px;
       background-color: #FFFFFF;
       border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 12px;
-      padding: 2rem;
-      height: 340px;
+      border-radius: 0;
+      padding: 2.5rem 2rem;
+      min-height: 200px;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    /* Precision Corner Ticks (┌ ┐ └ ┘) for workflow cards */
+    .workflow-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+      background-position: top left, top right, bottom left, bottom right;
+      background-size: 8px 8px;
+      background-repeat: no-repeat;
+      transition: background-image 250ms ease;
+    }
+
+    .workflow-card:hover::before {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+    }
+
+    .workflow-card:hover {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.15);
     }
 
     .workflow-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
+      font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0;
       line-height: 1.2;
       color: #000000;
     }
 
-    .workflow-card p {
-      font-family: 'DM Sans', sans-serif;
-      color: #808080;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
     .card-icon {
-      margin-top: auto;
-      align-self: flex-start;
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
+      margin: 0 auto 1.5rem auto;
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #FFFFFF;
       background-size: cover;
       background-position: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .workflow-card:hover .card-icon {
+      transform: scale(1.06);
     }
 
     .card-icon svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       stroke-width: 2px;
       filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
     }
@@ -349,19 +552,20 @@
 
     .workflow-timeline {
       position: relative;
-      margin-top: 3rem;
+      margin-top: 3.5rem;
       display: flex;
       align-items: center;
+      justify-content: center;
       padding: 0 3rem;
     }
 
     .timeline-line {
       position: absolute;
       top: 50%;
-      left: 3rem;
-      right: 3rem;
+      left: 15%;
+      right: 15%;
       height: 1px;
-      background-color: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.1);
       z-index: 1;
       transform: translateY(-50%);
     }
@@ -376,7 +580,7 @@
     .indicator-pill {
       width: 54px;
       height: 36px;
-      background-color: #FFFFFF;
+      background: #FFFFFF;
       color: #000000;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 40px;
@@ -387,812 +591,502 @@
       font-weight: 500;
       font-size: 0.95rem;
       transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .indicator-pill:hover {
+      border-color: #000000;
+      color: #000000;
     }
 
     .indicator-pill.active {
-      background-color: var(--surface-deep);
+      background: var(--surface-deep, #0A0D12);
       color: #FFFFFF;
-      border-color: var(--surface-deep);
+      border-color: var(--surface-deep, #0A0D12);
+      box-shadow: 0 4px 12px rgba(10, 13, 18, 0.25);
     }
 
-    /* Use Cases Section */
-    .use-cases-section {
-      padding: 6rem 3rem;
-      background: #F5F5F7;
+    /* ═══════════════════════════════════════════════════════════════
+       DATA SOLUTIONS SECTION
+       ═══════════════════════════════════════════════════════════════ */
+    .data-solutions-section {
+      padding: 5.5rem 3rem 5rem;
+      background: var(--surface-deep);
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .use-cases-container {
-      max-width: 1400px;
+    .data-solutions-container {
+      max-width: 1300px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .section-heading {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      margin-bottom: 4rem;
-      color: #000000;
-      text-align: center;
-    }
-
-    .use-cases-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .use-case-card {
-      background: #FFFFFF;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 20px;
-      padding: 3rem;
-      transition: all 300ms ease;
-    }
-
-    .use-case-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .use-case-card h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      color: #000000;
-      letter-spacing: -0.02em;
-    }
-
-    .use-case-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .use-case-card li {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.0625rem;
-      line-height: 1.6;
-      color: #4A4A4A;
-      padding-left: 2rem;
-      position: relative;
-    }
-
-    .use-case-card li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.5rem;
-      width: 8px;
-      height: 8px;
-      background: var(--surface-deep);
-      border-radius: 50%;
-    }
-
-    .use-cases-cta {
-      text-align: center;
-    }
-
-    .use-cases-cta-button {
-      display: inline-block;
-      padding: 1.125rem 3.5rem;
-      background: var(--surface-deep);
+      font-size: clamp(2.25rem, 4vw, 3.5rem); /* 56px */
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
       color: #FFFFFF;
+      text-align: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .solutions-subtitle {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 300ms ease;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 2.75rem;
+      max-width: 55ch; /* 50-60 chars */
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .use-cases-cta-button:hover {
-      background: #1a1f2e;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Why Choose Section */
-    .why-choose-section {
-      padding: 6rem 3rem;
-      background: var(--surface-deep);
-    }
-
-    .why-choose-container {
-      max-width: 1400px;
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+      width: 100%;
       margin: 0 auto;
     }
 
-    .why-choose-section .section-heading {
+    @media (max-width: 1024px) {
+      .solutions-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .solutions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .solution-item {
+      background: #0B0E14;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      position: relative;
+      transition: border-color 250ms ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Ultra-thin 1px, 7px arms */
+    .solution-item::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        /* Top-Left */
+        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+      transition: background 250ms ease;
+    }
+
+    .solution-item:hover::before {
+      background:
+        /* Top-Left */
+        linear-gradient(to right, #38BDF8 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, #38BDF8 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, #38BDF8 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, #38BDF8 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+    }
+
+    .solution-item-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
       color: #FFFFFF;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BUILT AROUND THE WORK SECTION (White Canvas & Blue Shaded Cards)
+       ═══════════════════════════════════════════════════════════════ */
+    .why-choose-section {
+      padding: 6rem 3rem 5.5rem;
+      background: #FFFFFF;
+      position: relative;
+    }
+
+    .why-choose-container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .why-choose-heading {
+      margin-bottom: 3.5rem;
+      text-align: center;
+      color: #0F172A;
     }
 
     .feature-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
     .feature-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 2.5rem;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 2px;
+      padding: 2.75rem 2.25rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      justify-content: flex-start;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.04);
+      transition: background 250ms ease, box-shadow 250ms ease;
     }
 
-    .feature-card h3 {
+    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Ultra-thin 1px, 7px arms */
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        /* Top-Left */
+        linear-gradient(to right, #0F172A 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, #0F172A 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, #0F172A 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, #0F172A 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, #0F172A 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, #0F172A 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, #0F172A 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, #0F172A 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+      transition: background 250ms ease;
+    }
+
+    .feature-card:hover::before {
+      background:
+        /* Top-Left */
+        linear-gradient(to right, #2563EB 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, #2563EB 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, #2563EB 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, #2563EB 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, #2563EB 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, #2563EB 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, #2563EB 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, #2563EB 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+    }
+
+    .feature-card-title {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      letter-spacing: -0.02em;
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      font-weight: 700;
+      color: #0F172A;
+      letter-spacing: -0.03em;
+      line-height: 1.18;
+      margin-bottom: 1rem;
     }
 
     .feature-card p {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6; /* 160% leading */
+      letter-spacing: -0.02em; /* -2% tracking */
+      color: #475569;
+      font-weight: 400;
+      max-width: 55ch;
     }
 
-    /* Final CTA Section */
-    .cta-section {
-      width: 100%;
-      background: var(--surface-deep);
-      padding: 7rem 1.5rem;
-      position: relative;
-      overflow: hidden;
+    /* Mobile Toggle Button */
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 38px;
+      height: 38px;
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+      transition: border-color 200ms ease, background-color 200ms ease;
     }
 
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(60% 80% at 50% 0%, rgba(56, 189, 248, 0.14) 0%, transparent 70%);
+    .navbar-toggle:hover {
+      border-color: #000000;
+      background: rgba(0, 0, 0, 0.04);
     }
 
-    .cta-inner {
-      position: relative;
-      max-width: 860px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .cta-heading {
-      margin-top: 0;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: #FFFFFF;
-      text-transform: uppercase;
-    }
-
-    .cta-subheading {
-      margin: 1.5rem auto 0.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1rem, 1.5vw, 1.125rem);
-      line-height: 1.65;
-      color: rgba(255, 255, 255, 0.76);
-    }
-
-    .cta-highlight {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 2.5rem;
+    .toggle-bar {
       display: block;
+      width: 18px;
+      height: 1.5px;
+      background: #000000;
+      border-radius: 1px;
+      transition: transform 250ms ease, opacity 250ms ease;
+      transform-origin: center;
     }
 
-    .cta-actions {
-      margin-top: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(0.3rem, 1vw, 0.5rem);
+    .navbar-toggle.is-active .toggle-bar:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
     }
 
-    .cta-text-link {
+    .navbar-toggle.is-active .toggle-bar:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .navbar-toggle.is-active .toggle-bar:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    /* Mobile Navigation Drawer / Overlay */
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(8, 13, 26, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), visibility 280ms ease;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
+      flex-direction: column;
+      padding-top: 4.25rem;
+    }
+
+    .mobile-nav-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-content {
       background: #FFFFFF;
-      padding: 0.65rem 1.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 700;
-      font-size: 0.8125rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #000000;
-      text-decoration: none;
-      white-space: nowrap;
-      line-height: 1;
-      transition: all 300ms ease;
-      cursor: pointer;
-    }
-
-    .cta-text-link:hover {
-      background: var(--accent-lime);
-      color: var(--gray-900);
-    }
-
-    .cta-shared-pill {
-      display: grid;
-      place-items: center;
-      aspect-ratio: 1;
-      border-radius: 9999px;
-      background: #FFFFFF;
-      padding: 0.65rem;
-      border: none;
-      cursor: pointer;
-      transition: all 300ms ease;
-      flex-shrink: 0;
-      pointer-events: none;
-    }
-
-    .cta-pill-arrow {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      padding: 1.5rem 2rem 2rem;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #000000;
-      transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+      flex-direction: column;
+      gap: 1.5rem;
+      transform: translateY(-20px);
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .cta-pill-arrow svg {
-      width: 0.875rem;
-      height: 0.875rem;
-      color: #000000;
+    .mobile-nav-overlay.is-open .mobile-nav-content {
+      transform: translateY(0);
     }
 
-    .cta-meta {
-      margin-top: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(255, 255, 255, 0.42);
-    }
-
-    .cta-meta-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.28);
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 768px) {
-      .cta-section {
-        padding: 4.5rem 1.5rem;
-      }
-    }
-
-    /* Footer */
-    .site-footer {
-      background: var(--surface-deepest);
-      padding: 4rem 3rem 2.5rem;
-    }
-
-    .footer-container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .footer-top {
-      display: grid;
-      gap: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .footer-branding h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 1rem;
-    }
-
-    .footer-branding p {
-      font-size: 0.9375rem;
-      line-height: 1.65;
-      color: rgba(255, 255, 255, 0.58);
-      max-width: 360px;
-    }
-
-    .footer-nav-groups {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .footer-group-title {
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.625rem;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      color: rgba(255, 255, 255, 0.38);
-    }
-
-    .footer-links {
-      list-style: none;
-      margin-top: 1.125rem;
+    .mobile-nav-links {
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
 
-    .footer-links a,
-    .footer-links span {
-      font-size: 0.9375rem;
-      line-height: 1.4;
-      color: rgba(255, 255, 255, 0.68);
-      text-decoration: none;
-      transition: color 200ms ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-cyan);
-    }
-
-    .footer-bottom {
-      margin-top: 4rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: rgba(255, 255, 255, 0.34);
-    }
-
-    .footer-legal {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .footer-legal a {
-      color: rgba(255, 255, 255, 0.34);
-      text-decoration: none;
-      transition: color 200ms ease;
-    }
-
-    .footer-legal a:hover {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    @media (min-width: 900px) {
-      .footer-top {
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
-        gap: 4rem;
-      }
-
-      .footer-nav-groups {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .use-cases-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .feature-cards {
-        grid-template-columns: 1fr;
-      }
-
-      .workflow-header {
-        flex-direction: column;
-        gap: 2rem;
-      }
-
-      .site-footer {
-        padding: 3.5rem 1.5rem 2rem;
-      }
-
-      .footer-bottom {
-        margin-top: 3rem;
-      }
-    }
-
-    /* Workflow Section */
-    .workflow-section {
-      padding: 6rem 3rem;
-      background: #FFFFFF;
-    }
-
-    .workflow-container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .workflow-intro {
-      max-width: 800px;
-      margin: 0 auto 5rem;
-      text-align: center;
-    }
-
-    .workflow-intro h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: #000000;
-      margin-bottom: 1.5rem;
-    }
-
-    .workflow-intro p {
+    .mobile-nav-item {
       font-family: 'DM Sans', sans-serif;
       font-size: 1.125rem;
-      line-height: 1.6;
-      color: rgba(0, 0, 0, 0.6);
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.75);
+      text-decoration: none;
+      padding: 0.6rem 0;
+      display: inline-flex;
+      align-items: center;
+      transition: color 180ms ease;
     }
 
-    .workflow-stages {
-      display: grid;
-      gap: 4rem;
-    }
-
-    .workflow-stage {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .stage-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .stage-number {
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .stage-content h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: #000000;
-      line-height: 1.2;
-    }
-
-    .stage-content p {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: rgba(0, 0, 0, 0.6);
-      max-width: 65ch;
-    }
-
-    .stage-details {
-      margin-top: 1.5rem;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .detail-item {
-      display: flex;
-      gap: 0.75rem;
-      align-items: start;
-    }
-
-    .detail-icon {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      color: var(--accent-cyan);
-      margin-top: 2px;
-    }
-
-    .detail-text {
-      flex: 1;
-    }
-
-    .detail-text strong {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: #000000;
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .detail-text span {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: rgba(0, 0, 0, 0.6);
-    }
-
-    /* Quality Section */
-    .quality-section {
-      padding: 6rem 3rem;
-      background: var(--surface-deep);
-    }
-
-    .quality-container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-header h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 1rem;
-    }
-
-    .section-header p {
-      font-family: 'DM Sans', sans-serif;
+    .mobile-nav-item::before,
+    .mobile-nav-item::after {
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 1.125rem;
-      color: rgba(255, 255, 255, 0.6);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .quality-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .quality-card {
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-    }
-
-    .quality-card h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.25rem;
       font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.75rem;
+      color: #000000;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
     }
 
-    .quality-card p {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.6);
+    .mobile-nav-item::before {
+      content: '[';
+      margin-right: 0.4rem;
+      transform: translateX(4px);
     }
 
-    /* Stats Section */
-    .stats-section {
-      padding: 6rem 3rem;
-      background: #FFFFFF;
+    .mobile-nav-item::after {
+      content: ']';
+      margin-left: 0.4rem;
+      transform: translateX(-4px);
     }
 
-    .stats-container {
-      max-width: 1400px;
-      margin: 0 auto;
+    .mobile-nav-item:hover {
+      color: #000000;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 3rem;
+    .mobile-nav-item:hover::before,
+    .mobile-nav-item:hover::after {
+      opacity: 1;
+      color: #000000;
+      transform: translateX(0);
     }
 
-    .stat-item {
-      text-align: center;
+    .mobile-nav-item.active {
+      color: #2563EB;
+      font-weight: 600;
     }
 
-    .stat-number {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      color: var(--accent-cyan);
-      line-height: 1;
-      margin-bottom: 0.75rem;
+    .mobile-nav-item.active::before,
+    .mobile-nav-item.active::after {
+      opacity: 1;
+      color: #2563EB;
+      transform: translateX(0);
     }
 
-    .stat-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9375rem;
-      color: rgba(0, 0, 0, 0.6);
-      line-height: 1.4;
+    .mobile-nav-cta {
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    /* Footer */
-    .site-footer {
+    .mobile-nav-cta .cta-button {
       width: 100%;
-      background: var(--surface-deepest);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 4.5rem 1.5rem 2rem;
-      font-family: 'DM Sans', sans-serif;
     }
 
-    .footer-inner {
-      max-width: 1220px;
-      margin: 0 auto;
-    }
-
-    .footer-top {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .footer-brand-logo {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.375rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #FFFFFF;
-    }
-
-    .footer-brand-line {
-      margin-top: 0.875rem;
-      max-width: 34ch;
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .footer-nav-groups {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2.5rem 1.5rem;
-    }
-
-    .footer-group-title {
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.625rem;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      color: rgba(255, 255, 255, 0.38);
-    }
-
-    .footer-links {
-      list-style: none;
-      margin-top: 1.125rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .footer-links a,
-    .footer-links span {
-      font-size: 0.9375rem;
-      line-height: 1.4;
-      color: rgba(255, 255, 255, 0.68);
-      text-decoration: none;
-      transition: color 200ms ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-cyan);
-    }
-
-    .footer-bottom {
-      margin-top: 4rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-family: 'IBM Plex Sans', monospace;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: rgba(255, 255, 255, 0.34);
-    }
-
-    .footer-legal {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .footer-legal a {
-      color: rgba(255, 255, 255, 0.34);
-      text-decoration: none;
-      transition: color 200ms ease;
-    }
-
-    .footer-legal a:hover {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    @media (min-width: 900px) {
-      .footer-top {
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
-        gap: 4rem;
-      }
-
-      .footer-nav-groups {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .workflow-stage {
-        grid-template-columns: 2fr 3fr;
-        gap: 4rem;
-      }
-    }
-
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE ADJUSTMENTS
+       ═══════════════════════════════════════════════════════════════ */
     @media (max-width: 1024px) {
+      .navbar {
+        padding: 0.65rem 1.5rem;
+      }
       .navbar-nav {
         display: none;
+      }
+      .navbar-actions .cta-button {
+        display: none;
+      }
+      .navbar-toggle {
+        display: flex;
+      }
+      .console-main-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-statement-pane {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-right: 0;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
       }
     }
 
     @media (max-width: 768px) {
       .navbar {
-        padding: 0.5rem 1.5rem;
+        padding: 0.65rem 1.25rem;
       }
-
       .hero-section {
-        padding: 6rem 1.5rem 4rem;
+        padding: 6.5rem 1.25rem 3.5rem;
       }
-
-      .workflow-section,
-      .quality-section,
-      .stats-section,
-      .cta-section {
-        padding: 4rem 1.5rem;
+      .workflow-section {
+        padding: 3.5rem 0 3rem;
       }
-
-      .site-footer {
-        padding: 3.5rem 1.5rem 2rem;
+      .data-solutions-section,
+      .why-choose-section {
+        padding: 3.5rem 1.25rem;
       }
+      .feature-cards {
+        grid-template-columns: 1fr;
+      }
+    }
 
-      .footer-bottom {
-        margin-top: 3rem;
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0.55rem 1rem;
+      }
+      .hero-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+      }
+      .workflow-header {
+        padding: 0 1rem;
+        margin-bottom: 2rem;
+      }
+      .workflow-card {
+        width: 280px;
+        padding: 1.75rem 1.25rem;
+      }
+      .intake-console-section {
+        padding: 1.5rem 0.75rem 1.5rem;
+      }
+      .console-header-bar {
+        padding: 0.6rem 1rem;
+      }
+      .console-statement-pane {
+        padding: 1.35rem 1rem;
+      }
+      .console-prompt-record {
+        padding: 0.85rem 1rem;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+      .console-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVBAR (Preserved)
+       ═══════════════════════════════════════════════════════════════ -->
   <nav class="navbar">
     <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
 
     <div class="navbar-nav">
       <a href="index.html" class="nav-item">Home</a>
       <a href="services.html" class="nav-item">Services</a>
-      <a href="approach.html" class="nav-item">Our Approach</a>
+      <a href="approach.html" class="nav-item active">Our Approach</a>
       <a href="contact.html" class="nav-item">Contact</a>
     </div>
 
@@ -1205,253 +1099,818 @@
           </svg>
         </span>
       </button>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Mobile Navigation Drawer / Overlay -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
+    <div class="mobile-nav-content">
+      <div class="mobile-nav-links">
+        <a href="index.html" class="mobile-nav-item">Home</a>
+        <a href="services.html" class="mobile-nav-item">Services</a>
+        <a href="approach.html" class="mobile-nav-item active">Our Approach</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+      </div>
+      <div class="mobile-nav-cta">
+        <a href="contact.html" class="cta-button">
+          <span class="cta-button-label">Book a Call</span>
+          <span class="cta-button-arrow">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════════ -->
   <section class="hero-section">
+    <!-- Minimal Ambient Lighting & Masked Micro-Grid -->
+    <div class="hero-backdrop-glow" aria-hidden="true"></div>
+    <div class="hero-micro-grid" aria-hidden="true"></div>
+
     <div class="hero-container">
       <h1>Our Approach</h1>
-      <p>From raw data to production intelligence — structured, transparent, and reliable.</p>
+      <p>From raw data to production intelligence: structured, transparent, and reliable.</p>
     </div>
   </section>
 
-  <!-- Workflow Section -->
+
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border light-theme" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       WORKFLOW SECTION
+       ═══════════════════════════════════════════════════════════════ -->
   <section class="workflow-section">
     <div class="workflow-container">
       <div class="workflow-header">
         <h2 class="workflow-title">Workflow</h2>
-        <div class="nav-buttons">
-          <button class="btn-nav btn-prev" id="btnPrev" aria-label="Previous">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="btn-nav btn-next" id="btnNext" aria-label="Next">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
       </div>
 
       <div id="trackWrapper" class="workflow-track-wrapper">
         <div id="track" class="workflow-track">
+          
+          <!-- Card 01: Learn -->
           <div class="workflow-card">
-            <h3>Defining dataset requirements</h3>
-            <p>Agreeing on the scope, schema, format, and quality standards.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
             </div>
+            <h3>Learn</h3>
           </div>
 
+          <!-- Card 02: Discover -->
           <div class="workflow-card">
-            <h3>Data collection or acquisition</h3>
-            <p>Collecting new data or importing data sets provided by the client.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
             </div>
+            <h3>Discover</h3>
           </div>
 
+          <!-- Card 03: Candidate Selection -->
           <div class="workflow-card">
-            <h3>Annotate, Clean & Enrich</h3>
-            <p>Applying exactly the services your project requires.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
               </svg>
             </div>
+            <h3>Candidate Selection <br/> from Talent Pool</h3>
           </div>
 
+          <!-- Card 04: Train -->
           <div class="workflow-card">
-            <h3>Quality control</h3>
-            <p>Multi-stage quality control, spot checks, expert review, and decision-making.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
               </svg>
             </div>
+            <h3>Train</h3>
           </div>
 
+          <!-- Card 05: Manage Production -->
           <div class="workflow-card">
-            <h3>Structured Data Delivery</h3>
-            <p>CSV, JSON, Parquet, SQL, API, or custom.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
             </div>
+            <h3>Manage Production</h3>
           </div>
 
+          <!-- Card 06: Review + Deliver -->
           <div class="workflow-card">
-            <h3>Iterations based on feedback</h3>
-            <p>Continuous improvement through close collaboration with the client.</p>
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M1 4v6h6M23 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
+            <h3>Review + Deliver</h3>
           </div>
+
         </div>
       </div>
 
+      <!-- Timeline Indicators -->
       <div class="workflow-timeline">
         <div class="timeline-line"></div>
         <div class="timeline-indicators">
-          <div class="indicator-pill active">01</div>
-          <div class="indicator-pill">02</div>
-          <div class="indicator-pill">03</div>
-          <div class="indicator-pill">04</div>
-          <div class="indicator-pill">05</div>
-          <div class="indicator-pill">06</div>
+          <div class="indicator-pill active" data-index="0">01</div>
+          <div class="indicator-pill" data-index="1">02</div>
+          <div class="indicator-pill" data-index="2">03</div>
+          <div class="indicator-pill" data-index="3">04</div>
+          <div class="indicator-pill" data-index="4">05</div>
+          <div class="indicator-pill" data-index="5">06</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Use Cases Section -->
-  <section class="use-cases-section">
-    <div class="use-cases-container">
-      <h2 class="section-heading">Use Cases</h2>
-      <div class="use-cases-grid">
-        <div class="use-case-card">
-          <h3>AI & Computer Vision</h3>
-          <ul>
-            <li>AI Model Training Data (LLM Post-Training & RLHF)</li>
-            <li>Autonomous Mobility & LiDAR</li>
-            <li>Healthcare & Medical Imaging</li>
-          </ul>
+
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border light-theme" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DATA SOLUTIONS SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="data-solutions-section">
+    <div class="data-solutions-container">
+      <h2 class="section-heading">Data solutions</h2>
+      <p class="solutions-subtitle">Our support extends across the wider data lifecycle.</p>
+      <div class="solutions-grid">
+        <div class="solution-item">
+          <h3 class="solution-item-title">Data Collection</h3>
         </div>
-        <div class="use-case-card">
-          <h3>Language & Business Data</h3>
-          <ul>
-            <li>Document AI & OCR (contracts, forms, invoices)</li>
-            <li>Customer Support & Chatbot Training</li>
-            <li>Market Research & Lead Datasets</li>
-          </ul>
+        <div class="solution-item">
+          <h3 class="solution-item-title">Data Enrichment</h3>
         </div>
-      </div>
-      <div class="use-cases-cta">
-        <a href="contact.html" class="use-cases-cta-button">Book a Call</a>
+        <div class="solution-item">
+          <h3 class="solution-item-title">Data Cleaning</h3>
+        </div>
+        <div class="solution-item">
+          <h3 class="solution-item-title">Dataset QA</h3>
+        </div>
+        <div class="solution-item">
+          <h3 class="solution-item-title">Human Review</h3>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Choose Section -->
+
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border light-theme" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       BUILT AROUND THE WORK SECTION
+       ═══════════════════════════════════════════════════════════════ -->
   <section class="why-choose-section">
     <div class="why-choose-container">
-      <h2 class="section-heading">Why Choose DataGlif</h2>
+      <h2 class="section-heading why-choose-heading">Built around the work, not a template</h2>
       <div class="feature-cards">
         <div class="feature-card">
-          <h3>Human-in-the-Loop Expertise</h3>
-          <p>Real experts supported by AI workflows to ensure accurate, reliable annotations.</p>
+          <h3 class="feature-card-title">Adaptive Framework</h3>
+          <p>The workflow fits the problem. Taxonomy, risk, scale, and delivery requirements determine whether the process is manual, model-assisted, or hybrid.</p>
         </div>
         <div class="feature-card">
-          <h3>Enterprise-Grade Quality</h3>
-          <p>Built-in QA, validation, transparent feedback, and consistent annotation standards.</p>
+          <h3 class="feature-card-title">Domain Calibration</h3>
+          <p>Annotators are hand selected for the task, calibrated on real examples, and coached around the edge cases that matter.</p>
         </div>
         <div class="feature-card">
-          <h3>Flexible & Workflow Ready</h3>
-          <p>Scale from pilot projects to millions of annotations, delivered in your preferred format.</p>
+          <h3 class="feature-card-title">Closed-Loop Iteration</h3>
+          <p>Quality improves with every cycle. Disagreements and recurring errors feed back into the rubric, training, and review process strengthening consistency and quality over time.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA Section -->
-  <section class="cta-section" id="contact">
-    <div class="cta-inner">
-      <h2 class="cta-heading">Ready to Build Better Data?</h2>
-      <p class="cta-subheading">Request a custom dataset scoping within</p>
-      <span class="cta-highlight">48 hours</span>
 
-      <div class="cta-actions">
-        <a href="contact.html" class="cta-text-link cta-link-left">Request a Dataset</a>
-        <button class="cta-shared-pill" aria-label="Navigate">
-          <span class="cta-pill-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="19" x2="12" y2="5"></line>
-              <polyline points="5 12 12 5 19 12"></polyline>
-            </svg>
-          </span>
-        </button>
-        <a href="mailto:hello@dataglif.com" class="cta-text-link cta-link-right">Email the team</a>
-      </div>
 
-      <div class="cta-meta">
-        <span>Pilot batch in 5 days</span>
-        <span class="cta-meta-dot"></span>
-        <span>NDA on request</span>
-        <span class="cta-meta-dot"></span>
-        <span>Reply within 24 hours</span>
-      </div>
+  <!-- ═══════════════════════════════════════════════════════════════
+       PROJECT INTAKE CONSOLE (Compact, Balanced & Interactive)
+       ═══════════════════════════════════════════════════════════════ -->
+  <style>
+    .intake-console-section .cta-button {
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #FFFFFF;
+    }
+
+    .intake-console-section .cta-button:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #080D1A;
+    }
+
+    .intake-console-section {
+      width: 100%;
+      background: var(--surface-deepest, #05070C);
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .intake-console-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .intake-console {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      clip-path: none;
+      position: relative;
+    }
+
+    .console-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 0.85rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .console-header-left {
+      color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .console-status-open {
+      color: #34D399;
+      font-weight: 600;
+    }
+
+    .console-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .console-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 6px #34D399;
+    }
+
+    .console-reticle-icon {
+      display: inline-flex;
+      color: rgba(255, 255, 255, 0.4);
+      transition: color 200ms ease, transform 300ms ease;
+    }
+
+    /* Middle Grid: Statement + 3 Prompt Records */
+    .console-main-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .console-statement-pane {
+      padding: 2rem 2.5rem 2rem 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .console-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .console-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 55ch; /* 50-60 chars */
+      margin: 0;
+    }
+
+    .console-action-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 0.35rem;
+    }
+
+    .console-subnote {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .console-subnote a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    .console-subnote a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    /* Right Prompts Records Pane */
+    .console-prompts-pane {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .console-prompt-record {
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      min-height: 96px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      background: transparent;
+      transition: background 250ms ease;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+    }
+
+    .console-prompt-record:hover,
+    .console-prompt-record:focus-visible {
+      background: rgba(56, 189, 248, 0.04);
+    }
+
+    .console-prompt-record:last-child {
+      border-bottom: none;
+    }
+
+    /* Default State: Header & Question */
+    .prompt-default-state {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .console-prompt-record:hover .prompt-default-state,
+    .console-prompt-record:focus-visible .prompt-default-state {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+
+    .prompt-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .console-reticle-icon {
+      display: inline-flex;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .prompt-query-line {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .prompt-cursor {
+      color: var(--accent-cyan);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1;
+      animation: prompt-blink 1.5s infinite;
+    }
+
+    @keyframes prompt-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Hover State: Replaces everything with strictly the answer text */
+    .prompt-hover-answer {
+      position: absolute;
+      inset: 0;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 220ms ease, transform 220ms ease;
+      pointer-events: none;
+    }
+
+    .console-prompt-record:hover .prompt-hover-answer,
+    .console-prompt-record:focus-visible .prompt-hover-answer {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .prompt-answer-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84375rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0;
+    }
+
+    /* Bottom Sitemap Grid (4 Columns) */
+    .console-sitemap-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding: 2.25rem 0 2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .console-nav-col-header {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .console-nav-arrow {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .console-brand-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 32ch;
+    }
+
+    .console-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .console-nav-links a,
+    .console-nav-links span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78125rem;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.58);
+      text-decoration: none;
+      transition: all 150ms ease;
+      display: inline-block;
+    }
+
+    .console-nav-links a:hover {
+      color: #FFFFFF;
+    }
+
+    /* Console Bottom Legal Bar */
+    .console-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0 0 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .console-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .console-legal-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .console-legal-links a:hover {
+      color: #FFFFFF;
+    }
+
+    .console-legal-sep {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 1024px) {
+      .console-main-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-statement-pane {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-right: 0;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .intake-console-section {
+        padding: 1.5rem 0.75rem 1.5rem;
+      }
+      .console-header-bar {
+        padding: 0.6rem 1rem;
+      }
+      .console-statement-pane {
+        padding: 1.35rem 1rem;
+      }
+      .console-prompt-record {
+        padding: 0.85rem 1rem;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+      .console-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
+      }
+    }
+  </style>
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
     </div>
-  </section>
+  </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-top">
-        <div class="footer-branding">
-          <h3>DataGlif</h3>
-          <p>High-quality training data for AI teams. From pilot projects to production scale.</p>
+  <section class="intake-console-section" id="contact">
+    <div class="intake-console-wrapper">
+      <div class="intake-console">
+        
+        <!-- 1. Top Header Bar -->
+        <div class="console-header-bar">
+          <div class="console-header-left">
+            <span>PROJECT INTAKE</span>
+            <span>/</span>
+            <span class="console-status-open">OPEN</span>
+          </div>
+          <div class="console-header-right">
+            <span class="console-status-dot" aria-hidden="true"></span>
+            <span>INTAKE OPEN</span>
+            <span class="console-reticle-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
         </div>
 
-        <div class="footer-nav-groups">
+        <!-- 2. Main Middle Grid -->
+        <div class="console-main-grid">
+          
+          <!-- Left Statement Pane -->
+          <div class="console-statement-pane">
+            <h2 class="console-heading">Start With the Failure Mode.</h2>
+            <p class="console-desc">
+              Show us what the model is missing, where the data breaks down, or what quality must be proven. That becomes the brief for the right collection, annotation, enrichment, and review workflow.
+            </p>
+            <div class="console-action-row">
+              <a href="contact.html" class="cta-button">
+                <span class="cta-button-label">Open a Data Brief</span>
+                <span class="cta-button-arrow">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+              <span class="console-subnote">
+                Or send a note / <a href="mailto:hello@dataglif.com">hello@dataglif.com</a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Right 3 Numbered Prompts with Pure Answer Swap on Hover -->
+          <div class="console-prompts-pane">
+            
+            <!-- Prompt 01 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>01 / DATA</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What are you working with?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">Raw images, LiDAR &amp; 3D point clouds, unstructured document scans, conversational audio, or pre-existing datasets requiring higher quality labels.</p>
+              </div>
+            </div>
+
+            <!-- Prompt 02 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>02 / GAP</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What is failing or missing?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">Edge-case classification errors, OCR transcription drift, bounding box misalignment, or low confidence in complex domain taxonomy.</p>
+              </div>
+            </div>
+
+            <!-- Prompt 03 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>03 / TARGET</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What must production-ready mean?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">&gt;99.5% verified consensus accuracy, schema-compliant JSON/Parquet export, multi-tier QA audits, and delivery within your SLA.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. Bottom Sitemap Navigation -->
+        <div class="console-sitemap-grid">
+          
           <div>
-            <div class="footer-group-title">Company</div>
-            <ul class="footer-links">
-              <li><a href="services.html">Services</a></li>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">→</span>
+              <span>DATAGLIF</span>
+            </div>
+            <p class="console-brand-desc">
+              Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
+            </p>
+          </div>
+
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>SERVICES</span>
+            </div>
+            <ul class="console-nav-links">
+              <li><a href="service.html">Image &amp; Video</a></li>
+              <li><a href="service.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="service.html">Text &amp; Documents</a></li>
+              <li><a href="service.html">Audio &amp; Multimodal</a></li>
+              <li><a href="service.html">Data Operations &amp; QA</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>COMPANY</span>
+            </div>
+            <ul class="console-nav-links">
+              <li><a href="index.html">Home</a></li>
               <li><a href="approach.html">Our Approach</a></li>
+              <li><a href="index.html#blog">Field Notes</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
 
           <div>
-            <div class="footer-group-title">Resources</div>
-            <ul class="footer-links">
-              <li><a href="#case-studies">Case Studies</a></li>
-              <li><a href="#documentation">Documentation</a></li>
-              <li><a href="#blog">Blog</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div class="footer-group-title">Get in Touch</div>
-            <ul class="footer-links">
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>GET IN TOUCH</span>
+            </div>
+            <ul class="console-nav-links">
               <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
               <li><span>San Francisco, CA</span></li>
               <li><span>Replies within 24 hours</span></li>
               <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      <div class="footer-bottom">
-        <span>&copy; 2026 DataGlif. All rights reserved.</span>
-        <div class="footer-legal">
-          <a href="#privacy">Privacy</a>
-          <a href="#terms">Terms</a>
-          <a href="#security">Data Security</a>
         </div>
+
+        <!-- 4. Console Bottom Legal Bar -->
+        <div class="console-bottom-bar">
+          <div>&copy; 2026 DATAGLIF. ALL RIGHTS RESERVED.</div>
+          <div class="console-legal-links">
+            <a href="#privacy">PRIVACY</a>
+            <span class="console-legal-sep">/</span>
+            <a href="#terms">TERMS</a>
+            <span class="console-legal-sep">/</span>
+            <a href="#security">DATA SECURITY</a>
+          </div>
+        </div>
+
       </div>
     </div>
-  </footer>
+  </section>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       GSAP & LENIS HORIZONTAL SCROLL ENGINE
+       ═══════════════════════════════════════════════════════════════ -->
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Lenis
+      // Initialize Lenis Smooth Scroll
       const lenis = new Lenis({
         lerp: 0.1,
         smoothWheel: true
@@ -1463,106 +1922,152 @@
       }
       requestAnimationFrame(raf);
 
-      // GSAP ScrollTrigger
+      // Register GSAP ScrollTrigger
       gsap.registerPlugin(ScrollTrigger);
 
       const track = document.getElementById('track');
       const cards = document.querySelectorAll('.workflow-card');
       const pills = document.querySelectorAll('.indicator-pill');
 
-      // Calculate total scroll distance needed to show all cards centered
-      const cardWidth = cards[0].offsetWidth;
-      const gap = 24;
-      const viewportCenter = window.innerWidth / 2;
-      const cardCenter = cardWidth / 2;
+      if (track && cards.length > 0) {
+        const cardWidth = cards[0].offsetWidth;
+        const gap = 24;
+        const totalScrollDistance = (cards.length - 1) * (cardWidth + gap);
 
-      // Total distance to scroll: move from first card centered to last card centered
-      const totalScrollDistance = (cards.length - 1) * (cardWidth + gap);
+        // Horizontal scroll animation with Pinning
+        gsap.to(track, {
+          x: () => -totalScrollDistance,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.workflow-section',
+            start: 'top top',
+            end: () => `+=${totalScrollDistance * 2}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1
+          }
+        });
 
-      // Horizontal scroll animation
-      gsap.to(track, {
-        x: () => -totalScrollDistance,
-        ease: 'none',
-        scrollTrigger: {
+        // Update active pill and card focus
+        ScrollTrigger.create({
           trigger: '.workflow-section',
           start: 'top top',
           end: () => `+=${totalScrollDistance * 2}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1
-        }
-      });
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const index = Math.min(Math.round(progress * (cards.length - 1)), cards.length - 1);
 
-      // Update active pill and scale center card on scroll
-      ScrollTrigger.create({
-        trigger: '.workflow-section',
-        start: 'top top',
-        end: () => `+=${totalScrollDistance * 2}`,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          // Calculate which card is currently centered
-          const index = Math.round(progress * (cards.length - 1));
+            pills.forEach(pill => pill.classList.remove('active'));
+            if (pills[index]) {
+              pills[index].classList.add('active');
+            }
 
-          pills.forEach(pill => pill.classList.remove('active'));
-          if (pills[index]) {
-            pills[index].classList.add('active');
-          }
+            cards.forEach((card, i) => {
+              const distance = Math.abs(i - progress * (cards.length - 1));
+              const scale = distance < 0.5 ? 1.08 : 1;
+              const opacity = distance < 0.5 ? 1 : 0.7;
 
-          // Scale cards based on position
-          cards.forEach((card, i) => {
-            const distance = Math.abs(i - progress * (cards.length - 1));
-            const scale = distance < 0.5 ? 1.08 : 1;
-            const opacity = distance < 0.5 ? 1 : 0.7;
-
-            gsap.to(card, {
-              scale: scale,
-              opacity: opacity,
-              duration: 0.3,
-              ease: 'power2.out'
+              gsap.to(card, {
+                scale: scale,
+                opacity: opacity,
+                duration: 0.3,
+                ease: 'power2.out'
+              });
             });
+          }
+        });
+
+        // Click on timeline pills to scroll to stage
+        pills.forEach((pill, i) => {
+          pill.addEventListener('click', () => {
+            const trigger = ScrollTrigger.getById('workflow') || ScrollTrigger.getAll()[0];
+            if (trigger) {
+              const targetProgress = i / (cards.length - 1);
+              const targetY = trigger.start + (targetProgress * (trigger.end - trigger.start));
+              lenis.scrollTo(targetY, { duration: 1 });
+            }
           });
-        }
-      });
-
-      // Navigation buttons - snap to each card position
-      const btnPrev = document.getElementById('btnPrev');
-      const btnNext = document.getElementById('btnNext');
-
-      btnNext.addEventListener('click', () => {
-        lenis.scrollTo(window.scrollY + (cardWidth + gap) * 2, { lock: false, duration: 1 });
-      });
-
-      btnPrev.addEventListener('click', () => {
-        lenis.scrollTo(window.scrollY - (cardWidth + gap) * 2, { lock: false, duration: 1 });
-      });
-    });
-
-    // CTA shared pill arrow rotation
-    (function() {
-      const leftLink = document.querySelector('.cta-link-left');
-      const rightLink = document.querySelector('.cta-link-right');
-      const arrow = document.querySelector('.cta-pill-arrow');
-      const pill = document.querySelector('.cta-shared-pill');
-
-      if (leftLink && rightLink && arrow && pill) {
-        leftLink.addEventListener('mouseenter', () => {
-          arrow.style.transform = 'rotate(90deg)';
-          pill.style.background = 'var(--accent-lime)';
-        });
-        leftLink.addEventListener('mouseleave', () => {
-          arrow.style.transform = 'rotate(0deg)';
-          pill.style.background = '#FFFFFF';
-        });
-
-        rightLink.addEventListener('mouseenter', () => {
-          arrow.style.transform = 'rotate(-90deg)';
-          pill.style.background = 'var(--accent-lime)';
-        });
-        rightLink.addEventListener('mouseleave', () => {
-          arrow.style.transform = 'rotate(0deg)';
-          pill.style.background = '#FFFFFF';
         });
       }
+    });
+
+    // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
+    (function initSmartNavbar() {
+      const navbar = document.querySelector('.navbar');
+      if (!navbar) return;
+
+      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      let ticking = false;
+      const scrollThreshold = 8;
+      const topThreshold = 50;
+
+      function handleScroll(currentY) {
+        const delta = currentY - lastScrollY;
+
+        if (currentY <= topThreshold) {
+          navbar.classList.remove('nav-hidden');
+        } else if (delta > scrollThreshold && currentY > topThreshold) {
+          // Scrolling down -> hide smoothly
+          navbar.classList.add('nav-hidden');
+        } else if (delta < -scrollThreshold) {
+          // Scrolling up -> show quickly
+          navbar.classList.remove('nav-hidden');
+        }
+
+        lastScrollY = Math.max(0, currentY);
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            handleScroll(currentY);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Lenis integration if present
+      if (typeof lenis !== 'undefined' && lenis && typeof lenis.on === 'function') {
+        lenis.on('scroll', (e) => {
+          const currentY = (typeof e.scroll === 'number') ? e.scroll : (window.pageYOffset || 0);
+          handleScroll(currentY);
+        });
+      }
+    })();
+
+    // Mobile Navigation Drawer Toggle
+    (function initMobileNav() {
+      const toggle = document.getElementById('navbarToggle');
+      const overlay = document.getElementById('mobileNavOverlay');
+      if (!toggle || !overlay) return;
+
+      function toggleNav(open) {
+        const isOpen = typeof open === 'boolean' ? open : !overlay.classList.contains('is-open');
+        toggle.classList.toggle('is-active', isOpen);
+        overlay.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+        overlay.setAttribute('aria-hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleNav();
+      });
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.closest('.mobile-nav-item') || e.target.closest('.mobile-nav-cta a')) {
+          toggleNav(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+          toggleNav(false);
+        }
+      });
     })();
   </script>
 

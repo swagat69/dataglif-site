@@ -1,0 +1,2827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - DataGlif</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --surface-deepest: #05070C;
+      --surface-deep: #0A0D12;
+      --surface-mid: #0F131C;
+      --accent-cyan: #38BDF8;
+      --accent-lime: #d4ff00;
+      --white: #ffffff;
+      --gray-300: #d1d5db;
+      --gray-900: #111827;
+
+      /* DataGlif colors */
+      --bg: #f0ede8;
+      --bg-2: #e8e4de;
+      --surface: #ffffff;
+      --surface-2: #f4f1ec;
+      --ink: #111210;
+      --ink-2: #3a3a38;
+      --ink-dim: #6b6b68;
+      --ink-faint: #aea9a2;
+      --line: #dedad4;
+      --line-2: #c5c0b8;
+      --blue: #2563eb;
+      --blue-soft: rgba(37,99,235,0.08);
+      --font-d: 'Bricolage Grotesque', sans-serif;
+      --font-b: 'Satoshi', system-ui, -apple-system, sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
+
+      /* Network Map colors */
+      --ring-color: #dbe4e4;
+      --line-base: #e0e6e6;
+      --line-glow: #00a699;
+      --shadow-color: rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.6; /* 160% body leading */
+      letter-spacing: -0.02em; /* -2% body tracking */
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NAVBAR (Preserved)
+       ═══════════════════════════════════════════════════════════════ */
+    /* Navbar - Consistent with all pages with smart scroll hide/show */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0.65rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transform: translateY(0);
+      will-change: transform;
+      /* Fast transition when showing on scroll up */
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Smooth hide when scrolling down */
+    .navbar.nav-hidden {
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #000000;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .navbar-nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-item {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.65);
+      cursor: pointer;
+      padding: 0.35rem 0.6rem;
+      background: transparent;
+      border-radius: 0;
+      transition: color 180ms ease;
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .nav-item::before,
+    .nav-item::after {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #000000;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease, color 180ms ease;
+    }
+
+    .nav-item::before {
+      content: '[';
+      margin-right: 0.35rem;
+      transform: translateX(4px);
+    }
+
+    .nav-item::after {
+      content: ']';
+      margin-left: 0.35rem;
+      transform: translateX(-4px);
+    }
+
+    /* On hover: animate brackets in black */
+    .nav-item:hover {
+      color: #000000;
+      background: transparent;
+    }
+
+    .nav-item:hover::before,
+    .nav-item:hover::after {
+      opacity: 1;
+      color: #000000;
+      transform: translateX(0);
+    }
+
+    /* Active Page Indication - Precision Monospace Brackets [ ] in Blue */
+    .nav-item.active {
+      color: #2563EB;
+      font-weight: 600;
+      background: transparent;
+    }
+
+    .nav-item.active::before,
+    .nav-item.active::after {
+      opacity: 1;
+      color: #2563EB;
+      font-weight: 600;
+      transform: translateX(0);
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.6rem 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+      color: #000000;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 200ms ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #080D1A;
+    }
+
+    .cta-button-label {
+      display: inline;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      transition: none;
+    }
+
+    .cta-button-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      transition: none;
+    }
+
+    .cta-button-arrow svg {
+      width: 0.8125rem;
+      height: 0.8125rem;
+      color: inherit;
+      transform-origin: center center;
+      transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
+    }
+
+    .cta-button:hover .cta-button-arrow svg {
+      transform: rotate(45deg);
+      color: #080D1A;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       MINIMAL HERO SECTION WITH AMBIENT LIGHTING & SUBTLE MASKED GRID
+       ═══════════════════════════════════════════════════════════════ */
+    .hero-section {
+      padding: 7.5rem 3rem 4.5rem;
+      background: var(--surface-deep, #0A0D12);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    /* Ambient top-center lighting bloom */
+    .hero-backdrop-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1100px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(56, 189, 248, 0.09) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 75%);
+    }
+
+    /* Ultra-subtle masked micro-grid */
+    .hero-micro-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, black 20%, transparent 80%);
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Minimal Technical Eyebrow Badge */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-cyan, #38BDF8);
+      box-shadow: 0 0 8px var(--accent-cyan, #38BDF8);
+      animation: hero-dot-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes hero-dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-container h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.75rem, 5.5vw, 5rem); /* 80px */
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-container p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.125rem;
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 58ch; /* 50-60 chars */
+      margin: 0 auto;
+    }
+
+    .hero-cta-button {
+      margin-top: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1.65rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+      color: #080D1A;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 200ms ease;
+      cursor: pointer;
+    }
+
+    .hero-cta-button:hover {
+      background: var(--accent-cyan, #38BDF8);
+      border-color: var(--accent-cyan, #38BDF8);
+      color: #080D1A;
+    }
+
+    .hero-cta-text {
+      white-space: nowrap;
+    }
+
+    .hero-cta-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .hero-cta-icon svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      color: inherit;
+      transform-origin: center center;
+      transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
+    }
+
+    .hero-cta-button:hover .hero-cta-icon svg {
+      transform: rotate(45deg);
+      color: #080D1A;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       INTRO SECTION
+       ═══════════════════════════════════════════════════════════════ */
+    .intro-section {
+      padding: 4rem 3rem 2rem;
+      background: #FFFFFF;
+      text-align: center;
+    }
+
+    .intro-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .intro-container h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 600;
+      color: #000000;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .intro-container p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.65);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       VERY MINIMAL SECTION BORDER GRAPHIC (1px Hairline with Micro Notches)
+       ═══════════════════════════════════════════════════════════════ */
+    .section-border {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 12%, rgba(255, 255, 255, 0.08) 88%, transparent 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .section-border.light-theme {
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.07) 12%, rgba(0, 0, 0, 0.07) 88%, transparent 100%);
+    }
+
+    .section-border-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      height: 1px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .section-border-notch {
+      width: 5px;
+      height: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      transform: translateY(-50%) rotate(45deg);
+      top: 50%;
+      position: relative;
+    }
+
+    .section-border.light-theme .section-border-notch {
+      border-color: rgba(0, 0, 0, 0.16);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       INTERACTIVE SERVICES MAP (5-Node Pentagon Layout)
+       ═══════════════════════════════════════════════════════════════ */
+    .scroll-wrapper {
+      height: 600vh;
+      position: relative;
+    }
+
+    .sticky-layout {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr minmax(450px, 620px) 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 4rem;
+      overflow: hidden;
+      z-index: 1;
+      background: var(--bg);
+    }
+
+    .left-col {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .text-panel {
+      position: absolute;
+      width: 100%;
+      max-width: 560px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .text-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .service-heading {
+      font-family: var(--font-d);
+      font-size: clamp(2.25rem, 4vw, 3.5rem); /* 56px */
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .service-description {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: var(--ink-2);
+      max-width: 55ch; /* 50-60 chars */
+      margin-bottom: 2rem;
+    }
+
+    .service-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--blue-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--blue);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .feature-text h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .center-col {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .network-map {
+      position: relative;
+      width: 620px;
+      height: 620px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .connectors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .base-line {
+      stroke: var(--line-base);
+      stroke-width: 2;
+    }
+
+    .glow-line {
+      stroke: var(--line-glow);
+      stroke-width: 3;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px dashed var(--ring-color);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .ring-1 {
+      width: 250px;
+      height: 250px;
+    }
+
+    .ring-2 {
+      width: 450px;
+      height: 450px;
+    }
+
+    .center-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .center-node::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: var(--bg);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .center-image {
+      width: 120%;
+      height: 120%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 3;
+    }
+
+    .node {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px var(--shadow-color);
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      z-index: 10;
+      opacity: 0.3;
+      transition: opacity 0.6s ease, box-shadow 0.6s ease, filter 0.3s ease;
+      cursor: pointer;
+    }
+
+    .node:hover {
+      filter: brightness(1.08) contrast(1.02);
+    }
+
+    .node span {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 20px;
+      z-index: 1;
+    }
+
+    .node svg {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* 5-Node Pentagon Layout */
+    .node-1 {
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-2 {
+      top: 40%;
+      left: 83%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-3 {
+      top: 78%;
+      left: 70%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-4 {
+      top: 78%;
+      left: 30%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node-5 {
+      top: 40%;
+      left: 17%;
+      transform: translate(-50%, -50%);
+    }
+
+    .node.active {
+      opacity: 1;
+      box-shadow: 0 8px 24px var(--shadow-color);
+    }
+
+    .node::before {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 16px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background-color: #2c2c2e;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      z-index: 20;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .node::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      border-width: 12px 12px 0 12px;
+      border-style: solid;
+      border-color: #2c2c2e transparent transparent transparent;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
+    }
+
+    .node:hover::before,
+    .node:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .right-col {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .graphic-wrapper {
+      position: absolute;
+      width: 100%;
+      max-width: 480px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .graphic-wrapper.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .service-panel-container {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .service-panel-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+    }
+
+    .panel-texture-coarse {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.32;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-texture-fine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.2;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .panel-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 16px;
+      box-shadow: inset 0 0 60px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .service-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      height: 320px;
+      width: 280px;
+      border-radius: 14px;
+      padding: 1.5rem;
+      z-index: 10;
+    }
+
+    .service-card.light {
+      background: #ffffff;
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.38);
+      outline: 1px solid rgba(10, 10, 11, 0.06);
+    }
+
+    .service-card.dark {
+      background: #141416;
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.58);
+      outline: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-eyebrow {
+      font-family: var(--font-m);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .card-eyebrow.light { color: #9a9a9f; }
+    .card-eyebrow.dark { color: #7a7a82; }
+
+    .card-pill {
+      border-radius: 9999px;
+      padding: 3px 8px;
+      font-family: var(--font-m);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    .card-pill.amber {
+      background: rgba(229, 168, 74, 0.15);
+      color: #c88d35;
+    }
+
+    .card-pill.violet {
+      background: rgba(157, 133, 200, 0.15);
+      color: #7d69a5;
+    }
+
+    @media (max-width: 1400px) {
+      .sticky-layout {
+        grid-template-columns: 1fr 480px 1fr;
+        padding: 0 2rem;
+        gap: 1rem;
+      }
+      .network-map {
+        width: 480px;
+        height: 480px;
+      }
+      .ring-1 {
+        width: 200px;
+        height: 200px;
+      }
+      .ring-2 {
+        width: 380px;
+        height: 380px;
+      }
+      .service-heading {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .sticky-layout {
+        grid-template-columns: 1fr 420px 1fr;
+        padding: 0 1.5rem;
+        gap: 1rem;
+      }
+      .network-map {
+        width: 420px;
+        height: 420px;
+      }
+      .ring-1 {
+        width: 180px;
+        height: 180px;
+      }
+      .ring-2 {
+        width: 320px;
+        height: 320px;
+      }
+      .text-panel {
+        max-width: 400px;
+      }
+      .graphic-wrapper {
+        max-width: 400px;
+      }
+      .service-heading {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .navbar-nav {
+        display: none;
+      }
+      .sticky-layout {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        position: relative;
+        height: auto;
+        padding: 2rem 1rem;
+      }
+      .scroll-wrapper {
+        height: auto;
+      }
+      .left-col,
+      .right-col {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 0;
+      }
+      .text-panel,
+      .graphic-wrapper {
+        position: relative;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        margin-bottom: 2rem;
+      }
+      .center-col {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sticky-layout {
+        padding: 1.5rem 1rem;
+      }
+      .left-col,
+      .right-col {
+        padding: 1.5rem 0;
+      }
+      .service-heading {
+        font-size: 1.75rem;
+      }
+      .service-description {
+        font-size: 15px;
+      }
+      .service-card {
+        width: 100%;
+        height: auto;
+        min-height: 280px;
+      }
+      .service-panel-container {
+        max-width: 100%;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       6 STACKING SERVICE CARDS SECTION
+       ═══════════════════════════════════════════════════════════════ */
+    .services-container {
+      position: relative;
+      background: #FFFFFF;
+      z-index: 2;
+      padding: 3rem 0 1rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CHOOSE THE DATA SERVICES YOU NEED (2x3 Grid)
+       ═══════════════════════════════════════════════════════════════ */
+    .services-grid-section {
+      width: 100%;
+      background: var(--surface-deepest, #05070C);
+      padding: 6.5rem 2rem 5.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .services-grid-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-grid-header {
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .services-grid-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.25rem, 4vw, 3.5rem); /* 56px */
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      margin: 0 auto 1rem auto;
+      text-align: center;
+    }
+
+    .services-grid-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 58ch; /* 50-60 chars */
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .services-grid-subtitle {
+        white-space: nowrap;
+      }
+    }
+
+    .services-3x2-grid,
+    .services-2x3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .services-3x2-grid,
+      .services-2x3-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .services-grid-section {
+        padding: 4.5rem 1.5rem 4rem;
+      }
+      .services-3x2-grid,
+      .services-2x3-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+    }
+
+    .data-service-card {
+      background: #0B0E14;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      padding: 2.25rem 2rem 2rem 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 250ms ease;
+    }
+
+    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Subtle at rest, Electric Blue on hover */
+    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Ultra-thin 1px, 7px arms */
+    .data-service-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        /* Top-Left */
+        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+      transition: background 250ms ease;
+    }
+
+    .data-service-card:hover::before {
+      background:
+        /* Top-Left */
+        linear-gradient(to right, #38BDF8 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top left / 1px 7px no-repeat,
+        /* Top-Right */
+        linear-gradient(to left, #38BDF8 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top right / 1px 7px no-repeat,
+        /* Bottom-Left */
+        linear-gradient(to right, #38BDF8 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        /* Bottom-Right */
+        linear-gradient(to left, #38BDF8 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+    }
+
+    .dsc-top {
+      margin-bottom: 1.25rem;
+    }
+
+    .dsc-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      font-weight: 700;
+      line-height: 1.18;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .dsc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .dsc-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78125rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.01em;
+      transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+    }
+
+    .data-service-card:hover .dsc-tag {
+      border-color: rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.05);
+      color: #FFFFFF;
+    }
+
+    .dsc-divider {
+      height: 1px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.09);
+      margin-bottom: 1.25rem;
+    }
+
+    .dsc-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 50ch;
+      margin: 0;
+    }
+
+    /* Mobile Toggle Button */
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 38px;
+      height: 38px;
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+      transition: border-color 200ms ease, background-color 200ms ease;
+    }
+
+    .navbar-toggle:hover {
+      border-color: #000000;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .toggle-bar {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: #000000;
+      border-radius: 1px;
+      transition: transform 250ms ease, opacity 250ms ease;
+      transform-origin: center;
+    }
+
+    .navbar-toggle.is-active .toggle-bar:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .navbar-toggle.is-active .toggle-bar:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .navbar-toggle.is-active .toggle-bar:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    /* Mobile Navigation Drawer / Overlay */
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(8, 13, 26, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), visibility 280ms ease;
+      display: flex;
+      flex-direction: column;
+      padding-top: 4.25rem;
+    }
+
+    .mobile-nav-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-content {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      padding: 1.5rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transform: translateY(-20px);
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-nav-overlay.is-open .mobile-nav-content {
+      transform: translateY(0);
+    }
+
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-nav-item {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.75);
+      text-decoration: none;
+      padding: 0.6rem 0;
+      display: inline-flex;
+      align-items: center;
+      transition: color 180ms ease;
+    }
+
+    .mobile-nav-item::before,
+    .mobile-nav-item::after {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #000000;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .mobile-nav-item::before {
+      content: '[';
+      margin-right: 0.4rem;
+      transform: translateX(4px);
+    }
+
+    .mobile-nav-item::after {
+      content: ']';
+      margin-left: 0.4rem;
+      transform: translateX(-4px);
+    }
+
+    .mobile-nav-item:hover {
+      color: #000000;
+    }
+
+    .mobile-nav-item:hover::before,
+    .mobile-nav-item:hover::after {
+      opacity: 1;
+      color: #000000;
+      transform: translateX(0);
+    }
+
+    .mobile-nav-item.active {
+      color: #2563EB;
+      font-weight: 600;
+    }
+
+    .mobile-nav-item.active::before,
+    .mobile-nav-item.active::after {
+      opacity: 1;
+      color: #2563EB;
+      transform: translateX(0);
+    }
+
+    .mobile-nav-cta {
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .mobile-nav-cta .cta-button {
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE ADJUSTMENTS
+       ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .navbar {
+        padding: 0.65rem 1.5rem;
+      }
+      .navbar-nav {
+        display: none;
+      }
+      .navbar-actions .cta-button {
+        display: none;
+      }
+      .navbar-toggle {
+        display: flex;
+      }
+      .console-main-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-statement-pane {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-right: 0;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.65rem 1.25rem;
+      }
+      .hero-section {
+        padding: 6.5rem 1.25rem 3.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0.55rem 1rem;
+      }
+      .hero-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+      }
+      .intake-console-section {
+        padding: 1.5rem 0.75rem 1.5rem;
+      }
+      .console-header-bar {
+        padding: 0.6rem 1rem;
+      }
+      .console-statement-pane {
+        padding: 1.35rem 1rem;
+      }
+      .console-prompt-record {
+        padding: 0.85rem 1rem;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+      .console-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVBAR (Preserved)
+       ═══════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
+
+    <div class="navbar-nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="services.html" class="nav-item active">Services</a>
+      <a href="approach.html" class="nav-item">Our Approach</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="cta-button" onclick="window.location.href='contact.html'">
+        <span class="cta-button-label">Book a Call</span>
+        <span class="cta-button-arrow">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Drawer / Overlay -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
+    <div class="mobile-nav-content">
+      <div class="mobile-nav-links">
+        <a href="index.html" class="mobile-nav-item">Home</a>
+        <a href="services.html" class="mobile-nav-item active">Services</a>
+        <a href="approach.html" class="mobile-nav-item">Our Approach</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+      </div>
+      <div class="mobile-nav-cta">
+        <a href="contact.html" class="cta-button">
+          <span class="cta-button-label">Book a Call</span>
+          <span class="cta-button-arrow">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="hero-section">
+    <!-- Minimal Ambient Lighting & Masked Micro-Grid -->
+    <div class="hero-backdrop-glow" aria-hidden="true"></div>
+    <div class="hero-micro-grid" aria-hidden="true"></div>
+
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>Our Services</h1>
+        <p>Comprehensive data solutions for AI and enterprise.</p>
+      </div>
+      <a href="contact.html" class="hero-cta-button">
+        <span class="hero-cta-text">Request a Dataset</span>
+        <span class="hero-cta-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       INTERACTIVE SERVICES MAP (5-Node Pentagon Layout)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="scroll-wrapper">
+    <div class="sticky-layout">
+      
+      <!-- ==================== LEFT COLUMN: TEXT CONTENT ==================== -->
+      <div class="left-col">
+        <!-- 01 Image & Video Text -->
+        <div class="text-panel" id="text-0">
+          <h2 class="service-heading">Image & Video</h2>
+          <p class="service-description">Comprehensive labeling and analysis including boxes, segmentation, tracking, and scene understanding.</p>
+          <div class="service-features">
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div class="feature-text"><h3>Bounding Boxes</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="feature-text"><h3>Segmentation</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div class="feature-text"><h3>Object Tracking</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0-5-3-8-9-8s-9 3-9 8M3 10h18M12 2v8"/></svg></div><div class="feature-text"><h3>Scene Understanding</h3></div></div>
+          </div>
+        </div>
+
+        <!-- 02 3D, Spatial & Multiview Text -->
+        <div class="text-panel" id="text-1">
+          <h2 class="service-heading">3D, Spatial & Multiview</h2>
+          <p class="service-description">Advanced annotation for synchronized views, cuboids, lane, and complex spatial work.</p>
+          <div class="service-features">
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="feature-text"><h3>Synchronized Views</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feature-text"><h3>3D Cuboids</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div><div class="feature-text"><h3>Lane Annotation</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div class="feature-text"><h3>Spatial Mapping</h3></div></div>
+          </div>
+        </div>
+
+        <!-- 03 Text & Documents Text -->
+        <div class="text-panel" id="text-2">
+          <h2 class="service-heading">Text & Documents</h2>
+          <p class="service-description">Intelligent processing including NER, extraction, OCR, layout, and document structure analysis.</p>
+          <div class="service-features">
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="feature-text"><h3>NER & Extraction</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="feature-text"><h3>OCR Validation</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feature-text"><h3>Document Layout</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div><div class="feature-text"><h3>Structure Analysis</h3></div></div>
+          </div>
+        </div>
+
+        <!-- 04 Audio & Multimodal Text -->
+        <div class="text-panel" id="text-3">
+          <h2 class="service-heading">Audio & Multimodal</h2>
+          <p class="service-description">Complex audio processing featuring speech recognition, diarization, and cross-modal tasks.</p>
+          <div class="service-features">
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div><div class="feature-text"><h3>Speech Recognition</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 3a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="feature-text"><h3>Speaker Diarization</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><div class="feature-text"><h3>Cross-modal Tasks</h3></div></div>
+          </div>
+        </div>
+
+        <!-- 05 Data Operations & QA Text -->
+        <div class="text-panel" id="text-4">
+          <h2 class="service-heading">Data Operations & QA</h2>
+          <p class="service-description">End-to-end pipelines covering data collection, curation, meticulous review, and delivery.</p>
+          <div class="service-features">
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10zM2 12h20"/></svg></div><div class="feature-text"><h3>Collection & Curation</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feature-text"><h3>Human Review</h3></div></div>
+            <div class="feature-item"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="feature-text"><h3>Quality Delivery</h3></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CENTER COLUMN: RADIAL NETWORK MAP ==================== -->
+      <div class="center-col">
+        <div class="network-map">
+          <svg class="connectors">
+            <g class="desktop-lines">
+              <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="base-line" />
+              <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="glow-line" id="line-0" />
+
+              <line x1="50%" y1="50%" x2="78%" y2="41.5%" class="base-line" />
+              <line x1="50%" y1="50%" x2="78%" y2="41.5%" class="glow-line" id="line-1" />
+
+              <line x1="50%" y1="50%" x2="67%" y2="73.8%" class="base-line" />
+              <line x1="50%" y1="50%" x2="67%" y2="73.8%" class="glow-line" id="line-2" />
+
+              <line x1="50%" y1="50%" x2="33%" y2="73.8%" class="base-line" />
+              <line x1="50%" y1="50%" x2="33%" y2="73.8%" class="glow-line" id="line-3" />
+
+              <line x1="50%" y1="50%" x2="22%" y2="41.5%" class="base-line" />
+              <line x1="50%" y1="50%" x2="22%" y2="41.5%" class="glow-line" id="line-4" />
+            </g>
+          </svg>
+
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+
+          <div class="center-node">
+            <img src="assets/network-images/center-logo-2.png" alt="Center Hub" class="center-image">
+          </div>
+
+          <div class="node node-1" id="node-0" data-label="Image & Video" style="background-image: url('assets/network-images/Adding_forest_green_yellow_gradient_202608241322.jpeg');">
+            <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          </div>
+          <div class="node node-2" id="node-1" data-label="3D, Spatial & Multiview" style="background-image: url('assets/network-images/Applying_purple_and_violet_gradient_202608241322.jpeg');">
+            <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <div class="node node-3" id="node-2" data-label="Text & Documents" style="background-image: url('assets/network-images/Image_with_blue_teal_gradient_202608241322.jpeg');">
+            <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div class="node node-4" id="node-3" data-label="Audio & Multimodal" style="background-image: url('assets/network-images/Image_with_red_black_gradient_202608241322.jpeg');">
+            <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"></path><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"></path></svg>
+          </div>
+          <div class="node node-5" id="node-4" data-label="Data Operations & QA" style="background-image: url('assets/network-images/Image_with_sunset_gradient_2K_202608241322.jpeg');">
+            <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RIGHT COLUMN: GRAPHICS ==================== -->
+      <div class="right-col">
+
+        <!-- 01 Image & Video Graphic -->
+        <div class="graphic-wrapper" id="graphic-0">
+          <div class="service-panel-container">
+            <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 18% 12%, #5b8abd 0%, #3f6b99 38%, #254261 72%, #122033 100%);">
+              <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+            </div>
+            <div class="service-card light">
+              <div class="card-header">
+                <span class="card-eyebrow light">Image & Video</span>
+                <span class="card-pill">active</span>
+              </div>
+              <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                  <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #5b8abd 0%, #4a7aad 100%); display: flex; align-items: center; justify-content: center;">
+                    <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10zM2 12h20"/></svg>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Bounding Boxes</div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">Processed</div>
+                  </div>
+                  <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+                </div>
+                <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                  <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #6b95d8 0%, #5a84c0 100%); display: flex; align-items: center; justify-content: center;">
+                    <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Segmentation Tasks</div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">Processed</div>
+                  </div>
+                  <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+                </div>
+                <div class="data-source" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(91, 138, 189, 0.08); border: 1px solid rgba(91, 138, 189, 0.2);">
+                  <div style="width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #7ba5cd 0%, #6a92c0 100%); display: flex; align-items: center; justify-content: center;">
+                    <svg style="width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-family: var(--font-m); font-size: 8px; font-weight: 600; color: #3a3a40;">Object Tracking</div>
+                    <div style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f;">Active Streams</div>
+                  </div>
+                  <div style="width: 4px; height: 4px; border-radius: 50%; background: #16a34a;"></div>
+                </div>
+                <div style="margin-top: 4px; padding: 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">SCENES UNDERSTOOD</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: #16a34a;">24.5K</span>
+                </div>
+              </div>
+              <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
+                <span style="border-radius: 4px; background: rgba(0,0,0,0.04); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">vision</span>
+                <span style="border-radius: 4px; background: rgba(0,0,0,0.04); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: #6b6b70;">pipeline</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 3D, Spatial & Multiview Graphic -->
+        <div class="graphic-wrapper" id="graphic-1">
+          <div class="service-panel-container">
+            <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 8% 85%, #7aad8c 0%, #5a8569 40%, #3a5544 76%, #1c2a22 100%);">
+              <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+            </div>
+            <div class="service-card light">
+              <div class="card-header">
+                <span class="card-eyebrow light">3D & Spatial Data</span>
+                <span class="card-pill">mapped</span>
+              </div>
+              <div style="margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 10px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                    <span style="font-family: var(--font-m); font-size: 7px; color: #e11d48; letter-spacing: 0.05em;">RAW SPATIAL DATA</span>
+                    <div style="flex: 1; height: 1px; background: rgba(225, 29, 72, 0.2);"></div>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.7; color: #6b6b70; background: rgba(225, 29, 72, 0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(225, 29, 72, 0.15);">
+                    <div>Unstructured Point Cloud <span style="background: rgba(225, 29, 72, 0.12); padding: 1px 3px; border-radius: 2px; color: #e11d48;">missing</span></div>
+                    <div style="margin-top: 2px;">Sensor Misalignment <span style="background: rgba(217, 119, 6, 0.12); padding: 1px 3px; border-radius: 2px; color: #d97706;">sync error</span></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                    <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">ANNOTATED OUTPUT</span>
+                    <div style="flex: 1; height: 1px; background: rgba(22, 163, 74, 0.2);"></div>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.7; color: #3a3a40; background: rgba(22, 163, 74, 0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(22, 163, 74, 0.15);">
+                    <div>3D Cuboids Mapped <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                    <div style="margin-top: 2px;">Lane Boundaries Detected <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                    <div style="margin-top: 2px;">Synchronized Multiviews <span style="background: rgba(22, 163, 74, 0.12); padding: 1px 3px; border-radius: 2px; color: #16a34a;">✓</span></div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">SCENES RESOLVED</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: #16a34a;">3,104</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Text & Documents Graphic -->
+        <div class="graphic-wrapper" id="graphic-2">
+          <div class="service-panel-container">
+            <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 92% 88%, #e5a84a 0%, #c88d35 38%, #8a5f24 72%, #3d2a12 100%);">
+              <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+            </div>
+            <div class="service-card dark">
+              <div class="card-header">
+                <span class="card-eyebrow dark">Text & Documents</span>
+                <span class="card-pill amber">extracted</span>
+              </div>
+              <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+                <div style="padding: 8px; border-radius: 6px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.2);">
+                  <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.45); margin-bottom: 4px;">RAW OCR</div>
+                  <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.75); line-height: 1.6;">
+                    <div>"invoice_id": "#8992"</div>
+                    <div>"entity": "ACME Corp."</div>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                      <div style="width: 5px; height: 5px; border-radius: 50%; background: #e5a84a;"></div>
+                      <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">NER</div>
+                    </div>
+                    <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.85); margin-left: 10px;">Organization, Currency, Date Found</div>
+                  </div>
+                  <div class="enrichment-layer" style="padding: 6px 8px; border-radius: 4px; background: rgba(229, 168, 74, 0.08); border: 1px solid rgba(229, 168, 74, 0.15);">
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 3px;">
+                      <div style="width: 5px; height: 5px; border-radius: 50%; background: #c88d35;"></div>
+                      <div style="font-family: var(--font-m); font-size: 7px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;">LAYOUT</div>
+                    </div>
+                    <div style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.85); margin-left: 10px;">Header, Tables, Footers parsed</div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">nlp</span>
+                  <span style="border-radius: 4px; background: rgba(255,255,255,0.06); padding: 3px 6px; font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">structure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 Audio & Multimodal Graphic -->
+        <div class="graphic-wrapper" id="graphic-3">
+          <div class="service-panel-container">
+            <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 88% 85%, #9d85c8 0%, #7d69a5 38%, #4e4270 72%, #252035 100%);">
+              <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+            </div>
+            <div class="service-card dark">
+              <div class="card-header">
+                <span class="card-eyebrow dark">Audio Operations</span>
+                <span class="card-pill violet">processed</span>
+              </div>
+              <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Speech Accuracy</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #b5a0d8;">98.2%</span>
+                </div>
+                <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                  <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #b5a0d8 0%, #9d85c8 100%); width: 98%;"></div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                  <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Diarization Precision</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #c5b3e0;">95.5%</span>
+                </div>
+                <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                  <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #c5b3e0 0%, #b5a0d8 100%); width: 95%;"></div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                  <span style="font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7);">Cross-Modal Alignment</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; color: #a58fc0;">97.1%</span>
+                </div>
+                <div style="height: 5px; width: 100%; overflow: hidden; border-radius: 9999px; background: rgba(255,255,255,0.08);">
+                  <div class="qa-bar" style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #a58fc0 0%, #8d7aad 100%); width: 97%;"></div>
+                </div>
+              </div>
+
+              <div style="margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.5);">Audio processed</span>
+                  <span style="font-family: var(--font-m); font-size: 8px; color: rgba(255,255,255,0.7); font-weight: 600;">1,240 hrs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 Data Operations & QA Graphic -->
+        <div class="graphic-wrapper" id="graphic-4">
+          <div class="service-panel-container">
+            <div class="service-panel-bg" style="background: radial-gradient(120% 120% at 15% 12%, #5ba5bd 0%, #3f8599 38%, #255361 72%, #122a33 100%);">
+              <div class="panel-texture-coarse"></div><div class="panel-texture-fine"></div><div class="panel-vignette"></div>
+            </div>
+            <div class="service-card light">
+              <div class="card-header">
+                <span class="card-eyebrow light">Data Operations</span>
+                <span style="border-radius: 6px; background: rgba(22, 163, 74, 0.12); padding: 2px 6px; font-family: var(--font-m); font-size: 9px; font-weight: 500; color: #16a34a;">delivered</span>
+              </div>
+              <div style="position: relative; margin-top: 0.75rem; flex: 1; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+                <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(91, 165, 189, 0.06); border: 1px solid rgba(91, 165, 189, 0.15);">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-family: var(--font-m); font-size: 7px; color: #3f8599; letter-spacing: 0.05em;">COLLECTION & CURATION</span>
+                    <span style="border-radius: 3px; background: rgba(91, 165, 189, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #3f8599;">DONE</span>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Automated parsing & edge cases flagged.</div>
+                </div>
+                <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(217, 119, 6, 0.06); border: 1px solid rgba(217, 119, 6, 0.15);">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-family: var(--font-m); font-size: 7px; color: #d97706; letter-spacing: 0.05em;">HUMAN REVIEW</span>
+                    <span style="border-radius: 3px; background: rgba(217, 119, 6, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #d97706;">DONE</span>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Expert verification on edge cases complete.</div>
+                </div>
+                <div class="review-item" style="padding: 7px; border-radius: 6px; background: rgba(22, 163, 74, 0.06); border: 1px solid rgba(22, 163, 74, 0.15);">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-family: var(--font-m); font-size: 7px; color: #16a34a; letter-spacing: 0.05em;">QUALITY DELIVERY</span>
+                    <span style="border-radius: 3px; background: rgba(22, 163, 74, 0.15); padding: 1px 4px; font-family: var(--font-m); font-size: 6px; color: #16a34a;">✓</span>
+                  </div>
+                  <div style="font-family: var(--font-m); font-size: 7px; line-height: 1.5; color: #6b6b70;">Exported and delivered to client systems.</div>
+                </div>
+              </div>
+              <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-m); font-size: 7px; color: #9a9a9f; letter-spacing: 0.05em;">PIPELINE STATUS</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: #16a34a;">100% COMPLETE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCROLL ANIMATION SCRIPT
+       ═══════════════════════════════════════════════════════════════ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollWrapper = document.querySelector('.scroll-wrapper');
+    const lines = document.querySelectorAll('.glow-line');
+    const nodes = [];
+    const textPanels = [];
+    const graphics = [];
+
+    // Setup lengths for drawing animation
+    lines.forEach((line, index) => {
+      const length = line.getTotalLength();
+      line.style.strokeDasharray = length;
+      line.style.strokeDashoffset = length;
+      line.dataset.length = length;
+
+      nodes.push(document.getElementById(`node-${index}`));
+      textPanels.push(document.getElementById(`text-${index}`));
+      graphics.push(document.getElementById(`graphic-${index}`));
+    });
+
+    // Keep first item active by default
+    if (nodes[0]) nodes[0].classList.add('active');
+    if (textPanels[0]) textPanels[0].classList.add('active');
+    if (graphics[0]) graphics[0].classList.add('active');
+
+    // Add click handlers to nodes for smooth scroll navigation
+    nodes.forEach((node, index) => {
+      if (!node) return;
+      node.addEventListener('click', () => {
+        const wrapperTop = scrollWrapper.offsetTop;
+        const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
+        const segmentSize = 1 / lines.length;
+        const targetScrollFraction = (index + 1) * segmentSize;
+        const targetScroll = wrapperTop + (targetScrollFraction * wrapperHeight);
+
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth < 1024) return;
+
+      const scrollPosition = window.scrollY;
+      const wrapperTop = scrollWrapper.offsetTop;
+      const wrapperBottom = wrapperTop + scrollWrapper.offsetHeight;
+
+      if (scrollPosition < wrapperTop || scrollPosition > wrapperBottom) {
+        return;
+      }
+
+      const wrapperScroll = scrollPosition - wrapperTop;
+      const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
+      const scrollFraction = Math.min(Math.max(wrapperScroll / wrapperHeight, 0), 1);
+
+      const segmentSize = 1 / lines.length;
+      let currentActiveIndex = 0;
+
+      lines.forEach((line, index) => {
+        const length = parseFloat(line.dataset.length);
+        const lineStartScroll = index * segmentSize;
+        const lineEndScroll = (index + 1) * segmentSize;
+
+        if (scrollFraction <= lineStartScroll) {
+          line.style.strokeDashoffset = length;
+        } else if (scrollFraction >= lineEndScroll) {
+          line.style.strokeDashoffset = 0;
+          currentActiveIndex = index;
+        } else {
+          const lineProgress = (scrollFraction - lineStartScroll) / segmentSize;
+          line.style.strokeDashoffset = length - (length * lineProgress);
+
+          if (lineProgress >= 0.85) {
+            currentActiveIndex = index;
+          } else if (index > 0) {
+            currentActiveIndex = index - 1;
+          }
+        }
+
+        if (nodes[index]) {
+          if (index <= currentActiveIndex) {
+            nodes[index].classList.add('active');
+          } else {
+            nodes[index].classList.remove('active');
+          }
+        }
+      });
+
+      textPanels.forEach((panel, index) => {
+        if (!panel) return;
+        if (index === currentActiveIndex) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+
+      graphics.forEach((graphic, index) => {
+        if (!graphic) return;
+        if (index === currentActiveIndex) {
+          graphic.classList.add('active');
+        } else {
+          graphic.classList.remove('active');
+        }
+      });
+    });
+
+    window.dispatchEvent(new Event('scroll'));
+  });
+  </script>
+
+
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border light-theme" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       CHOOSE THE DATA SERVICES YOU NEED (2x3 Grid)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="services-grid-section" id="data-services">
+    <div class="services-grid-container">
+      
+      <div class="services-grid-header">
+        <h2 class="services-grid-title">Choose the Data Services You Need</h2>
+        <p class="services-grid-subtitle">
+          Already have data? Bring your own dataset and we'll clean, enrich, annotate, QA, or review it.
+        </p>
+      </div>
+
+      <div class="services-3x2-grid">
+        
+        <!-- Card 1: Data Collection -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Data Collection</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">Web extraction</span>
+            <span class="dsc-tag">Surveys</span>
+            <span class="dsc-tag">Schema mapping</span>
+            <span class="dsc-tag">API harvesting</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Targeted sourcing from public, licensed, and API sources. Custom surveys and data harvesting.
+          </p>
+        </div>
+
+        <!-- Card 2: Data Annotation -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Data Annotation</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">NER</span>
+            <span class="dsc-tag">Bounding boxes</span>
+            <span class="dsc-tag">Polygons</span>
+            <span class="dsc-tag">Sentiment</span>
+            <span class="dsc-tag">RLHF</span>
+            <span class="dsc-tag">Segmentation</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Expert labeling for NLP, vision, video, and multimodal models — using your guidelines or creating them from scratch.
+          </p>
+        </div>
+
+        <!-- Card 3: Data Cleaning -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Data Cleaning</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">Deduplication</span>
+            <span class="dsc-tag">Validation</span>
+            <span class="dsc-tag">Missing value resolution</span>
+            <span class="dsc-tag">Normalization</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Remove noise, fix inconsistencies, deduplicate, and normalize your existing datasets.
+          </p>
+        </div>
+
+        <!-- Card 4: Data Enrichment -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Data Enrichment</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">Metadata enrichment</span>
+            <span class="dsc-tag">Categorization</span>
+            <span class="dsc-tag">Taxonomy mapping</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.
+          </p>
+        </div>
+
+        <!-- Card 5: Dataset QA -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Dataset QA</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">Accuracy audit</span>
+            <span class="dsc-tag">Consistency checks</span>
+            <span class="dsc-tag">Gold set creation</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Rigorous quality assurance, sampling, inter-annotator agreement, and adjudication.
+          </p>
+        </div>
+
+        <!-- Card 6: Human Review -->
+        <div class="data-service-card">
+          <div class="dsc-top">
+            <h3 class="dsc-title">Human Review</h3>
+          </div>
+          <div class="dsc-tags">
+            <span class="dsc-tag">Edge cases</span>
+            <span class="dsc-tag">Escalation</span>
+            <span class="dsc-tag">Nuance validation</span>
+          </div>
+          <div class="dsc-divider"></div>
+          <p class="dsc-desc">
+            Deep human-in-the-loop verification for edge cases, subjective labels, and high-stakes decisions.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       PROJECT INTAKE CONSOLE (Compact, Balanced & Interactive)
+       ═══════════════════════════════════════════════════════════════ -->
+  <style>
+    .intake-console-section .cta-button {
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #FFFFFF;
+    }
+
+    .intake-console-section .cta-button:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #080D1A;
+    }
+
+    .intake-console-section {
+      width: 100%;
+      background: var(--surface-deepest, #05070C);
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .intake-console-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .intake-console {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      clip-path: none;
+      position: relative;
+    }
+
+    .console-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 0.85rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .console-header-left {
+      color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .console-status-open {
+      color: #34D399;
+      font-weight: 600;
+    }
+
+    .console-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .console-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 6px #34D399;
+    }
+
+    .console-reticle-icon {
+      display: inline-flex;
+      color: rgba(255, 255, 255, 0.4);
+      transition: color 200ms ease, transform 300ms ease;
+    }
+
+    /* Middle Grid: Statement + 3 Prompt Records */
+    .console-main-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .console-statement-pane {
+      padding: 2rem 2.5rem 2rem 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .console-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .console-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 55ch; /* 50-60 chars */
+      margin: 0;
+    }
+
+    .console-action-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 0.35rem;
+    }
+
+    .console-subnote {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .console-subnote a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    .console-subnote a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    /* Right Prompts Records Pane */
+    .console-prompts-pane {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .console-prompt-record {
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      min-height: 96px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      background: transparent;
+      transition: background 250ms ease;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+    }
+
+    .console-prompt-record:hover,
+    .console-prompt-record:focus-visible {
+      background: rgba(56, 189, 248, 0.04);
+    }
+
+    .console-prompt-record:last-child {
+      border-bottom: none;
+    }
+
+    /* Default State: Header & Question */
+    .prompt-default-state {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .console-prompt-record:hover .prompt-default-state,
+    .console-prompt-record:focus-visible .prompt-default-state {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+
+    .prompt-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .console-reticle-icon {
+      display: inline-flex;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .prompt-query-line {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .prompt-cursor {
+      color: var(--accent-cyan);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1;
+      animation: prompt-blink 1.5s infinite;
+    }
+
+    @keyframes prompt-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Hover State: Replaces everything with strictly the answer text */
+    .prompt-hover-answer {
+      position: absolute;
+      inset: 0;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 220ms ease, transform 220ms ease;
+      pointer-events: none;
+    }
+
+    .console-prompt-record:hover .prompt-hover-answer,
+    .console-prompt-record:focus-visible .prompt-hover-answer {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .prompt-answer-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84375rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0;
+    }
+
+    /* Bottom Sitemap Grid (4 Columns) */
+    .console-sitemap-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding: 2.25rem 0 2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .console-nav-col-header {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .console-nav-arrow {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .console-brand-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 32ch;
+    }
+
+    .console-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .console-nav-links a,
+    .console-nav-links span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78125rem;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.58);
+      text-decoration: none;
+      transition: all 150ms ease;
+      display: inline-block;
+    }
+
+    .console-nav-links a:hover {
+      color: #FFFFFF;
+    }
+
+    /* Console Bottom Legal Bar */
+    .console-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0 0 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .console-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .console-legal-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .console-legal-links a:hover {
+      color: #FFFFFF;
+    }
+
+    .console-legal-sep {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 1024px) {
+      .console-main-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-statement-pane {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-right: 0;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .intake-console-section {
+        padding: 1.5rem 0.75rem 1.5rem;
+      }
+      .console-header-bar {
+        padding: 0.6rem 1rem;
+      }
+      .console-statement-pane {
+        padding: 1.35rem 1rem;
+      }
+      .console-prompt-record {
+        padding: 0.85rem 1rem;
+      }
+      .console-sitemap-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+      .console-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
+      }
+    }
+  </style>
+
+  <!-- Minimal Section Border Graphic -->
+  <div class="section-border" aria-hidden="true">
+    <div class="section-border-inner">
+      <span class="section-border-notch"></span>
+      <span class="section-border-notch"></span>
+    </div>
+  </div>
+
+  <section class="intake-console-section" id="contact">
+    <div class="intake-console-wrapper">
+      <div class="intake-console">
+        
+        <!-- 1. Top Header Bar -->
+        <div class="console-header-bar">
+          <div class="console-header-left">
+            <span>PROJECT INTAKE</span>
+            <span>/</span>
+            <span class="console-status-open">OPEN</span>
+          </div>
+          <div class="console-header-right">
+            <span class="console-status-dot" aria-hidden="true"></span>
+            <span>INTAKE OPEN</span>
+            <span class="console-reticle-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- 2. Main Middle Grid -->
+        <div class="console-main-grid">
+          
+          <!-- Left Statement Pane -->
+          <div class="console-statement-pane">
+            <h2 class="console-heading">Start With the Failure Mode.</h2>
+            <p class="console-desc">
+              Show us what the model is missing, where the data breaks down, or what quality must be proven. That becomes the brief for the right collection, annotation, enrichment, and review workflow.
+            </p>
+            <div class="console-action-row">
+              <a href="contact.html" class="cta-button">
+                <span class="cta-button-label">Open a Data Brief</span>
+                <span class="cta-button-arrow">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+              <span class="console-subnote">
+                Or send a note / <a href="mailto:hello@dataglif.com">hello@dataglif.com</a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Right 3 Numbered Prompts with Pure Answer Swap on Hover -->
+          <div class="console-prompts-pane">
+            
+            <!-- Prompt 01 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>01 / DATA</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What are you working with?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">Raw images, LiDAR &amp; 3D point clouds, unstructured document scans, conversational audio, or pre-existing datasets requiring higher quality labels.</p>
+              </div>
+            </div>
+
+            <!-- Prompt 02 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>02 / GAP</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What is failing or missing?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">Edge-case classification errors, OCR transcription drift, bounding box misalignment, or low confidence in complex domain taxonomy.</p>
+              </div>
+            </div>
+
+            <!-- Prompt 03 -->
+            <div class="console-prompt-record" tabindex="0">
+              <div class="prompt-default-state">
+                <div class="prompt-meta-row">
+                  <span>03 / TARGET</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="prompt-query-line">
+                  <span class="prompt-cursor">|</span>
+                  <span>What must production-ready mean?</span>
+                </div>
+              </div>
+              <div class="prompt-hover-answer">
+                <p class="prompt-answer-text">&gt;99.5% verified consensus accuracy, schema-compliant JSON/Parquet export, multi-tier QA audits, and delivery within your SLA.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. Bottom Sitemap Navigation -->
+        <div class="console-sitemap-grid">
+          
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">→</span>
+              <span>DATAGLIF</span>
+            </div>
+            <p class="console-brand-desc">
+              Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
+            </p>
+          </div>
+
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>SERVICES</span>
+            </div>
+            <ul class="console-nav-links">
+              <li><a href="service.html">Image &amp; Video</a></li>
+              <li><a href="service.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="service.html">Text &amp; Documents</a></li>
+              <li><a href="service.html">Audio &amp; Multimodal</a></li>
+              <li><a href="service.html">Data Operations &amp; QA</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>COMPANY</span>
+            </div>
+            <ul class="console-nav-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="approach.html">Our Approach</a></li>
+              <li><a href="index.html#blog">Field Notes</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow">&gt;</span>
+              <span>GET IN TOUCH</span>
+            </div>
+            <ul class="console-nav-links">
+              <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
+              <li><span>San Francisco, CA</span></li>
+              <li><span>Replies within 24 hours</span></li>
+              <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- 4. Console Bottom Legal Bar -->
+        <div class="console-bottom-bar">
+          <div>&copy; 2026 DATAGLIF. ALL RIGHTS RESERVED.</div>
+          <div class="console-legal-links">
+            <a href="#privacy">PRIVACY</a>
+            <span class="console-legal-sep">/</span>
+            <a href="#terms">TERMS</a>
+            <span class="console-legal-sep">/</span>
+            <a href="#security">DATA SECURITY</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <script>
+    // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
+    (function initSmartNavbar() {
+      const navbar = document.querySelector('.navbar');
+      if (!navbar) return;
+
+      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      let ticking = false;
+      const scrollThreshold = 8;
+      const topThreshold = 50;
+
+      function handleScroll(currentY) {
+        const delta = currentY - lastScrollY;
+
+        if (currentY <= topThreshold) {
+          navbar.classList.remove('nav-hidden');
+        } else if (delta > scrollThreshold && currentY > topThreshold) {
+          // Scrolling down -> hide smoothly
+          navbar.classList.add('nav-hidden');
+        } else if (delta < -scrollThreshold) {
+          // Scrolling up -> show quickly
+          navbar.classList.remove('nav-hidden');
+        }
+
+        lastScrollY = Math.max(0, currentY);
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            handleScroll(currentY);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Lenis integration if present
+      if (typeof lenis !== 'undefined' && lenis && typeof lenis.on === 'function') {
+        lenis.on('scroll', (e) => {
+          const currentY = (typeof e.scroll === 'number') ? e.scroll : (window.pageYOffset || 0);
+          handleScroll(currentY);
+        });
+      }
+    })();
+
+    // Mobile Navigation Drawer Toggle
+    (function initMobileNav() {
+      const toggle = document.getElementById('navbarToggle');
+      const overlay = document.getElementById('mobileNavOverlay');
+      if (!toggle || !overlay) return;
+
+      function toggleNav(open) {
+        const isOpen = typeof open === 'boolean' ? open : !overlay.classList.contains('is-open');
+        toggle.classList.toggle('is-active', isOpen);
+        overlay.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+        overlay.setAttribute('aria-hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleNav();
+      });
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.closest('.mobile-nav-item') || e.target.closest('.mobile-nav-cta a')) {
+          toggleNav(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+          toggleNav(false);
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
