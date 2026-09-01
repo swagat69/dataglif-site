@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Unicorn Studio SDK (for exact HydraDB Tree WebGL Animation) -->
+  <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.11/dist/unicornStudio.umd.js"></script>
+
   <style>
     :root {
       --surface-deepest: #05070C;
@@ -377,7 +380,7 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
-       WORKFLOW HORIZONTAL CAROUSEL SECTION (White Canvas & Blue Shaded Cards)
+       WORKFLOW HORIZONTAL CAROUSEL SECTION (White Canvas & Full-Cover Blue Tree)
        ═══════════════════════════════════════════════════════════════ */
     .workflow-section {
       background: #FFFFFF;
@@ -386,11 +389,41 @@
       position: relative;
     }
 
+    .hydra-tree-bg {
+      display: none; /* Temporarily hidden per user request */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      /* Inverts black canvas to pure white #ffffff and renders exact DataGlif website Cyan & Blue (#38BDF8 / #2563EB) */
+      filter: invert(1) hue-rotate(6deg) saturate(2.6) contrast(1.22) brightness(0.98);
+      opacity: 0.95;
+    }
+
+    .hydra-tree-bg .unicorn-embed {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      transform: scale(1.32) translateY(6%);
+      transform-origin: center bottom;
+    }
+
+    @media (max-width: 900px) {
+      .hydra-tree-bg .unicorn-embed {
+        transform: scale(1.15) translateY(4%);
+      }
+    }
+
     .workflow-container {
       width: 100%;
       margin: 0 auto;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .workflow-header {
@@ -429,23 +462,27 @@
 
     .workflow-track-wrapper {
       width: 100%;
-      overflow: visible;
-      padding: 1.5rem 0;
+      overflow: hidden;
+      padding: 2.5rem 0;
+      position: relative;
     }
 
     .workflow-track {
       display: flex;
       gap: 1.5rem;
-      padding: 0 calc(50vw - 160px);
+      padding: 0;
       width: max-content;
       will-change: transform;
       align-items: center;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .workflow-card {
       width: 320px;
-      background-color: #FFFFFF;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background-color: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(37, 99, 235, 0.12);
       border-radius: 0;
       padding: 2.5rem 2rem;
       min-height: 200px;
@@ -454,9 +491,21 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease, background-color 0.45s ease;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
       position: relative;
+      opacity: 0.65;
+      transform: scale(0.95);
+      cursor: pointer;
+    }
+
+    .workflow-card.active {
+      opacity: 1;
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(37, 99, 235, 0.06);
+      border-color: rgba(37, 99, 235, 0.35);
+      z-index: 5;
     }
 
     /* Precision Corner Ticks (┌ ┐ └ ┘) for workflow cards */
@@ -1159,6 +1208,19 @@
        WORKFLOW SECTION
        ═══════════════════════════════════════════════════════════════ -->
   <section class="workflow-section">
+    <!-- Exact HydraDB Tree WebGL Embed on White Canvas (DataGlif Blue Calibrated) -->
+    <div class="hydra-tree-bg">
+      <div 
+        class="unicorn-embed" 
+        data-us-project="oUvrbeOq0WuFIWyfR7ZD" 
+        data-us-scale="1" 
+        data-us-dpi="1.5" 
+        data-us-fps="60"
+        data-us-lazyload="false"
+        style="width: 100%; height: 100%;"
+      ></div>
+    </div>
+
     <div class="workflow-container">
       <div class="workflow-header">
         <h2 class="workflow-title">Workflow</h2>
@@ -1903,91 +1965,109 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       GSAP & LENIS HORIZONTAL SCROLL ENGINE
+       WORKFLOW AUTO-SCROLL CAROUSEL ENGINE
        ═══════════════════════════════════════════════════════════════ -->
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Lenis Smooth Scroll
-      const lenis = new Lenis({
-        lerp: 0.1,
-        smoothWheel: true
-      });
-
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
-      // Register GSAP ScrollTrigger
-      gsap.registerPlugin(ScrollTrigger);
-
+      const trackWrapper = document.getElementById('trackWrapper');
       const track = document.getElementById('track');
       const cards = document.querySelectorAll('.workflow-card');
       const pills = document.querySelectorAll('.indicator-pill');
 
-      if (track && cards.length > 0) {
-        const cardWidth = cards[0].offsetWidth;
-        const gap = 24;
-        const totalScrollDistance = (cards.length - 1) * (cardWidth + gap);
+      if (!track || !cards.length) return;
 
-        // Horizontal scroll animation with Pinning
-        gsap.to(track, {
-          x: () => -totalScrollDistance,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.workflow-section',
-            start: 'top top',
-            end: () => `+=${totalScrollDistance * 2}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1
+      const TOTAL = cards.length;
+      const AUTO_SCROLL_INTERVAL = 2400; // 2.4 seconds per step
+      const IDLE_RESUME_DELAY = 10000;   // Resume auto-scroll 10s after click
+
+      let currentIndex = 0;
+      let autoTimer = null;
+      let idleTimer = null;
+
+      // Position the track so card at index is centered inside trackWrapper
+      function centerCard(index) {
+        if (!cards[index]) return;
+        const card = cards[index];
+        const wrapperWidth = trackWrapper.offsetWidth;
+        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+        const targetX = (wrapperWidth / 2) - cardCenter;
+
+        track.style.transform = `translateX(${targetX}px)`;
+
+        // Update active classes
+        cards.forEach((c, i) => {
+          if (i === index) {
+            c.classList.add('active');
+          } else {
+            c.classList.remove('active');
           }
         });
 
-        // Update active pill and card focus
-        ScrollTrigger.create({
-          trigger: '.workflow-section',
-          start: 'top top',
-          end: () => `+=${totalScrollDistance * 2}`,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const index = Math.min(Math.round(progress * (cards.length - 1)), cards.length - 1);
-
-            pills.forEach(pill => pill.classList.remove('active'));
-            if (pills[index]) {
-              pills[index].classList.add('active');
-            }
-
-            cards.forEach((card, i) => {
-              const distance = Math.abs(i - progress * (cards.length - 1));
-              const scale = distance < 0.5 ? 1.08 : 1;
-              const opacity = distance < 0.5 ? 1 : 0.7;
-
-              gsap.to(card, {
-                scale: scale,
-                opacity: opacity,
-                duration: 0.3,
-                ease: 'power2.out'
-              });
-            });
+        pills.forEach((p, i) => {
+          if (i === index) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
           }
         });
 
-        // Click on timeline pills to scroll to stage
-        pills.forEach((pill, i) => {
-          pill.addEventListener('click', () => {
-            const trigger = ScrollTrigger.getById('workflow') || ScrollTrigger.getAll()[0];
-            if (trigger) {
-              const targetProgress = i / (cards.length - 1);
-              const targetY = trigger.start + (targetProgress * (trigger.end - trigger.start));
-              lenis.scrollTo(targetY, { duration: 1 });
-            }
-          });
+        currentIndex = index;
+      }
+
+      function nextStep() {
+        const nextIndex = (currentIndex + 1) % TOTAL;
+        centerCard(nextIndex);
+      }
+
+      function startAutoScroll() {
+        stopAutoScroll();
+        autoTimer = setInterval(nextStep, AUTO_SCROLL_INTERVAL);
+      }
+
+      function stopAutoScroll() {
+        if (autoTimer) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function scheduleResume() {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          startAutoScroll();
+        }, IDLE_RESUME_DELAY);
+      }
+
+      // Card click
+      cards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+          stopAutoScroll();
+          centerCard(i);
+          scheduleResume();
         });
+      });
+
+      // Pill click
+      pills.forEach((pill, i) => {
+        pill.addEventListener('click', () => {
+          stopAutoScroll();
+          centerCard(i);
+          scheduleResume();
+        });
+      });
+
+      // Recalculate centering on window resize
+      window.addEventListener('resize', () => {
+        centerCard(currentIndex);
+      });
+
+      // Initialize
+      centerCard(0);
+      startAutoScroll();
+
+      // Initialize Unicorn Studio Tree Animation
+      if (window.UnicornStudio) {
+        window.UnicornStudio.init();
       }
     });
 

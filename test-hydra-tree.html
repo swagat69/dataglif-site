@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydraDB Tree Animation - 100% Exact Replica</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Exact Unicorn Studio WebGL SDK (v2.1.11) used by HydraDB -->
+  <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.11/dist/unicornStudio.umd.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      transition: background-color 0.4s ease;
+    }
+
+    .hero-stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 4rem;
+    }
+
+    .hydra-tree-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: -40px;
+      width: 72%;
+      max-width: 1150px;
+      aspect-ratio: 1.84872 / 1;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .hero-stage.fullscreen-mode .hydra-tree-wrapper {
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      max-width: unset;
+      aspect-ratio: unset;
+    }
+
+    .unicorn-embed {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: filter 0.35s ease;
+    }
+
+    .tint-original { filter: none; }
+    .tint-dataglif-blue { filter: hue-rotate(185deg) saturate(1.35) brightness(1.12); }
+    .tint-royal-blue { filter: hue-rotate(205deg) saturate(1.55) brightness(0.96); }
+    .tint-white-canvas-blue { filter: invert(1) hue-rotate(6deg) saturate(2.6) contrast(1.22) brightness(0.98); }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 540px;
+      pointer-events: none;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.25rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 28px;
+    }
+
+    .floating-dock {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 19, 28, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .dock-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dock-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+
+    .dock-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding-right: 4px;
+    }
+
+    .dock-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .dock-btn .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .dock-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .dock-btn.active {
+      color: #fff;
+      background: rgba(56, 189, 248, 0.2);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    body.white-mode {
+      background-color: #FFFFFF;
+      color: #0F172A;
+    }
+
+    body.white-mode .hero-title { color: #0F172A; }
+    body.white-mode .hero-desc { color: rgba(15, 23, 42, 0.65); }
+    body.white-mode .floating-dock { background: rgba(15, 23, 42, 0.94); }
+  </style>
+</head>
+<body>
+
+  <div id="heroStage" class="hero-stage">
+    <div id="treeWrapper" class="hydra-tree-wrapper">
+      <div 
+        id="unicornCanvas"
+        class="unicorn-embed tint-dataglif-blue" 
+        data-us-project="oUvrbeOq0WuFIWyfR7ZD" 
+        data-us-scale="1" 
+        data-us-dpi="1.5" 
+        data-us-fps="60"
+        data-us-lazyload="false"
+      ></div>
+    </div>
+
+    <div class="hero-content">
+      <div id="tagBadge" class="tag-badge">100% Exact WebGL Replica</div>
+      <h1 class="hero-title">AI-Ready Data Architecture</h1>
+      <p class="hero-desc">
+        Identical WebGL pixel shaders, recursive branch physics, and real-time energy flow pulses reverse-engineered from HydraDB.
+      </p>
+    </div>
+  </div>
+
+  <div class="floating-dock">
+    <div class="dock-group">
+      <span class="dock-label">Color:</span>
+      <button id="btn-blue" class="dock-btn active" onclick="setColor('dataglif-blue', this)">
+        <span class="dot" style="background: #38BDF8; box-shadow: 0 0 8px #38BDF8;"></span> DataGlif Blue
+      </button>
+      <button id="btn-royal" class="dock-btn" onclick="setColor('royal-blue', this)">
+        <span class="dot" style="background: #2563EB; box-shadow: 0 0 8px #2563EB;"></span> Royal Blue
+      </button>
+      <button id="btn-orange" class="dock-btn" onclick="setColor('original-orange', this)">
+        <span class="dot" style="background: #FF571A; box-shadow: 0 0 8px #FF571A;"></span> Original Orange
+      </button>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-group">
+      <span class="dock-label">Canvas:</span>
+      <button id="btn-bg-dark" class="dock-btn active" onclick="setCanvasBg('dark', this)">Dark</button>
+      <button id="btn-bg-white" class="dock-btn" onclick="setCanvasBg('white', this)">White</button>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <div class="dock-group">
+      <span class="dock-label">View:</span>
+      <button id="btn-view-hero" class="dock-btn active" onclick="setViewMode('hero', this)">Hero</button>
+      <button id="btn-view-full" class="dock-btn" onclick="setViewMode('full', this)">Fullscreen</button>
+    </div>
+  </div>
+
+  <script>
+    const el = document.getElementById('unicornCanvas');
+    const stage = document.getElementById('heroStage');
+
+    let currentBg = 'dark';
+    let currentColor = 'dataglif-blue';
+
+    function updateClasses() {
+      el.className = 'unicorn-embed';
+      if (currentBg === 'white') {
+        el.classList.add('tint-white-canvas-blue');
+      } else {
+        if (currentColor === 'dataglif-blue') el.classList.add('tint-dataglif-blue');
+        else if (currentColor === 'royal-blue') el.classList.add('tint-royal-blue');
+        else if (currentColor === 'original-orange') el.classList.add('tint-original');
+      }
+    }
+
+    function setColor(colorKey, btn) {
+      currentColor = colorKey;
+      document.querySelectorAll('.dock-group button').forEach(b => {
+        if (b.id && (b.id.startsWith('btn-blue') || b.id.startsWith('btn-royal') || b.id.startsWith('btn-orange'))) {
+          b.classList.remove('active');
+        }
+      });
+      if (btn) btn.classList.add('active');
+      updateClasses();
+    }
+
+    function setCanvasBg(bgKey, btn) {
+      currentBg = bgKey;
+      document.querySelectorAll('#btn-bg-dark, #btn-bg-white').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      if (bgKey === 'white') document.body.classList.add('white-mode');
+      else document.body.classList.remove('white-mode');
+      updateClasses();
+    }
+
+    function setViewMode(modeKey, btn) {
+      document.querySelectorAll('#btn-view-hero, #btn-view-full').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      if (modeKey === 'full') stage.classList.add('fullscreen-mode');
+      else stage.classList.remove('fullscreen-mode');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.UnicornStudio) {
+        window.UnicornStudio.init();
+      }
+    });
+  </script>
+</body>
+</html>

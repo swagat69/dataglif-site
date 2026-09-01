@@ -2295,14 +2295,13 @@
       overflow: hidden;
       border-radius: var(--radius-md);
       background: #0a0a0b;
-      aspect-ratio: 16 / 5;
     }
 
     .blog-featured-img {
       display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
     }
 
     .blog-featured-content {
@@ -2384,7 +2383,7 @@
       overflow: hidden;
       border-radius: var(--radius-md);
       background: #e7e6e3;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 4 / 3;
     }
 
     .blog-card-img {
@@ -2407,16 +2406,11 @@
       top: 0;
       left: 0;
       width: 1280px;
-      height: 1280px;
+      height: 960px;
       border: none;
       display: block;
-      background: #ffffff;
       transform-origin: top left;
       pointer-events: none;
-    }
-
-    .blog-card-img-wrap:hover iframe {
-      pointer-events: auto;
     }
 
     .blog-card-content {
@@ -3478,14 +3472,14 @@
   </section>
 
   <script>
-    // Scale embedded demo iframes (built full-size) down to fit their square preview tiles
+    // Scale embedded demo iframes (built full-size) down to fit their 16:9 preview tiles
     (function() {
-      const IFRAME_SIZE = 1280;
+      const IFRAME_W = 1280;
 
       function scaleFrames() {
         document.querySelectorAll('.blog-card-img-wrap iframe').forEach((frame) => {
           const wrap = frame.parentElement;
-          const scale = wrap.clientWidth / IFRAME_SIZE;
+          const scale = wrap.clientWidth / IFRAME_W;
           frame.style.transform = `scale(${scale})`;
         });
       }

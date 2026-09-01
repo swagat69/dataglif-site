@@ -491,22 +491,83 @@
        INTERACTIVE SERVICES MAP (5-Node Pentagon Layout)
        ═══════════════════════════════════════════════════════════════ */
     .scroll-wrapper {
-      height: 600vh;
       position: relative;
     }
 
     .sticky-layout {
-      position: sticky;
-      top: 0;
-      height: 100vh;
+      position: relative;
+      min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr minmax(450px, 620px) 1fr;
       align-items: center;
       gap: 2rem;
-      padding: 0 4rem;
-      overflow: hidden;
+      padding: 3.5rem 4rem 4rem;
       z-index: 1;
-      background: var(--bg);
+      background: var(--surface-deepest, #05070C);
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CONCENTRIC CIRCULAR RINGS (Exact Center Logo Alignment - Blue)
+       ═══════════════════════════════════════════════════════════════ */
+    .center-rings-bg {
+      display: none; /* Temporarily hidden per user request */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1400px;
+      height: 1400px;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+      mask-image: radial-gradient(circle 580px at 50% 50%, #000 25%, rgba(0,0,0,0.6) 60%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle 580px at 50% 50%, #000 25%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    }
+
+    .round-ring circle {
+      fill: none;
+      stroke: rgba(37, 99, 235, 0.3);
+      stroke-width: 1.25px;
+      transform-origin: 500px 500px;
+      will-change: transform, opacity, stroke;
+      animation: roundBreatheBlue 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .round-ring-1 circle { animation-delay: 0s; }
+    .round-ring-2 circle { animation-delay: 0.22s; }
+    .round-ring-3 circle { animation-delay: 0.44s; }
+    .round-ring-4 circle { animation-delay: 0.66s; }
+    .round-ring-5 circle { animation-delay: 0.88s; }
+    .round-ring-6 circle { animation-delay: 1.10s; }
+    .round-ring-7 circle { animation-delay: 1.32s; }
+    .round-ring-8 circle { animation-delay: 1.54s; }
+    .round-ring-9 circle { animation-delay: 1.76s; }
+    .round-ring-10 circle { animation-delay: 1.98s; }
+    .round-ring-11 circle { animation-delay: 2.20s; }
+    .round-ring-12 circle { animation-delay: 2.42s; }
+    .round-ring-13 circle { animation-delay: 2.64s; }
+    .round-ring-14 circle { animation-delay: 2.86s; }
+    .round-ring-15 circle { animation-delay: 3.08s; }
+    .round-ring-16 circle { animation-delay: 3.30s; }
+    .round-ring-17 circle { animation-delay: 3.52s; }
+    .round-ring-18 circle { animation-delay: 3.74s; }
+    .round-ring-19 circle { animation-delay: 3.96s; }
+    .round-ring-20 circle { animation-delay: 4.18s; }
+
+    @keyframes roundBreatheBlue {
+      0%, 100% {
+        transform: scale(0.985);
+        opacity: 0.15;
+        stroke: rgba(37, 99, 235, 0.2);
+      }
+      50% {
+        transform: scale(1.025);
+        opacity: 0.82;
+        stroke: #38bdf8;
+        filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6)) drop-shadow(0 0 18px rgba(37, 99, 235, 0.35));
+      }
     }
 
     .left-col {
@@ -515,6 +576,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      z-index: 2;
     }
 
     .text-panel {
@@ -539,7 +601,7 @@
       font-weight: 700;
       line-height: 1.12;
       letter-spacing: -0.05em;
-      color: var(--ink);
+      color: #FFFFFF;
       margin-bottom: 1.25rem;
     }
 
@@ -548,7 +610,7 @@
       font-size: 1rem; /* 16px body */
       line-height: 1.6;
       letter-spacing: -0.02em;
-      color: var(--ink-2);
+      color: rgba(255, 255, 255, 0.72);
       max-width: 55ch; /* 50-60 chars */
       margin-bottom: 2rem;
     }
@@ -570,7 +632,8 @@
       width: 28px;
       height: 28px;
       border-radius: 6px;
-      background: var(--blue-soft);
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -581,7 +644,7 @@
     .feature-icon svg {
       width: 14px;
       height: 14px;
-      stroke: var(--blue);
+      stroke: var(--accent-cyan, #38BDF8);
       fill: none;
       stroke-width: 2;
     }
@@ -589,17 +652,26 @@
     .feature-text h3 {
       font-size: 15px;
       font-weight: 600;
-      color: var(--ink);
+      color: #FFFFFF;
       margin-bottom: 0.25rem;
     }
 
     .center-col {
       position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 100%;
+      gap: 1.25rem;
+      z-index: 2;
+    }
+
+    .map-cta-button {
+      position: relative;
+      z-index: 15;
+      margin-top: -45px;
     }
 
     .network-map {
@@ -609,6 +681,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 2;
     }
 
     .connectors {
@@ -621,36 +694,33 @@
       z-index: 1;
     }
 
+    .perimeter-line {
+      stroke: rgba(255, 255, 255, 0.22);
+      stroke-width: 1.5px;
+      stroke-dasharray: 4 4;
+    }
+
     .base-line {
-      stroke: var(--line-base);
-      stroke-width: 2;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 1.5px;
     }
 
     .glow-line {
-      stroke: var(--line-glow);
-      stroke-width: 3;
+      stroke: var(--accent-cyan, #38BDF8);
+      stroke-width: 3px;
+      stroke-linecap: round;
       stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
+      filter: drop-shadow(0 0 8px #38BDF8) drop-shadow(0 0 16px rgba(56, 189, 248, 0.8));
     }
 
-    .ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 1px dashed var(--ring-color);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    .ring-1 {
-      width: 250px;
-      height: 250px;
-    }
-
-    .ring-2 {
-      width: 450px;
-      height: 450px;
+    .right-col {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      z-index: 2;
     }
 
     .center-node {
@@ -672,7 +742,7 @@
       position: absolute;
       width: 100px;
       height: 100px;
-      background-color: var(--bg);
+      background-color: var(--surface-deepest, #05070C);
       border-radius: 50%;
       z-index: 1;
     }
@@ -690,21 +760,27 @@
       width: 80px;
       height: 80px;
       border-radius: 20px;
-      box-shadow: 0 6px 16px var(--shadow-color);
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: var(--surface-deepest, #05070C);
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       z-index: 10;
-      opacity: 0.3;
-      transition: opacity 0.6s ease, box-shadow 0.6s ease, filter 0.3s ease;
+      opacity: 1; /* 100% opaque so background rings never bleed through */
+      filter: grayscale(0.25) brightness(0.65);
+      transition: filter 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
       cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
     }
 
-    .node:hover {
-      filter: brightness(1.08) contrast(1.02);
+    .node.active, .node:hover {
+      filter: grayscale(0) brightness(1.08) contrast(1.02);
+      transform: translate(-50%, -50%) scale(1.06);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35), 0 8px 24px rgba(0, 0, 0, 0.6);
     }
 
     .node span {
@@ -939,13 +1015,8 @@
         width: 480px;
         height: 480px;
       }
-      .ring-1 {
-        width: 200px;
-        height: 200px;
-      }
-      .ring-2 {
-        width: 380px;
-        height: 380px;
+      .map-cta-button {
+        margin-top: -30px;
       }
       .service-heading {
         font-size: 2.2rem;
@@ -962,13 +1033,8 @@
         width: 420px;
         height: 420px;
       }
-      .ring-1 {
-        width: 180px;
-        height: 180px;
-      }
-      .ring-2 {
-        width: 320px;
-        height: 320px;
+      .map-cta-button {
+        margin-top: -20px;
       }
       .text-panel {
         max-width: 400px;
@@ -1059,7 +1125,7 @@
     .services-grid-section {
       width: 100%;
       background: var(--surface-deepest, #05070C);
-      padding: 4.5rem 2rem 4rem;
+      padding: 6.5rem 2rem 5.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       position: relative;
     }
@@ -1070,7 +1136,7 @@
     }
 
     .services-grid-header {
-      margin-bottom: 2.25rem;
+      margin-bottom: 3.5rem;
       text-align: center;
     }
 
@@ -1131,7 +1197,7 @@
       background: #0B0E14;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 2px;
-      padding: 1.85rem 1.6rem 1.6rem 1.6rem;
+      padding: 2.25rem 2rem 2rem 2rem;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -1562,7 +1628,7 @@
        ═══════════════════════════════════════════════════════════════ -->
   <div class="scroll-wrapper">
     <div class="sticky-layout">
-      
+
       <!-- ==================== LEFT COLUMN: TEXT CONTENT ==================== -->
       <div class="left-col">
         <!-- 01 Image & Video Text -->
@@ -1627,27 +1693,47 @@
       <!-- ==================== CENTER COLUMN: RADIAL NETWORK MAP ==================== -->
       <div class="center-col">
         <div class="network-map">
-          <svg class="connectors">
-            <g class="desktop-lines">
-              <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="base-line" />
-              <line x1="50%" y1="50%" x2="50%" y2="20.3%" class="glow-line" id="line-0" />
-
-              <line x1="50%" y1="50%" x2="78%" y2="41.5%" class="base-line" />
-              <line x1="50%" y1="50%" x2="78%" y2="41.5%" class="glow-line" id="line-1" />
-
-              <line x1="50%" y1="50%" x2="67%" y2="73.8%" class="base-line" />
-              <line x1="50%" y1="50%" x2="67%" y2="73.8%" class="glow-line" id="line-2" />
-
-              <line x1="50%" y1="50%" x2="33%" y2="73.8%" class="base-line" />
-              <line x1="50%" y1="50%" x2="33%" y2="73.8%" class="glow-line" id="line-3" />
-
-              <line x1="50%" y1="50%" x2="22%" y2="41.5%" class="base-line" />
-              <line x1="50%" y1="50%" x2="22%" y2="41.5%" class="glow-line" id="line-4" />
-            </g>
+          <!-- 20 Concentric Circular Rings centered directly on the middle logo -->
+          <svg class="center-rings-bg" viewBox="0 0 1000 1000" aria-hidden="true">
+            <g class="round-ring round-ring-1"><circle cx="500" cy="500" r="45" /></g>
+            <g class="round-ring round-ring-2"><circle cx="500" cy="500" r="70" /></g>
+            <g class="round-ring round-ring-3"><circle cx="500" cy="500" r="95" /></g>
+            <g class="round-ring round-ring-4"><circle cx="500" cy="500" r="120" /></g>
+            <g class="round-ring round-ring-5"><circle cx="500" cy="500" r="145" /></g>
+            <g class="round-ring round-ring-6"><circle cx="500" cy="500" r="170" /></g>
+            <g class="round-ring round-ring-7"><circle cx="500" cy="500" r="195" /></g>
+            <g class="round-ring round-ring-8"><circle cx="500" cy="500" r="220" /></g>
+            <g class="round-ring round-ring-9"><circle cx="500" cy="500" r="245" /></g>
+            <g class="round-ring round-ring-10"><circle cx="500" cy="500" r="270" /></g>
+            <g class="round-ring round-ring-11"><circle cx="500" cy="500" r="295" /></g>
+            <g class="round-ring round-ring-12"><circle cx="500" cy="500" r="320" /></g>
+            <g class="round-ring round-ring-13"><circle cx="500" cy="500" r="350" /></g>
+            <g class="round-ring round-ring-14"><circle cx="500" cy="500" r="380" /></g>
+            <g class="round-ring round-ring-15"><circle cx="500" cy="500" r="415" /></g>
+            <g class="round-ring round-ring-16"><circle cx="500" cy="500" r="450" /></g>
+            <g class="round-ring round-ring-17"><circle cx="500" cy="500" r="490" /></g>
+            <g class="round-ring round-ring-18"><circle cx="500" cy="500" r="530" /></g>
+            <g class="round-ring round-ring-19"><circle cx="500" cy="500" r="575" /></g>
+            <g class="round-ring round-ring-20"><circle cx="500" cy="500" r="620" /></g>
           </svg>
 
-          <div class="ring ring-1"></div>
-          <div class="ring ring-2"></div>
+          <svg class="connectors">
+            <g class="desktop-lines">
+              <!-- Static Perimeter Tracks connecting nodes to each other -->
+              <line x1="22%" y1="41.5%" x2="50%" y2="20.3%" class="perimeter-line" />
+              <line x1="50%" y1="20.3%" x2="78%" y2="41.5%" class="perimeter-line" />
+              <line x1="78%" y1="41.5%" x2="67%" y2="73.8%" class="perimeter-line" />
+              <line x1="67%" y1="73.8%" x2="33%" y2="73.8%" class="perimeter-line" />
+              <line x1="33%" y1="73.8%" x2="22%" y2="41.5%" class="perimeter-line" />
+
+              <!-- Active Glowing Rotating Perimeter Connecting Lines (Node to Node) -->
+              <line x1="22%" y1="41.5%" x2="50%" y2="20.3%" class="glow-line" id="line-0" />
+              <line x1="50%" y1="20.3%" x2="78%" y2="41.5%" class="glow-line" id="line-1" />
+              <line x1="78%" y1="41.5%" x2="67%" y2="73.8%" class="glow-line" id="line-2" />
+              <line x1="67%" y1="73.8%" x2="33%" y2="73.8%" class="glow-line" id="line-3" />
+              <line x1="33%" y1="73.8%" x2="22%" y2="41.5%" class="glow-line" id="line-4" />
+            </g>
+          </svg>
 
           <div class="center-node">
             <img src="assets/network-images/center-logo-2.png" alt="Center Hub" class="center-image">
@@ -1669,6 +1755,16 @@
             <span></span><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           </div>
         </div>
+
+        <a href="contact.html" class="cta-button map-cta-button">
+          <span class="cta-button-label">Get in Touch</span>
+          <span class="cta-button-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </a>
       </div>
 
       <!-- ==================== RIGHT COLUMN: GRAPHICS ==================== -->
@@ -1911,17 +2007,25 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       SCROLL ANIMATION SCRIPT
+       CONTINUOUS FAST PERIMETER CONNECTING LOOP SCRIPT
        ═══════════════════════════════════════════════════════════════ -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const scrollWrapper = document.querySelector('.scroll-wrapper');
     const lines = document.querySelectorAll('.glow-line');
     const nodes = [];
     const textPanels = [];
     const graphics = [];
+    const TOTAL = lines.length;
+    const CONNECT_DURATION = 800; // Fast 800ms continuous connection speed
+    const IDLE_RESUME_DELAY = 6000; // Resume after 6 seconds idle
 
-    // Setup lengths for drawing animation
+    let currentIndex = 0;
+    let animFrame = null;
+    let idleTimer = null;
+    let isPaused = false;
+    let startTime = null;
+
+    // Initialize line lengths and node caches
     lines.forEach((line, index) => {
       const length = line.getTotalLength();
       line.style.strokeDasharray = length;
@@ -1933,96 +2037,104 @@
       graphics.push(document.getElementById(`graphic-${index}`));
     });
 
-    // Keep first item active by default
-    if (nodes[0]) nodes[0].classList.add('active');
-    if (textPanels[0]) textPanels[0].classList.add('active');
-    if (graphics[0]) graphics[0].classList.add('active');
+    function resetAllLines() {
+      lines.forEach(line => {
+        const len = parseFloat(line.dataset.length);
+        line.style.strokeDashoffset = len;
+      });
+    }
 
-    // Add click handlers to nodes for smooth scroll navigation
+    function setActiveState(index) {
+      nodes.forEach((node, i) => {
+        if (!node) return;
+        node.classList.toggle('active', i === index);
+      });
+      textPanels.forEach((panel, i) => {
+        if (!panel) return;
+        panel.classList.toggle('active', i === index);
+      });
+      graphics.forEach((graphic, i) => {
+        if (!graphic) return;
+        graphic.classList.toggle('active', i === index);
+      });
+      currentIndex = index;
+    }
+
+    // Continuous frame-by-frame perimeter connection animation
+    function continuousConnectLoop(timestamp) {
+      if (isPaused) return;
+      if (!startTime) startTime = timestamp;
+
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / CONNECT_DURATION, 1);
+
+      // Fast energetic smooth curve
+      const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      
+      const line = lines[currentIndex];
+      if (line) {
+        const length = parseFloat(line.dataset.length);
+        line.style.strokeDashoffset = length * (1 - eased);
+      }
+
+      if (progress >= 1) {
+        // Connected to next node! Immediately activate and seamlessly continue to next line
+        const nextIndex = (currentIndex + 1) % TOTAL;
+        resetAllLines();
+        setActiveState(nextIndex);
+        startTime = timestamp;
+      }
+
+      animFrame = requestAnimationFrame(continuousConnectLoop);
+    }
+
+    function startContinuousFlow() {
+      if (animFrame) cancelAnimationFrame(animFrame);
+      isPaused = false;
+      startTime = null;
+      animFrame = requestAnimationFrame(continuousConnectLoop);
+    }
+
+    function pauseFlow() {
+      isPaused = true;
+      if (animFrame) {
+        cancelAnimationFrame(animFrame);
+        animFrame = null;
+      }
+    }
+
+    function scheduleResume() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        startContinuousFlow();
+      }, IDLE_RESUME_DELAY);
+    }
+
+    // Interactive Click Handlers on Nodes
     nodes.forEach((node, index) => {
       if (!node) return;
       node.addEventListener('click', () => {
-        const wrapperTop = scrollWrapper.offsetTop;
-        const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
-        const segmentSize = 1 / lines.length;
-        const targetScrollFraction = (index + 1) * segmentSize;
-        const targetScroll = wrapperTop + (targetScrollFraction * wrapperHeight);
-
-        window.scrollTo({
-          top: targetScroll,
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      if (window.innerWidth < 1024) return;
-
-      const scrollPosition = window.scrollY;
-      const wrapperTop = scrollWrapper.offsetTop;
-      const wrapperBottom = wrapperTop + scrollWrapper.offsetHeight;
-
-      if (scrollPosition < wrapperTop || scrollPosition > wrapperBottom) {
-        return;
-      }
-
-      const wrapperScroll = scrollPosition - wrapperTop;
-      const wrapperHeight = scrollWrapper.offsetHeight - window.innerHeight;
-      const scrollFraction = Math.min(Math.max(wrapperScroll / wrapperHeight, 0), 1);
-
-      const segmentSize = 1 / lines.length;
-      let currentActiveIndex = 0;
-
-      lines.forEach((line, index) => {
-        const length = parseFloat(line.dataset.length);
-        const lineStartScroll = index * segmentSize;
-        const lineEndScroll = (index + 1) * segmentSize;
-
-        if (scrollFraction <= lineStartScroll) {
-          line.style.strokeDashoffset = length;
-        } else if (scrollFraction >= lineEndScroll) {
-          line.style.strokeDashoffset = 0;
-          currentActiveIndex = index;
+        if (isPaused && currentIndex === index) {
+          // Clicking active node unpauses continuous flow
+          startContinuousFlow();
+          clearTimeout(idleTimer);
         } else {
-          const lineProgress = (scrollFraction - lineStartScroll) / segmentSize;
-          line.style.strokeDashoffset = length - (length * lineProgress);
-
-          if (lineProgress >= 0.85) {
-            currentActiveIndex = index;
-          } else if (index > 0) {
-            currentActiveIndex = index - 1;
+          // Pause on clicked node to inspect details
+          pauseFlow();
+          resetAllLines();
+          setActiveState(index);
+          const incomingIndex = (index - 1 + TOTAL) % TOTAL;
+          if (lines[incomingIndex]) {
+            lines[incomingIndex].style.strokeDashoffset = '0';
           }
-        }
-
-        if (nodes[index]) {
-          if (index <= currentActiveIndex) {
-            nodes[index].classList.add('active');
-          } else {
-            nodes[index].classList.remove('active');
-          }
-        }
-      });
-
-      textPanels.forEach((panel, index) => {
-        if (!panel) return;
-        if (index === currentActiveIndex) {
-          panel.classList.add('active');
-        } else {
-          panel.classList.remove('active');
-        }
-      });
-
-      graphics.forEach((graphic, index) => {
-        if (!graphic) return;
-        if (index === currentActiveIndex) {
-          graphic.classList.add('active');
-        } else {
-          graphic.classList.remove('active');
+          scheduleResume();
         }
       });
     });
 
-    window.dispatchEvent(new Event('scroll'));
+    // Start continuous fast connecting animation
+    setActiveState(0);
+    startContinuousFlow();
   });
   </script>
 
@@ -2043,7 +2155,7 @@
     <div class="services-grid-container">
       
       <div class="services-grid-header">
-        <h2 class="services-grid-title">Choose the data services you need</h2>
+        <h2 class="services-grid-title">Choose the Data Services You Need</h2>
         <p class="services-grid-subtitle">
           Already have data? Bring your own dataset and we'll clean, enrich, annotate, QA, or review it.
         </p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DLA Interactive Booklet - Full Version</title>
+  <title>DLA Interactive Booklet - Preview</title>
   <style>
     * {
       margin: 0;
@@ -11,95 +11,40 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(145deg, #1b1c19 0%, #111210 54%, #181816 100%);
+      background: #e7e6e3;
       color: #f6f2e9;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(16, 17, 15, 0.72);
-      backdrop-filter: blur(18px);
-    }
-
-    .title-section h1 {
-      font-size: 1.5rem;
-      font-family: Georgia, serif;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-    }
-
-    .subtitle {
-      font-size: 0.75rem;
-      color: #c3bdb2;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .controls {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      padding: 0.75rem 1.25rem;
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      color: inherit;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.24);
-    }
-
-    .btn.active {
-      background: rgba(233, 120, 61, 0.14);
-      border-color: rgba(233, 120, 61, 0.55);
-      color: #ffd8c1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     .reading-stage {
-      flex: 1;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
-      position: relative;
-      min-height: 0;
+      padding: 0;
     }
 
     .book-container {
       position: relative;
-      max-width: 1400px;
       width: 100%;
+      height: 100%;
       display: flex;
       gap: 0;
+      align-items: center;
       justify-content: center;
-      perspective: 2400px;
     }
 
     .page {
-      width: 45%;
-      max-width: 620px;
+      height: 100%;
       aspect-ratio: 1136 / 1548;
       background: white;
-      border: 1px solid rgba(76, 71, 62, 0.26);
-      box-shadow: 5px 7px 20px rgba(0, 0, 0, 0.18);
+      border: none;
+      box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -115,88 +60,27 @@
     }
 
     .page-left {
-      border-radius: 5px 1px 1px 5px;
-      box-shadow: 5px 7px 20px rgba(0, 0, 0, 0.18), inset 10px 0 20px rgba(0, 0, 0, 0.025);
+      border-radius: 0;
+      box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1), inset 6px 0 14px rgba(0, 0, 0, 0.02);
     }
 
     .page-right {
-      border-radius: 1px 5px 5px 1px;
-      box-shadow: -5px 7px 20px rgba(0, 0, 0, 0.18), inset -10px 0 20px rgba(0, 0, 0, 0.025);
+      border-radius: 0;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1), inset -6px 0 14px rgba(0, 0, 0, 0.02);
     }
 
     .spine-shadow {
       position: absolute;
       top: 0;
       left: 50%;
-      width: 18px;
+      width: 14px;
       height: 100%;
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.02) 46%, rgba(0, 0, 0, 0.2));
-      filter: blur(2px);
-      opacity: 0.65;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.01) 46%, rgba(0, 0, 0, 0.15));
+      filter: blur(1px);
+      opacity: 0.5;
       pointer-events: none;
       transform: translateX(-50%);
       z-index: 10;
-    }
-
-    .bottom-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(16, 17, 15, 0.74);
-      backdrop-filter: blur(18px);
-      gap: 1rem;
-    }
-
-    .nav-btn {
-      padding: 0.75rem 1.5rem;
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      color: inherit;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      min-width: 120px;
-    }
-
-    .nav-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .nav-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .page-indicator {
-      text-align: center;
-      font-size: 0.875rem;
-      color: #c9c4ba;
-      flex: 1;
-      max-width: 280px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      margin: 0.5rem 0;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #d65f27, #ff9c64);
-      transition: width 0.4s ease;
-      transform-origin: left;
     }
 
     /* Mobile Responsive */
@@ -208,6 +92,7 @@
       }
 
       .page {
+        height: auto;
         width: 90%;
         max-width: 500px;
       }
@@ -223,40 +108,10 @@
       .spine-shadow {
         display: none;
       }
-
-      .topbar, .bottom-controls {
-        padding: 1rem;
-      }
-
-      .title-section h1 {
-        font-size: 1.2rem;
-      }
-
-      .nav-btn span.turn-label {
-        display: none;
-      }
-
-      .nav-btn {
-        min-width: 48px;
-        padding: 0.75rem;
-        justify-content: center;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="title-section">
-      <div class="subtitle">28-Page Interactive Document</div>
-      <h1>Dallas County Quality Engineering</h1>
-    </div>
-    <div class="controls">
-      <button class="btn" onclick="toggleAutoplay()" id="autoplayBtn">
-        ▶ Auto-Play
-      </button>
-    </div>
-  </div>
-
   <div class="reading-stage">
     <div class="book-container">
       <div class="spine-shadow"></div>
@@ -269,30 +124,10 @@
     </div>
   </div>
 
-  <div class="bottom-controls">
-    <button class="nav-btn" onclick="previousPage()" id="prevBtn">
-      <span>←</span>
-      <span class="turn-label">Previous</span>
-    </button>
-
-    <div class="page-indicator">
-      <div id="pageText">Page 1-2 of 28</div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-
-    <button class="nav-btn" onclick="nextPage()" id="nextBtn">
-      <span class="turn-label">Next</span>
-      <span>→</span>
-    </button>
-  </div>
-
   <script>
     const TOTAL_PAGES = 28;
     const BASE_PATH = 'pages/';
     let currentPage = 1;
-    let isAutoplay = false;
     let autoplayInterval = null;
 
     function padNumber(num) {
@@ -304,101 +139,36 @@
 
       if (isMobile) {
         document.getElementById('leftPageImg').src = `${BASE_PATH}page-${padNumber(currentPage)}.png`;
-        document.getElementById('pageText').textContent = `Page ${currentPage} of ${TOTAL_PAGES}`;
       } else {
         const leftPage = currentPage;
         const rightPage = Math.min(currentPage + 1, TOTAL_PAGES);
 
         document.getElementById('leftPageImg').src = `${BASE_PATH}page-${padNumber(leftPage)}.png`;
         document.getElementById('rightPageImg').src = `${BASE_PATH}page-${padNumber(rightPage)}.png`;
-        document.getElementById('pageText').textContent = `Page ${leftPage}-${rightPage} of ${TOTAL_PAGES}`;
       }
-
-      // Update progress bar
-      const progress = (currentPage / TOTAL_PAGES) * 100;
-      document.getElementById('progressFill').style.width = progress + '%';
-
-      // Update button states
-      document.getElementById('prevBtn').disabled = currentPage <= 1;
-      document.getElementById('nextBtn').disabled = currentPage >= TOTAL_PAGES;
     }
 
     function nextPage() {
-      if (currentPage < TOTAL_PAGES) {
-        const isMobile = window.innerWidth <= 768;
-        currentPage += isMobile ? 1 : 2;
-        if (currentPage > TOTAL_PAGES) currentPage = TOTAL_PAGES;
-        updateDisplay();
-      } else if (isAutoplay) {
-        stopAutoplay();
+      const isMobile = window.innerWidth <= 768;
+      currentPage += isMobile ? 1 : 2;
+      if (currentPage > TOTAL_PAGES) {
+        currentPage = 1;
       }
-    }
-
-    function previousPage() {
-      if (currentPage > 1) {
-        const isMobile = window.innerWidth <= 768;
-        currentPage -= isMobile ? 1 : 2;
-        if (currentPage < 1) currentPage = 1;
-        updateDisplay();
-      }
-    }
-
-    function toggleAutoplay() {
-      if (isAutoplay) {
-        stopAutoplay();
-      } else {
-        startAutoplay();
-      }
+      updateDisplay();
     }
 
     function startAutoplay() {
-      isAutoplay = true;
-      document.getElementById('autoplayBtn').classList.add('active');
-      document.getElementById('autoplayBtn').innerHTML = '⏸ Pause';
-
       autoplayInterval = setInterval(() => {
-        if (currentPage >= TOTAL_PAGES) {
-          stopAutoplay();
-        } else {
-          nextPage();
-        }
+        nextPage();
       }, 2400);
     }
 
-    function stopAutoplay() {
-      isAutoplay = false;
-      document.getElementById('autoplayBtn').classList.remove('active');
-      document.getElementById('autoplayBtn').innerHTML = '▶ Auto-Play';
-
-      if (autoplayInterval) {
-        clearInterval(autoplayInterval);
-        autoplayInterval = null;
-      }
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') previousPage();
-      if (e.key === 'ArrowRight') nextPage();
-      if (e.key === 'Home') {
-        currentPage = 1;
-        updateDisplay();
-      }
-      if (e.key === 'End') {
-        currentPage = TOTAL_PAGES;
-        updateDisplay();
-      }
-      if (e.key === ' ') {
-        e.preventDefault();
-        toggleAutoplay();
-      }
-    });
-
-    // Handle window resize
     window.addEventListener('resize', updateDisplay);
 
-    // Initialize
     updateDisplay();
+    setTimeout(() => {
+      startAutoplay();
+    }, 1000);
   </script>
 </body>
 </html>
