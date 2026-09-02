@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Unicorn Studio SDK (for exact HydraDB Tree WebGL Animation) -->
-  <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.11/dist/unicornStudio.umd.js"></script>
+  
 
   <style>
     :root {
@@ -242,18 +242,6 @@
     }
 
     /* Ambient top-center lighting bloom */
-    .hero-backdrop-glow {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 1100px;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(56, 189, 248, 0.09) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 75%);
-    }
 
     /* Ultra-subtle masked micro-grid */
     .hero-micro-grid {
@@ -342,41 +330,46 @@
     /* ═══════════════════════════════════════════════════════════════
        VERY MINIMAL SECTION BORDER GRAPHIC (1px Hairline with Micro Notches)
        ═══════════════════════════════════════════════════════════════ */
-    .section-border {
-      position: relative;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 12%, rgba(255, 255, 255, 0.08) 88%, transparent 100%);
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 4-CORNER BLUE SQUARES (Architectural Registration Marks)
+       ═══════════════════════════════════════════════════════════════ */
+    .section-corner-squares {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       pointer-events: none;
-      z-index: 5;
+      z-index: 20;
     }
 
-    .section-border.light-theme {
-      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.07) 12%, rgba(0, 0, 0, 0.07) 88%, transparent 100%);
+    .corner-square {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background-color: #2563EB;
     }
 
-    .section-border-inner {
-      max-width: 1240px;
-      margin: 0 auto;
-      height: 1px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
+    .corner-square--tl {
+      top: 0;
+      left: 0;
     }
 
-    .section-border-notch {
-      width: 5px;
-      height: 5px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      transform: translateY(-50%) rotate(45deg);
-      top: 50%;
-      position: relative;
+    .corner-square--tr {
+      top: 0;
+      right: 0;
     }
 
-    .section-border.light-theme .section-border-notch {
-      border-color: rgba(0, 0, 0, 0.16);
+    .corner-square--bl {
+      bottom: 0;
+      left: 0;
+    }
+
+    .corner-square--br {
+      bottom: 0;
+      right: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -389,34 +382,7 @@
       position: relative;
     }
 
-    .hydra-tree-bg {
-      display: none; /* Temporarily hidden per user request */
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      /* Inverts black canvas to pure white #ffffff and renders exact DataGlif website Cyan & Blue (#38BDF8 / #2563EB) */
-      filter: invert(1) hue-rotate(6deg) saturate(2.6) contrast(1.22) brightness(0.98);
-      opacity: 0.95;
-    }
-
-    .hydra-tree-bg .unicorn-embed {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-      transform: scale(1.32) translateY(6%);
-      transform-origin: center bottom;
-    }
-
     @media (max-width: 900px) {
-      .hydra-tree-bg .unicorn-embed {
-        transform: scale(1.15) translateY(4%);
-      }
     }
 
     .workflow-container {
@@ -474,15 +440,13 @@
       width: max-content;
       will-change: transform;
       align-items: center;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .workflow-card {
       width: 320px;
-      background-color: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(37, 99, 235, 0.12);
+      background-color: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 0;
       padding: 2.5rem 2rem;
       min-height: 200px;
@@ -491,20 +455,20 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease, background-color 0.45s ease;
-      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, background-color 0.4s ease;
+      box-shadow: none;
       position: relative;
-      opacity: 0.65;
-      transform: scale(0.95);
+      opacity: 0.55;
+      transform: scale(0.92);
       cursor: pointer;
     }
 
     .workflow-card.active {
       opacity: 1;
       transform: scale(1.05);
-      background-color: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(37, 99, 235, 0.06);
-      border-color: rgba(37, 99, 235, 0.35);
+      background-color: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.25);
+      box-shadow: none;
       z-index: 5;
     }
 
@@ -535,8 +499,8 @@
     }
 
     .workflow-card:hover {
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: none;
+      border-color: rgba(0, 0, 0, 0.25);
     }
 
     .workflow-card h3 {
@@ -560,7 +524,7 @@
       color: #FFFFFF;
       background-size: cover;
       background-position: center;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      box-shadow: none;
       transition: transform 0.3s ease;
     }
 
@@ -572,7 +536,7 @@
       width: 24px;
       height: 24px;
       stroke-width: 2px;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+      filter: none;
     }
 
     .workflow-card:nth-child(1) .card-icon {
@@ -614,7 +578,7 @@
       left: 15%;
       right: 15%;
       height: 1px;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.08);
       z-index: 1;
       transform: translateY(-50%);
     }
@@ -627,33 +591,34 @@
     }
 
     .indicator-pill {
-      width: 54px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       background: #FFFFFF;
       color: #000000;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 40px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
     }
 
     .indicator-pill:hover {
       border-color: #000000;
       color: #000000;
+      transform: translateY(-1px);
     }
 
     .indicator-pill.active {
       background: var(--surface-deep, #0A0D12);
       color: #FFFFFF;
       border-color: var(--surface-deep, #0A0D12);
-      box-shadow: 0 4px 12px rgba(10, 13, 18, 0.25);
+      box-shadow: none;
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -798,6 +763,23 @@
       color: #0F172A;
     }
 
+    /* SplitText Responsive Masking */
+    .split-heading {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .heading-reveal-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    /* Smooth GSAP Text Reveals */
+    .smooth-text-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
     .feature-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -874,6 +856,147 @@
       color: #475569;
       font-weight: 400;
       max-width: 55ch;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ANNOTATION WORKFLOWS SECTION (Self-Contained & Responsive)
+       ═══════════════════════════════════════════════════════════════ */
+    .scarcity-section {
+      position: relative;
+      width: 100%;
+      background: var(--surface-deep, #0A0D12);
+      padding: 5.5rem 1.5rem 5rem;
+    }
+
+    .scarcity-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .scarcity-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .scarcity-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.25rem, 4vw, 3.5rem); /* 56px */
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      color: #FFFFFF;
+    }
+
+    .scarcity-body {
+      margin: 1.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      max-width: 56ch; /* 50-60 chars per line */
+    }
+
+    .scarcity-body p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; /* 16px body */
+      line-height: 1.6; /* 160% body leading */
+      letter-spacing: -0.02em; /* -2% body tracking */
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .scarcity-body .accent {
+      color: var(--accent-cyan, #38BDF8);
+      font-weight: 700;
+    }
+
+    .scarcity-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 760px;
+      border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.75rem;
+      text-align: left;
+      position: relative;
+    }
+
+    /* Precision Corner Ticks (┌ ┐ └ ┘) for scarcity list outer container */
+    .scarcity-list::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%23FFFFFF' stroke-opacity='0.5' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%23FFFFFF' stroke-opacity='0.5' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%23FFFFFF' stroke-opacity='0.5' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%23FFFFFF' stroke-opacity='0.5' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+      background-position: top left, top right, bottom left, bottom right;
+      background-size: 8px 8px;
+      background-repeat: no-repeat;
+      transition: background-image 250ms ease;
+    }
+
+    .scarcity-list:hover::before {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%2338BDF8' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%2338BDF8' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%2338BDF8' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%2338BDF8' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+    }
+
+    .scarcity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 1.1rem;
+      transition: all 200ms ease;
+    }
+
+    .scarcity-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-cyan, #38BDF8);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .scarcity-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .scarcity-item-title {
+      margin-top: 0.35rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #FFFFFF;
+    }
+
+    @media (max-width: 768px) {
+      .scarcity-section {
+        padding: 4.5rem 1.5rem;
+      }
+
+      .scarcity-list {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Mobile Toggle Button */
@@ -1185,7 +1308,6 @@
        ═══════════════════════════════════════════════════════════════ -->
   <section class="hero-section">
     <!-- Minimal Ambient Lighting & Masked Micro-Grid -->
-    <div class="hero-backdrop-glow" aria-hidden="true"></div>
     <div class="hero-micro-grid" aria-hidden="true"></div>
 
     <div class="hero-container">
@@ -1195,40 +1317,20 @@
   </section>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border light-theme" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        WORKFLOW SECTION
        ═══════════════════════════════════════════════════════════════ -->
   <section class="workflow-section">
-    <!-- Exact HydraDB Tree WebGL Embed on White Canvas (DataGlif Blue Calibrated) -->
-    <div class="hydra-tree-bg">
-      <div 
-        class="unicorn-embed" 
-        data-us-project="oUvrbeOq0WuFIWyfR7ZD" 
-        data-us-scale="1" 
-        data-us-dpi="1.5" 
-        data-us-fps="60"
-        data-us-lazyload="false"
-        style="width: 100%; height: 100%;"
-      ></div>
-    </div>
 
     <div class="workflow-container">
       <div class="workflow-header">
-        <h2 class="workflow-title">Workflow</h2>
+        <h2 class="workflow-title split-heading">Workflow</h2>
       </div>
 
       <div id="trackWrapper" class="workflow-track-wrapper">
         <div id="track" class="workflow-track">
           
+          <!-- SET 1 -->
           <!-- Card 01: Learn -->
           <div class="workflow-card">
             <div class="card-icon">
@@ -1288,9 +1390,7 @@
               </svg>
             </div>
             <h3>Review + Deliver</h3>
-          </div>
-
-        </div>
+          </div>        </div>
       </div>
 
       <!-- Timeline Indicators -->
@@ -1309,21 +1409,12 @@
   </section>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border light-theme" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        DATA SOLUTIONS SECTION
        ═══════════════════════════════════════════════════════════════ -->
   <section class="data-solutions-section">
     <div class="data-solutions-container">
-      <h2 class="section-heading">Data solutions</h2>
+      <h2 class="section-heading split-heading">Data solutions</h2>
       <p class="solutions-subtitle">Our support extends across the wider data lifecycle.</p>
       <div class="solutions-grid">
         <div class="solution-item">
@@ -1346,21 +1437,20 @@
   </section>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border light-theme" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        BUILT AROUND THE WORK SECTION
        ═══════════════════════════════════════════════════════════════ -->
   <section class="why-choose-section">
-    <div class="why-choose-container">
-      <h2 class="section-heading why-choose-heading">Built around the work, not a template</h2>
+    <!-- 4 Corner Blue Squares -->
+    <div class="section-corner-squares" aria-hidden="true">
+      <span class="corner-square corner-square--tl"></span>
+      <span class="corner-square corner-square--tr"></span>
+      <span class="corner-square corner-square--bl"></span>
+      <span class="corner-square corner-square--br"></span>
+    </div>
+
+    <div class="why-choose-container container">
+      <h2 class="section-heading why-choose-heading split-heading">Built around the work, not a template</h2>
       <div class="feature-cards">
         <div class="feature-card">
           <h3 class="feature-card-title">Adaptive Framework</h3>
@@ -1373,6 +1463,68 @@
         <div class="feature-card">
           <h3 class="feature-card-title">Closed-Loop Iteration</h3>
           <p>Quality improves with every cycle. Disagreements and recurring errors feed back into the rubric, training, and review process strengthening consistency and quality over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ANNOTATION WORKFLOWS SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="scarcity-section">
+    <div class="scarcity-container">
+      <div class="scarcity-grid">
+        <div class="scarcity-content container">
+          <h2 class="scarcity-title split-heading">Annotation workflows built around your exact problem.</h2>
+          <div class="scarcity-body">
+            <p>
+              Every project begins with the client's data, taxonomy, and quality requirements. We assemble the right talent from our network, train and calibrate annotators for the task, and manage workflows ranging from fully manual labeling to human-guided, semi-automatic annotation.
+            </p>
+            <p>
+              <span class="accent">DataGlif</span> is your end-to-end partner: from
+              collection and rich annotation to curation, QA, and delivery of
+              production-ready data.
+            </p>
+          </div>
+        </div>
+
+        <div class="scarcity-list">
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Domain-Matched Talent</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-11.55,39.29c-4.79,5-9.75,10.17-12.38,16.52-2.52,6.1-2.63,13.07-2.73,19.82-.1,7-.21,14.33-3.32,17.43s-10.39,3.22-17.43,3.32c-6.75.1-13.72.21-19.82,2.73-6.35,2.63-11.52,7.59-16.52,12.38S132,224,128,224s-9.15-4.92-14.11-9.69-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82-2.63-6.35-7.59-11.52-12.38-16.52S32,132,32,128s4.92-9.15,9.69-14.11,9.75-10.17,12.38-16.52c2.52-6.1,2.63-13.07,2.73-19.82.1-7,.21-14.33,3.32-17.43S70.51,56.9,77.55,56.8c6.75-.1,13.72-.21,19.82-2.73,6.35-2.63,11.52-7.59,16.52-12.38S124,32,128,32s9.15,4.92,14.11,9.69,10.17,9.75,16.52,12.38c6.1,2.52,13.07,2.63,19.82,2.73,7,.1,14.33.21,17.43,3.32s3.22,10.39,3.32,17.43c.1,6.75.21,13.72,2.73,19.82,2.63,6.35,7.59,11.52,12.38,16.52S224,124,224,128,219.08,137.15,214.31,142.11ZM173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Task-Specific Training & Calibration</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Manual or Model-Assisted Workflows</div>
+            </div>
+          </div>
+
+          <div class="scarcity-item">
+            <span class="scarcity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg>
+            </span>
+            <div>
+              <div class="scarcity-item-title">Managed QA, Adjudication & Delivery</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1597,11 +1749,12 @@
     }
 
     .prompt-cursor {
-      color: var(--accent-cyan);
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 600;
-      font-size: 1rem;
-      line-height: 1;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-cyan, #38BDF8);
+      flex-shrink: 0;
+      vertical-align: middle;
       animation: prompt-blink 1.5s infinite;
     }
 
@@ -1661,8 +1814,12 @@
     }
 
     .console-nav-arrow {
-      color: var(--accent-cyan);
-      font-weight: 700;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-cyan, #38BDF8);
+      flex-shrink: 0;
+      vertical-align: middle;
     }
 
     .console-brand-desc {
@@ -1770,13 +1927,6 @@
     }
   </style>
 
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
 
   <section class="intake-console-section" id="contact">
     <div class="intake-console-wrapper">
@@ -1805,7 +1955,7 @@
           
           <!-- Left Statement Pane -->
           <div class="console-statement-pane">
-            <h2 class="console-heading">Start With the Failure Mode.</h2>
+            <h2 class="console-heading split-heading">Start With the Failure Mode.</h2>
             <p class="console-desc">
               Show us what the model is missing, where the data breaks down, or what quality must be proven. That becomes the brief for the right collection, annotation, enrichment, and review workflow.
             </p>
@@ -1839,7 +1989,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -1860,7 +2010,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -1881,7 +2031,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -1898,7 +2048,7 @@
           
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">→</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>DATAGLIF</span>
             </div>
             <p class="console-brand-desc">
@@ -1908,7 +2058,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -1922,7 +2072,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -1935,7 +2085,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
@@ -2064,11 +2214,6 @@
       // Initialize
       centerCard(0);
       startAutoScroll();
-
-      // Initialize Unicorn Studio Tree Animation
-      if (window.UnicornStudio) {
-        window.UnicornStudio.init();
-      }
     });
 
     // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
@@ -2149,6 +2294,80 @@
         }
       });
     })();
+  </script>
+
+  <!-- GSAP & SplitText Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="./js/SplitText.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    // Clean GSAP Heading Reveals on Scroll (No Scrub)
+    gsap.set(".split-heading", { opacity: 1 });
+
+    document.fonts.ready.then(() => {
+      const headings = gsap.utils.toArray('.split-heading');
+
+      headings.forEach((heading) => {
+        if (!heading) return;
+
+        SplitText.create(heading, {
+          type: "words,lines",
+          mask: "lines",
+          linesClass: "heading-reveal-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              yPercent: 110,
+              opacity: 0,
+              duration: 0.95,
+              stagger: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: heading,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true
+              }
+            });
+          }
+        });
+      });
+
+      // Smooth GSAP Text Reveals for Paragraphs & Subtitles
+      const smoothTargets = gsap.utils.toArray([
+        '.hero-subtitle',
+        '.feature-card p',
+        '.scarcity-body p',
+        '.console-brand-desc'
+      ].join(','));
+
+      smoothTargets.forEach((el) => {
+        if (!el) return;
+
+        SplitText.create(el, {
+          type: "lines",
+          linesClass: "smooth-text-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              opacity: 0,
+              y: 18,
+              duration: 1.0,
+              stagger: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 88%",
+                once: true
+              }
+            });
+          }
+        });
+      });
+    });
   </script>
 
 </body>

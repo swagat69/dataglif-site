@@ -201,7 +201,7 @@
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.12em;
-      text-transform: uppercase;
+      text-transform: none;
       text-decoration: none;
       transition: all 200ms ease;
       cursor: pointer;
@@ -312,7 +312,7 @@
       font-size: 0.6875rem;
       font-weight: 600;
       letter-spacing: 0.16em;
-      text-transform: uppercase;
+      text-transform: none;
       color: rgba(255, 255, 255, 0.8);
       margin-bottom: 1.5rem;
       backdrop-filter: blur(4px);
@@ -376,7 +376,7 @@
       font-size: 0.8125rem;
       font-weight: 600;
       letter-spacing: 0.12em;
-      text-transform: uppercase;
+      text-transform: none;
       text-decoration: none;
       transition: all 200ms ease;
       cursor: pointer;
@@ -450,41 +450,46 @@
     /* ═══════════════════════════════════════════════════════════════
        VERY MINIMAL SECTION BORDER GRAPHIC (1px Hairline with Micro Notches)
        ═══════════════════════════════════════════════════════════════ */
-    .section-border {
-      position: relative;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 12%, rgba(255, 255, 255, 0.08) 88%, transparent 100%);
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 4-CORNER BLUE SQUARES (Architectural Registration Marks)
+       ═══════════════════════════════════════════════════════════════ */
+    .section-corner-squares {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       pointer-events: none;
-      z-index: 5;
+      z-index: 20;
     }
 
-    .section-border.light-theme {
-      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.07) 12%, rgba(0, 0, 0, 0.07) 88%, transparent 100%);
+    .corner-square {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background-color: #2563EB;
     }
 
-    .section-border-inner {
-      max-width: 1240px;
-      margin: 0 auto;
-      height: 1px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
+    .corner-square--tl {
+      top: 0;
+      left: 0;
     }
 
-    .section-border-notch {
-      width: 5px;
-      height: 5px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      transform: translateY(-50%) rotate(45deg);
-      top: 50%;
-      position: relative;
+    .corner-square--tr {
+      top: 0;
+      right: 0;
     }
 
-    .section-border.light-theme .section-border-notch {
-      border-color: rgba(0, 0, 0, 0.16);
+    .corner-square--bl {
+      bottom: 0;
+      left: 0;
+    }
+
+    .corner-square--br {
+      bottom: 0;
+      right: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -977,7 +982,7 @@
     .card-eyebrow {
       font-family: var(--font-m);
       font-size: 9px;
-      text-transform: uppercase;
+      text-transform: none;
       letter-spacing: 0.22em;
     }
 
@@ -1140,6 +1145,18 @@
       text-align: center;
     }
 
+    
+    /* SplitText Responsive Masking */
+    .split-heading {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .heading-reveal-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
     .services-grid-title {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: clamp(2rem, 3.5vw, 3rem); /* Adjusted to a proper size */
@@ -1147,6 +1164,7 @@
       line-height: 1.12;
       letter-spacing: -0.03em;
       color: #FFFFFF;
+      text-transform: none;
       margin: 0 auto 1rem auto;
       text-align: center;
     }
@@ -1168,139 +1186,254 @@
       }
     }
 
-    .services-3x2-grid,
-    .services-2x3-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    @media (max-width: 1024px) {
-      .services-3x2-grid,
-      .services-2x3-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .services-grid-section {
-        padding: 4.5rem 1.5rem 4rem;
-      }
-      .services-3x2-grid,
-      .services-2x3-grid {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-      }
-    }
-
-    .data-service-card {
-      background: #0B0E14;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      padding: 2.25rem 2rem 2rem 2rem;
+        /* Split-Console Layout (Compact, Side-by-Side Tags, No Pixel Graphics) */
+    .services-grid-section {
+      width: 100%;
+      background: var(--surface-deepest, #05070C);
+      padding: 4.5rem 2rem 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       position: relative;
+    }
+
+    .services-grid-header {
+      margin-bottom: 2.25rem;
+      text-align: center;
+    }
+
+    
+    /* SplitText Responsive Masking */
+    .split-heading {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .heading-reveal-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .services-grid-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 3.2vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      color: #FFFFFF;
+      text-transform: none;
+      margin: 0 auto 0.75rem auto;
+      text-align: center;
+    }
+
+    .services-grid-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 58ch;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .services-console {
+      background: var(--surface-deep, #080B10);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .console-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: auto;
+    }
+
+    /* Left Column: Numbered Service List */
+    .console-menu-col {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: border-color 250ms ease;
+      background: rgba(0, 0, 0, 0.35);
     }
 
-    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Subtle at rest, Electric Blue on hover */
-    /* Minimal Corner Ticks (┌ ┐ └ ┘) - Ultra-thin 1px, 7px arms */
-    .data-service-card::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      pointer-events: none;
-      z-index: 2;
-      background:
-        /* Top-Left */
-        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 7px 1px no-repeat,
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top left / 1px 7px no-repeat,
-        /* Top-Right */
-        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 7px 1px no-repeat,
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 7px, transparent 7px) top right / 1px 7px no-repeat,
-        /* Bottom-Left */
-        linear-gradient(to right, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 7px 1px no-repeat,
-        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom left / 1px 7px no-repeat,
-        /* Bottom-Right */
-        linear-gradient(to left, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 7px 1px no-repeat,
-        linear-gradient(to top, rgba(255, 255, 255, 0.2) 7px, transparent 7px) bottom right / 1px 7px no-repeat;
-      transition: background 250ms ease;
-    }
-
-    .data-service-card:hover::before {
-      background:
-        /* Top-Left */
-        linear-gradient(to right, #38BDF8 7px, transparent 7px) top left / 7px 1px no-repeat,
-        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top left / 1px 7px no-repeat,
-        /* Top-Right */
-        linear-gradient(to left, #38BDF8 7px, transparent 7px) top right / 7px 1px no-repeat,
-        linear-gradient(to bottom, #38BDF8 7px, transparent 7px) top right / 1px 7px no-repeat,
-        /* Bottom-Left */
-        linear-gradient(to right, #38BDF8 7px, transparent 7px) bottom left / 7px 1px no-repeat,
-        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom left / 1px 7px no-repeat,
-        /* Bottom-Right */
-        linear-gradient(to left, #38BDF8 7px, transparent 7px) bottom right / 7px 1px no-repeat,
-        linear-gradient(to top, #38BDF8 7px, transparent 7px) bottom right / 1px 7px no-repeat;
-    }
-
-    .dsc-top {
-      margin-bottom: 1.25rem;
-    }
-
-    .dsc-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(1.25rem, 2vw, 1.5rem);
-      font-weight: 700;
-      line-height: 1.18;
-      color: #FFFFFF;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      margin: 0;
-    }
-
-    .dsc-tags {
+    .console-menu-item {
+      padding: 1.05rem 1.5rem;
+      min-height: 52px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      position: relative;
+      background: transparent;
+      user-select: none;
+      transition: background 180ms ease;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 1.25rem;
+      align-items: center;
     }
 
-    .dsc-tag {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78125rem;
+    .console-menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .console-menu-item:hover {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .menu-item-code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8125rem;
       font-weight: 500;
-      padding: 0.3rem 0.65rem;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.85);
-      letter-spacing: 0.01em;
-      transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: rgba(255, 255, 255, 0.55);
+      transition: color 180ms ease;
     }
 
-    .data-service-card:hover .dsc-tag {
-      border-color: rgba(56, 189, 248, 0.3);
-      background: rgba(56, 189, 248, 0.05);
+    .console-menu-item:hover .menu-item-code {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Active: ONLY the bigger text */
+    .menu-item-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      display: none;
+      line-height: 1.2;
+    }
+
+    .menu-item-active-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #2563EB;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+    }
+
+    /* On click / active: HIDE number & small writing, SHOW ONLY the bigger text */
+    .console-menu-item.is-active {
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .console-menu-item.is-active .menu-item-code {
+      display: none;
+    }
+
+    .console-menu-item.is-active .menu-item-title {
+      display: block;
+    }
+
+    .console-menu-item.is-active .menu-item-active-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #2563EB;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+    }
+
+    /* Right Column: Stage */
+        .stage-content-wrap {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .stage-content-wrap.is-leaving {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+
+    .stage-content-wrap.is-entering {
+      opacity: 0;
+      transform: translateY(7px);
+    }
+
+    .console-stage-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--surface-deepest, #05070C);
+    }
+
+    /* Upper Tier: Exact Description */
+    .stage-header-tier {
+      padding: 2.25rem 2.75rem 1.5rem 2.75rem;
+    }
+
+    .stage-headline {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.025em;
       color: #FFFFFF;
     }
 
-    .dsc-divider {
+    .stage-tier-divider {
       height: 1px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.09);
-      margin-bottom: 1.25rem;
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    .dsc-desc {
+    /* Lower Tier: Side-by-Side Tags with Tiny Square Separators */
+    .stage-tags-tier {
+      padding: 1.35rem 2.75rem 1.85rem 2.75rem;
+    }
+
+    .stage-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+    }
+
+    .stage-tag-item {
       font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
-      line-height: 1.6;
-      letter-spacing: -0.02em;
+      font-weight: 500;
       color: rgba(255, 255, 255, 0.85);
-      max-width: 50ch;
-      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    /* Very Tiny Square In Between Tags */
+    .tag-sep-square {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: #2563EB;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 860px) {
+      .services-grid-section {
+        padding: 3.5rem 1.25rem;
+      }
+      .console-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-menu-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .stage-header-tier {
+      padding: 2.25rem 2.75rem 1.5rem 2.75rem;
+    }
+      .stage-tags-tier {
+      padding: 1.35rem 2.75rem 1.85rem 2.75rem;
+    }
     }
 
     /* Mobile Toggle Button */
@@ -1613,15 +1746,6 @@
     </div>
   </section>
 
-
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
 
   <!-- ═══════════════════════════════════════════════════════════════
        INTERACTIVE SERVICES MAP (5-Node Pentagon Layout)
@@ -2139,131 +2263,85 @@
   </script>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border light-theme" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        CHOOSE THE DATA SERVICES YOU NEED (2x3 Grid)
        ═══════════════════════════════════════════════════════════════ -->
   <section class="services-grid-section" id="data-services">
+    <!-- 4 Corner Blue Squares -->
+    <div class="section-corner-squares" aria-hidden="true">
+      <span class="corner-square corner-square--tl"></span>
+      <span class="corner-square corner-square--tr"></span>
+      <span class="corner-square corner-square--bl"></span>
+      <span class="corner-square corner-square--br"></span>
+    </div>
+
     <div class="services-grid-container">
       
       <div class="services-grid-header">
-        <h2 class="services-grid-title">Choose the Data Services You Need</h2>
+        <h2 class="services-grid-title split-heading">Choose the data services you need</h2>
         <p class="services-grid-subtitle">
           Already have data? Bring your own dataset and we'll clean, enrich, annotate, QA, or review it.
         </p>
       </div>
 
-      <div class="services-3x2-grid">
-        
-        <!-- Card 1: Data Collection -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Data Collection</h3>
-          </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">Web extraction</span>
-            <span class="dsc-tag">Surveys</span>
-            <span class="dsc-tag">Schema mapping</span>
-            <span class="dsc-tag">API harvesting</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Targeted sourcing from public, licensed, and API sources. Custom surveys and data harvesting.
-          </p>
-        </div>
+            <!-- 2-Column Console Layout Matching Reference Image -->
+      <div class="services-console">
+        <div class="console-grid">
 
-        <!-- Card 2: Data Annotation -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Data Annotation</h3>
+          <!-- Left Column: Numbered Service List -->
+          <div class="console-menu-col" id="consoleMenu">
+            <div class="console-menu-item" data-idx="0" role="button" tabindex="0">
+              <div class="menu-item-code">01 DATA COLLECTION</div>
+              <div class="menu-item-title">Data Collection</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+            <div class="console-menu-item" data-idx="1" role="button" tabindex="0">
+              <div class="menu-item-code">02 DATA ANNOTATION</div>
+              <div class="menu-item-title">Data Annotation</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+            <div class="console-menu-item" data-idx="2" role="button" tabindex="0">
+              <div class="menu-item-code">03 DATA CLEANING</div>
+              <div class="menu-item-title">Data Cleaning</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+            <div class="console-menu-item is-active" data-idx="3" role="button" tabindex="0">
+              <div class="menu-item-code">04 DATA ENRICHMENT</div>
+              <div class="menu-item-title">Data Enrichment</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+            <div class="console-menu-item" data-idx="4" role="button" tabindex="0">
+              <div class="menu-item-code">05 DATASET QA</div>
+              <div class="menu-item-title">Dataset QA</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+            <div class="console-menu-item" data-idx="5" role="button" tabindex="0">
+              <div class="menu-item-code">06 HUMAN REVIEW</div>
+              <div class="menu-item-title">Human Review</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
           </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">NER</span>
-            <span class="dsc-tag">Bounding boxes</span>
-            <span class="dsc-tag">Polygons</span>
-            <span class="dsc-tag">Sentiment</span>
-            <span class="dsc-tag">RLHF</span>
-            <span class="dsc-tag">Segmentation</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Expert labeling for NLP, vision, video, and multimodal models — using your guidelines or creating them from scratch.
-          </p>
-        </div>
 
-        <!-- Card 3: Data Cleaning -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Data Cleaning</h3>
+          <!-- Right Column: Details Stage -->
+          <div class="console-stage-col" id="consoleStage">
+            <div class="stage-content-wrap">
+              <div class="stage-header-tier">
+                <h3 class="stage-headline">Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.</h3>
+              </div>
+              <div class="stage-tier-divider"></div>
+              <div class="stage-tags-tier">
+                <div class="stage-tags-row">
+                  <span class="stage-tag-item">Metadata enrichment</span>
+                  <span class="tag-sep-square" aria-hidden="true"></span>
+                  <span class="stage-tag-item">Categorization</span>
+                  <span class="tag-sep-square" aria-hidden="true"></span>
+                  <span class="stage-tag-item">Taxonomy mapping</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">Deduplication</span>
-            <span class="dsc-tag">Validation</span>
-            <span class="dsc-tag">Missing value resolution</span>
-            <span class="dsc-tag">Normalization</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Remove noise, fix inconsistencies, deduplicate, and normalize your existing datasets.
-          </p>
-        </div>
 
-        <!-- Card 4: Data Enrichment -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Data Enrichment</h3>
-          </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">Metadata enrichment</span>
-            <span class="dsc-tag">Categorization</span>
-            <span class="dsc-tag">Taxonomy mapping</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.
-          </p>
         </div>
-
-        <!-- Card 5: Dataset QA -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Dataset QA</h3>
-          </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">Accuracy audit</span>
-            <span class="dsc-tag">Consistency checks</span>
-            <span class="dsc-tag">Gold set creation</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Rigorous quality assurance, sampling, inter-annotator agreement, and adjudication.
-          </p>
-        </div>
-
-        <!-- Card 6: Human Review -->
-        <div class="data-service-card">
-          <div class="dsc-top">
-            <h3 class="dsc-title">Human Review</h3>
-          </div>
-          <div class="dsc-tags">
-            <span class="dsc-tag">Edge cases</span>
-            <span class="dsc-tag">Escalation</span>
-            <span class="dsc-tag">Nuance validation</span>
-          </div>
-          <div class="dsc-divider"></div>
-          <p class="dsc-desc">
-            Deep human-in-the-loop verification for edge cases, subjective labels, and high-stakes decisions.
-          </p>
-        </div>
-
       </div>
 
     </div>
@@ -2317,7 +2395,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.6875rem;
       letter-spacing: 0.18em;
-      text-transform: uppercase;
+      text-transform: none;
     }
 
     .console-header-left {
@@ -2468,7 +2546,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      text-transform: uppercase;
+      text-transform: none;
       color: rgba(255, 255, 255, 0.45);
     }
 
@@ -2488,11 +2566,12 @@
     }
 
     .prompt-cursor {
-      color: var(--accent-cyan);
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 600;
-      font-size: 1rem;
-      line-height: 1;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-cyan, #38BDF8);
+      flex-shrink: 0;
+      vertical-align: middle;
       animation: prompt-blink 1.5s infinite;
     }
 
@@ -2545,15 +2624,19 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      text-transform: uppercase;
+      text-transform: none;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 0.75rem;
       font-weight: 600;
     }
 
     .console-nav-arrow {
-      color: var(--accent-cyan);
-      font-weight: 700;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-cyan, #38BDF8);
+      flex-shrink: 0;
+      vertical-align: middle;
     }
 
     .console-brand-desc {
@@ -2595,7 +2678,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.625rem;
       letter-spacing: 0.16em;
-      text-transform: uppercase;
+      text-transform: none;
       color: rgba(255, 255, 255, 0.4);
     }
 
@@ -2661,13 +2744,6 @@
     }
   </style>
 
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
 
   <section class="intake-console-section" id="contact">
     <div class="intake-console-wrapper">
@@ -2696,7 +2772,7 @@
           
           <!-- Left Statement Pane -->
           <div class="console-statement-pane">
-            <h2 class="console-heading">Start With the Failure Mode.</h2>
+            <h2 class="console-heading split-heading">Start With the Failure Mode.</h2>
             <p class="console-desc">
               Show us what the model is missing, where the data breaks down, or what quality must be proven. That becomes the brief for the right collection, annotation, enrichment, and review workflow.
             </p>
@@ -2730,7 +2806,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -2751,7 +2827,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -2772,7 +2848,7 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor">|</span>
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -2789,7 +2865,7 @@
           
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">→</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>DATAGLIF</span>
             </div>
             <p class="console-brand-desc">
@@ -2799,7 +2875,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -2813,7 +2889,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -2826,7 +2902,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
@@ -2932,6 +3008,217 @@
         }
       });
     })();
+  </script>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       CHOOSE THE DATA SERVICES CONSOLE ENGINE (Exact Copy from Services)
+       ═══════════════════════════════════════════════════════════════ -->
+  <script>
+    (function initServicesConsole() {
+      const SERVICES = [
+        {
+          id: '01',
+          code: '01 DATA COLLECTION',
+          title: 'Data Collection',
+          desc: 'Targeted sourcing from public, licensed, and API sources. Custom surveys and data harvesting.',
+          tags: [
+            'Web extraction',
+            'Surveys',
+            'Schema mapping',
+            'API harvesting'
+          ]
+        },
+        {
+          id: '02',
+          code: '02 DATA ANNOTATION',
+          title: 'Data Annotation',
+          desc: 'Expert labeling for NLP, vision, video, and multimodal models — using your guidelines or creating them from scratch.',
+          tags: [
+            'NER',
+            'Bounding boxes',
+            'Polygons',
+            'Sentiment',
+            'RLHF',
+            'Segmentation'
+          ]
+        },
+        {
+          id: '03',
+          code: '03 DATA CLEANING',
+          title: 'Data Cleaning',
+          desc: 'Remove noise, fix inconsistencies, deduplicate, and normalize your existing datasets.',
+          tags: [
+            'Deduplication',
+            'Validation',
+            'Missing value resolution',
+            'Normalization'
+          ]
+        },
+        {
+          id: '04',
+          code: '04 DATA ENRICHMENT',
+          title: 'Data Enrichment',
+          desc: 'Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.',
+          tags: [
+            'Metadata enrichment',
+            'Categorization',
+            'Taxonomy mapping'
+          ]
+        },
+        {
+          id: '05',
+          code: '05 DATASET QA',
+          title: 'Dataset QA',
+          desc: 'Rigorous quality assurance, sampling, inter-annotator agreement, and adjudication.',
+          tags: [
+            'Accuracy audit',
+            'Consistency checks',
+            'Gold set creation'
+          ]
+        },
+        {
+          id: '06',
+          code: '06 HUMAN REVIEW',
+          title: 'Human Review',
+          desc: 'Deep human-in-the-loop verification for edge cases, subjective labels, and high-stakes decisions.',
+          tags: [
+            'Edge cases',
+            'Escalation',
+            'Nuance validation'
+          ]
+        }
+      ];
+
+            const menuEl = document.getElementById('consoleMenu');
+      const stageEl = document.getElementById('consoleStage');
+      if (!menuEl || !stageEl) return;
+
+      let activeIndex = 3; // 04 Data Enrichment active by default matching reference image
+
+      function initMenu() {
+        menuEl.innerHTML = SERVICES.map((item, idx) => {
+          const isActive = idx === activeIndex;
+          return `
+            <div 
+              class="console-menu-item ${isActive ? 'is-active' : ''}"
+              data-idx="${idx}"
+              role="button"
+              tabindex="0"
+            >
+              <div class="menu-item-code">${item.code}</div>
+              <div class="menu-item-title">${item.title}</div>
+              <div class="menu-item-active-bar"></div>
+            </div>
+          `;
+        }).join('');
+
+        menuEl.querySelectorAll('.console-menu-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const idx = parseInt(item.getAttribute('data-idx'), 10);
+            if (!isNaN(idx)) {
+              selectService(idx);
+            }
+          });
+        });
+      }
+
+      function renderStageContent(idx) {
+        const current = SERVICES[idx];
+        stageEl.innerHTML = `
+          <div class="stage-content-wrap">
+            <div class="stage-header-tier">
+              <h3 class="stage-headline">${current.desc}</h3>
+            </div>
+
+            <div class="stage-tier-divider"></div>
+
+            <div class="stage-tags-tier">
+              <div class="stage-tags-row">
+                ${current.tags.map((tag, i) => `
+                  <span class="stage-tag-item">${tag}</span>
+                  ${i < current.tags.length - 1 ? '<span class="tag-sep-square" aria-hidden="true"></span>' : ''}
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function selectService(idx) {
+        if (idx === activeIndex) return;
+
+        const items = menuEl.querySelectorAll('.console-menu-item');
+        if (items[activeIndex]) items[activeIndex].classList.remove('is-active');
+        if (items[idx]) items[idx].classList.add('is-active');
+
+        activeIndex = idx;
+
+        const oldWrap = stageEl.querySelector('.stage-content-wrap');
+        if (oldWrap) {
+          oldWrap.classList.add('is-leaving');
+          setTimeout(() => {
+            renderStageContent(activeIndex);
+            const newWrap = stageEl.querySelector('.stage-content-wrap');
+            if (newWrap) {
+              newWrap.classList.add('is-entering');
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  newWrap.classList.remove('is-entering');
+                });
+              });
+            }
+          }, 140);
+        } else {
+          renderStageContent(activeIndex);
+        }
+      }
+
+      initMenu();
+      renderStageContent(activeIndex);
+    })();
+  </script>
+
+
+  <!-- GSAP & SplitText Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="./js/SplitText.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    // Clean GSAP Heading Reveals on Scroll (No Scrub)
+    gsap.set(".split-heading", { opacity: 1 });
+
+    document.fonts.ready.then(() => {
+      const headings = gsap.utils.toArray('.split-heading');
+
+      headings.forEach((heading) => {
+        if (!heading) return;
+
+        SplitText.create(heading, {
+          type: "words,lines",
+          mask: "lines",
+          linesClass: "heading-reveal-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              yPercent: 110,
+              opacity: 0,
+              duration: 0.95,
+              stagger: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: heading,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true
+              }
+            });
+          }
+        });
+      });
+    });
   </script>
 
 </body>

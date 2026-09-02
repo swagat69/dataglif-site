@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose the Data Services You Need - Ideas</title>
+
+  <!-- Fonts (Exact DataGlif Typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --surface-deepest: #05070C;
+      --surface-deep: #080B10;
+      --accent-blue: #2563EB;
+      --accent-cyan: #38BDF8;
+      --white: #FFFFFF;
+      --line-subtle: rgba(255, 255, 255, 0.08);
+      --line-bright: rgba(255, 255, 255, 0.14);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--surface-deepest);
+      color: #FFFFFF;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Section Container */
+    .services-grid-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-corner-squares {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .corner-square {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background-color: #2563EB;
+    }
+
+    .corner-square--tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-square--tr {
+      top: 0;
+      right: 0;
+    }
+
+    .corner-square--bl {
+      bottom: 0;
+      left: 0;
+    }
+
+    .corner-square--br {
+      bottom: 0;
+      right: 0;
+    }
+
+    /* Header */
+    .services-grid-header {
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .services-grid-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2.25rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      color: #FFFFFF;
+      text-transform: none;
+      margin-bottom: 1rem;
+    }
+
+    .services-grid-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 58ch;
+      margin: 0 auto;
+    }
+
+    /* 2-Column Split Console */
+        /* Split-Console Layout (Compact, Side-by-Side Tags, No Pixel Graphics) */
+    .services-grid-section {
+      width: 100%;
+      background: var(--surface-deepest, #05070C);
+      padding: 4.5rem 2rem 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .services-grid-header {
+      margin-bottom: 2.25rem;
+      text-align: center;
+    }
+
+    .services-grid-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 3.2vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      color: #FFFFFF;
+      text-transform: none;
+      margin: 0 auto 0.75rem auto;
+      text-align: center;
+    }
+
+    .services-grid-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 58ch;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .services-console {
+      background: var(--surface-deep, #080B10);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .console-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: auto;
+    }
+
+    /* Left Column: Numbered Service List */
+    .console-menu-col {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .console-menu-item {
+      padding: 1.05rem 1.5rem;
+      min-height: 52px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      position: relative;
+      background: transparent;
+      user-select: none;
+      transition: background 180ms ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .console-menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .console-menu-item:hover {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .menu-item-code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: rgba(255, 255, 255, 0.55);
+      transition: color 180ms ease;
+    }
+
+    .console-menu-item:hover .menu-item-code {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Active: ONLY the bigger text */
+    .menu-item-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      display: none;
+      line-height: 1.2;
+    }
+
+    .menu-item-active-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #2563EB;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+    }
+
+    /* On click / active: HIDE number & small writing, SHOW ONLY the bigger text */
+    .console-menu-item.is-active {
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .console-menu-item.is-active .menu-item-code {
+      display: none;
+    }
+
+    .console-menu-item.is-active .menu-item-title {
+      display: block;
+    }
+
+    .console-menu-item.is-active .menu-item-active-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #2563EB;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+    }
+
+    /* Right Column: Stage */
+        .stage-content-wrap {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .stage-content-wrap.is-leaving {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+
+    .stage-content-wrap.is-entering {
+      opacity: 0;
+      transform: translateY(7px);
+    }
+
+    .console-stage-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--surface-deepest, #05070C);
+    }
+
+    /* Upper Tier: Exact Description */
+    .stage-header-tier {
+      padding: 2.25rem 2.75rem 1.5rem 2.75rem;
+    }
+
+    .stage-headline {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+    }
+
+    .stage-tier-divider {
+      height: 1px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Lower Tier: Side-by-Side Tags with Tiny Square Separators */
+    .stage-tags-tier {
+      padding: 1.35rem 2.75rem 1.85rem 2.75rem;
+    }
+
+    .stage-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+    }
+
+    .stage-tag-item {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: -0.01em;
+    }
+
+    /* Very Tiny Square In Between Tags */
+    .tag-sep-square {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: #2563EB;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 860px) {
+      .services-grid-section {
+        padding: 3.5rem 1.25rem;
+      }
+      .console-grid {
+        grid-template-columns: 1fr;
+      }
+      .console-menu-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .stage-header-tier {
+      padding: 2.25rem 2.75rem 1.5rem 2.75rem;
+    }
+      .stage-tags-tier {
+      padding: 1.35rem 2.75rem 1.85rem 2.75rem;
+    }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="services-grid-section" id="data-services">
+    <!-- Corner Registration Squares in Blue -->
+    <div class="section-corner-squares" aria-hidden="true">
+      <span class="corner-square corner-square--tl"></span>
+      <span class="corner-square corner-square--tr"></span>
+      <span class="corner-square corner-square--bl"></span>
+      <span class="corner-square corner-square--br"></span>
+    </div>
+    
+    <div class="services-grid-header">
+      <h2 class="services-grid-title">Choose the Data Services You Need</h2>
+      <p class="services-grid-subtitle">
+        Already have data? Bring your own dataset and we'll clean, enrich, annotate, QA, or review it.
+      </p>
+    </div>
+
+    <!-- 2-Column Console Layout -->
+    <div class="services-console">
+      <div class="console-grid">
+
+        <!-- Left Column: Numbered Service List -->
+        <div class="console-menu-col" id="consoleMenu">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Right Column: Details Stage -->
+        <div class="console-stage-col" id="consoleStage">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    // EXACT content from services.html (lines 2167-2266)
+    const SERVICES = [
+      {
+        id: '01',
+        code: '01 DATA COLLECTION',
+        title: 'Data Collection',
+        desc: 'Targeted sourcing from public, licensed, and API sources. Custom surveys and data harvesting.',
+        tags: [
+          'Web extraction',
+          'Surveys',
+          'Schema mapping',
+          'API harvesting'
+        ]
+      },
+      {
+        id: '02',
+        code: '02 DATA ANNOTATION',
+        title: 'Data Annotation',
+        desc: 'Expert labeling for NLP, vision, video, and multimodal models — using your guidelines or creating them from scratch.',
+        tags: [
+          'NER',
+          'Bounding boxes',
+          'Polygons',
+          'Sentiment',
+          'RLHF',
+          'Segmentation'
+        ]
+      },
+      {
+        id: '03',
+        code: '03 DATA CLEANING',
+        title: 'Data Cleaning',
+        desc: 'Remove noise, fix inconsistencies, deduplicate, and normalize your existing datasets.',
+        tags: [
+          'Deduplication',
+          'Validation',
+          'Missing value resolution',
+          'Normalization'
+        ]
+      },
+      {
+        id: '04',
+        code: '04 DATA ENRICHMENT',
+        title: 'Data Enrichment',
+        desc: 'Add metadata, categorizations, geocoding, cross-references, and layers of intelligence.',
+        tags: [
+          'Metadata enrichment',
+          'Categorization',
+          'Taxonomy mapping'
+        ]
+      },
+      {
+        id: '05',
+        code: '05 DATASET QA',
+        title: 'Dataset QA',
+        desc: 'Rigorous quality assurance, sampling, inter-annotator agreement, and adjudication.',
+        tags: [
+          'Accuracy audit',
+          'Consistency checks',
+          'Gold set creation'
+        ]
+      },
+      {
+        id: '06',
+        code: '06 HUMAN REVIEW',
+        title: 'Human Review',
+        desc: 'Deep human-in-the-loop verification for edge cases, subjective labels, and high-stakes decisions.',
+        tags: [
+          'Edge cases',
+          'Escalation',
+          'Nuance validation'
+        ]
+      }
+    ];
+
+    let activeIndex = 3; // Default to item 04 matching reference screenshot
+
+    
+
+    function render() {
+      const menuEl = document.getElementById('consoleMenu');
+      const stageEl = document.getElementById('consoleStage');
+      const current = SERVICES[activeIndex];
+
+      // Left Menu
+      menuEl.innerHTML = SERVICES.map((item, idx) => {
+        const isActive = idx === activeIndex;
+        return `
+          <div 
+            class="console-menu-item ${isActive ? 'is-active' : ''}"
+            onclick="selectService(${idx})"
+            role="button"
+            tabindex="0"
+          >
+            <div class="menu-item-code">${item.code}</div>
+            <div class="menu-item-title">${item.title}</div>
+            <div class="menu-item-active-bar"></div>
+          </div>
+        `;
+      }).join('');
+
+      // Right Detail Stage
+      stageEl.innerHTML = `
+          <div class="stage-header-tier">
+            <h3 class="stage-headline">${current.desc}</h3>
+          </div>
+
+          <div class="stage-tier-divider"></div>
+
+          <div class="stage-tags-tier">
+            <div class="stage-tags-row">
+              ${current.tags.map((tag, i) => `
+                <span class="stage-tag-item">${tag}</span>
+                ${i < current.tags.length - 1 ? '<span class="tag-sep-square" aria-hidden="true"></span>' : ''}
+              `).join('')}
+            </div>
+          </div>
+        `;
+    }
+
+    function selectService(idx) {
+      activeIndex = idx;
+      render();
+    }
+
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
+
+</body>
+</html>

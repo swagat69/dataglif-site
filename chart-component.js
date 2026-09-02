@@ -183,7 +183,9 @@
                 x2="${plotRight}" y2="${upperBoundY}" />
 
           <!-- Historical Trend -->
-          <path class="dex-chart__historical" d="${historicalPath}" fill="none" />
+          <g class="dex-chart__historical-wrap">
+            <path class="dex-chart__historical" d="${historicalPath}" fill="none" />
+          </g>
 
           <!-- Current Marker -->
           <line class="dex-chart__current-marker"
@@ -191,7 +193,7 @@
                 x2="${currentX}" y2="${plotBottom}" />
 
           <!-- Projection -->
-          <path class="dex-chart__projection" d="${projectionPath}" fill="none" />
+          <path class="dex-chart__projection" pathLength="100" d="${projectionPath}" fill="none" />
 
           <!-- Model Points -->
           ${CHART_DATA.modelPoints.map((point, index) => {
@@ -207,7 +209,7 @@
               const anchor = layout.end ? 'end' : 'start';
 
               return `
-                <g class="dex-chart__model-point" style="--dex-point-index: ${index}">
+                <g class="dex-chart__model-point" style="--dex-point-index: ${index}; transform-origin: ${x}px ${y}px;">
                   <circle class="dex-chart__model-dot" cx="${x}" cy="${y}" r="7.25" />
                   <line class="dex-chart__leader" x1="${x}" y1="${y}" x2="${lineEndX}" y2="${lineEndY}" />
                   <text class="dex-chart__model-label" x="${labelX}" y="${labelY}" text-anchor="${anchor}">${point.label}</text>
@@ -215,7 +217,7 @@
               `;
             } else {
               return `
-                <g class="dex-chart__model-point" style="--dex-point-index: ${index}">
+                <g class="dex-chart__model-point" style="--dex-point-index: ${index}; transform-origin: ${x}px ${y}px;">
                   <circle class="dex-chart__model-dot" cx="${x}" cy="${y}" r="7.25" />
                 </g>
               `;
@@ -234,8 +236,8 @@
               <text x="516" y="249">stock range · 9–27T</text>
             </g>
 
-            <circle class="dex-chart__exhaustion-pulse" cx="${exhaustionX}" cy="${exhaustionY}" r="9" />
-            <circle class="dex-chart__exhaustion-dot" cx="${exhaustionX}" cy="${exhaustionY}" r="4.5" />
+            <circle class="dex-chart__exhaustion-pulse" cx="${exhaustionX}" cy="${exhaustionY}" r="9" style="transform-origin: ${exhaustionX}px ${exhaustionY}px;" />
+            <circle class="dex-chart__exhaustion-dot" cx="${exhaustionX}" cy="${exhaustionY}" r="4.5" style="transform-origin: ${exhaustionX}px ${exhaustionY}px;" />
           </g>
 
           <!-- Axes -->

@@ -342,42 +342,7 @@
     /* ═══════════════════════════════════════════════════════════════
        VERY MINIMAL SECTION BORDER GRAPHIC (1px Hairline with Micro Notches)
        ═══════════════════════════════════════════════════════════════ */
-    .section-border {
-      position: relative;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 12%, rgba(255, 255, 255, 0.08) 88%, transparent 100%);
-      pointer-events: none;
-      z-index: 5;
-    }
 
-    .section-border.light-theme {
-      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.07) 12%, rgba(0, 0, 0, 0.07) 88%, transparent 100%);
-    }
-
-    .section-border-inner {
-      max-width: 1240px;
-      margin: 0 auto;
-      height: 1px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-    }
-
-    .section-border-notch {
-      width: 5px;
-      height: 5px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      transform: translateY(-50%) rotate(45deg);
-      top: 50%;
-      position: relative;
-    }
-
-    .section-border.light-theme .section-border-notch {
-      border-color: rgba(0, 0, 0, 0.16);
-    }
 
     /* ═══════════════════════════════════════════════════════════════
        CONTACT SECTION (White Canvas with Clean Light Panels & Corner Framing)
@@ -540,6 +505,17 @@
     .contact-icon svg {
       width: 20px;
       height: 20px;
+    }
+
+    /* SplitText Responsive Masking */
+    .split-heading {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .heading-reveal-line {
+      display: block;
+      will-change: transform, opacity;
     }
 
     .contact-text {
@@ -997,8 +973,12 @@
     }
 
     .console-nav-arrow {
-      color: var(--accent-cyan);
-      font-weight: 700;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-cyan, #38BDF8);
+      flex-shrink: 0;
+      vertical-align: middle;
     }
 
     .console-brand-desc {
@@ -1362,15 +1342,6 @@
   </section>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border light-theme" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        CONTACT SECTION (White Background with Blue Shaded Content)
        ═══════════════════════════════════════════════════════════════ -->
@@ -1385,7 +1356,7 @@
 
           <!-- Intro -->
           <div class="intro-section">
-            <h2>Ready to build your dataset?</h2>
+            <h2 class="split-heading">Ready to build your dataset?</h2>
             <p>Tell us what you need and we'll follow up within 48 hours</p>
           </div>
 
@@ -1530,15 +1501,6 @@
   </section>
 
 
-
-  <!-- Minimal Section Border Graphic -->
-  <div class="section-border" aria-hidden="true">
-    <div class="section-border-inner">
-      <span class="section-border-notch"></span>
-      <span class="section-border-notch"></span>
-    </div>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════════════
        PROJECT INTAKE CONSOLE (Preserved Footer Frame)
        ═══════════════════════════════════════════════════════════════ -->
@@ -1569,7 +1531,7 @@
           
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">→</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>DATAGLIF</span>
             </div>
             <p class="console-brand-desc">
@@ -1579,7 +1541,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -1593,7 +1555,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -1606,7 +1568,7 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow">&gt;</span>
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
@@ -1711,6 +1673,48 @@
         }
       });
     })();
+  </script>
+
+  <!-- GSAP & SplitText Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="./js/SplitText.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    // Clean GSAP Heading Reveals on Scroll (No Scrub)
+    gsap.set(".split-heading", { opacity: 1 });
+
+    document.fonts.ready.then(() => {
+      const headings = gsap.utils.toArray('.split-heading');
+
+      headings.forEach((heading) => {
+        if (!heading) return;
+
+        SplitText.create(heading, {
+          type: "words,lines",
+          mask: "lines",
+          linesClass: "heading-reveal-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              yPercent: 110,
+              opacity: 0,
+              duration: 0.95,
+              stagger: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: heading,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true
+              }
+            });
+          }
+        });
+      });
+    });
   </script>
 
 </body>
