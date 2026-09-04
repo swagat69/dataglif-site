@@ -426,200 +426,149 @@
       margin-bottom: 0;
     }
 
-    .workflow-track-wrapper {
-      width: 100%;
-      overflow: hidden;
-      padding: 2.5rem 0;
-      position: relative;
-    }
-
-    .workflow-track {
-      display: flex;
-      gap: 1.5rem;
-      padding: 0;
-      width: max-content;
-      will-change: transform;
-      align-items: center;
-      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .workflow-card {
-      width: 320px;
-      background-color: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 0;
-      padding: 2.5rem 2rem;
-      min-height: 200px;
+    /* ---- Workflow blurred marquee ---- */
+    .wfm {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, background-color 0.4s ease;
-      box-shadow: none;
-      position: relative;
-      opacity: 0.55;
-      transform: scale(0.92);
-      cursor: pointer;
+      padding: 0 1.5rem;
     }
 
-    .workflow-card.active {
+    .wfm-strip {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 0;
+      background: #FFFFFF;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+    }
+
+    .wfm-viewport {
+      overflow: hidden;
+    }
+
+    .wfm-track {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 64px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .wfm-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: 0 0.5rem;
+    }
+
+    .wfm-item span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1rem;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      text-align: center;
+      white-space: pre-line;
+      color: #64748B;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .wfm-item:hover span {
       opacity: 1;
-      transform: scale(1.05);
-      background-color: #FFFFFF;
-      border-color: rgba(0, 0, 0, 0.25);
-      box-shadow: none;
+    }
+
+    .wfm-dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      align-self: center;
+      background: #2563EB;
+    }
+
+    .wfm-blur {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 180px;
+      pointer-events: none;
       z-index: 5;
     }
 
-    /* Precision Corner Ticks (┌ ┐ └ ┘) for workflow cards */
-    .workflow-card::before {
-      content: '';
+    .wfm-blur--left { left: 0; }
+    .wfm-blur--right { right: 0; }
+
+    .wfm-blur > i {
       position: absolute;
-      inset: -1px;
+      inset: 0;
+      display: block;
+    }
+
+    .wfm-tint {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 180px;
       pointer-events: none;
-      z-index: 2;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%230F172A' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
-      background-position: top left, top right, bottom left, bottom right;
-      background-size: 8px 8px;
-      background-repeat: no-repeat;
-      transition: background-image 250ms ease;
+      z-index: 10;
     }
 
-    .workflow-card:hover::before {
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 8 L0.5 0.5 L8 0.5' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0.5 L7.5 0.5 L7.5 8' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0.5 0 L0.5 7.5 L8 7.5' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 7.5 L7.5 7.5 L7.5 0' fill='none' stroke='%232563EB' stroke-width='1' shape-rendering='crispEdges'/%3E%3C/svg%3E");
+    .wfm-tint--left {
+      left: 0;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
     }
 
-    .workflow-card:hover {
-      box-shadow: none;
-      border-color: rgba(0, 0, 0, 0.25);
+    .wfm-tint--right {
+      right: 0;
+      background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.04));
     }
 
-    .workflow-card h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0;
-      line-height: 1.2;
-      color: #000000;
-    }
-
-    .card-icon {
-      margin: 0 auto 1.5rem auto;
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      background-size: cover;
-      background-position: center;
-      box-shadow: none;
-      transition: transform 0.3s ease;
-    }
-
-    .workflow-card:hover .card-icon {
-      transform: scale(1.06);
-    }
-
-    .card-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke-width: 2px;
-      filter: none;
-    }
-
-    .workflow-card:nth-child(1) .card-icon {
-      background: radial-gradient(120% 120% at 85% 15%, #d66b9a 0%, #a8456e 38%, #6b2844 72%, #2d1220 100%);
-    }
-
-    .workflow-card:nth-child(2) .card-icon {
-      background: radial-gradient(120% 120% at 18% 12%, #5b8abd 0%, #3f6b99 38%, #254261 72%, #122033 100%);
-    }
-
-    .workflow-card:nth-child(3) .card-icon {
-      background: radial-gradient(120% 120% at 8% 85%, #7aad8c 0%, #5a8569 40%, #3a5544 76%, #1c2a22 100%);
-    }
-
-    .workflow-card:nth-child(4) .card-icon {
-      background: radial-gradient(120% 120% at 92% 88%, #e5a84a 0%, #c88d35 38%, #8a5f24 72%, #3d2a12 100%);
-    }
-
-    .workflow-card:nth-child(5) .card-icon {
-      background: radial-gradient(120% 120% at 88% 85%, #9d85c8 0%, #7d69a5 38%, #4e4270 72%, #252035 100%);
-    }
-
-    .workflow-card:nth-child(6) .card-icon {
-      background: radial-gradient(120% 120% at 15% 20%, #4a9fd8 0%, #3a7fa8 38%, #255070 72%, #122838 100%);
-    }
-
-    .workflow-timeline {
-      position: relative;
-      margin-top: 3.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 3rem;
-    }
-
-    .timeline-line {
+    .wfm-plus {
       position: absolute;
-      top: 50%;
-      left: 15%;
-      right: 15%;
-      height: 1px;
-      background: rgba(0, 0, 0, 0.08);
-      z-index: 1;
-      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      z-index: 20;
+      pointer-events: none;
+      color: #64748B;
     }
 
-    .timeline-indicators {
-      display: flex;
-      gap: 1rem;
+    .wfm-plus--tl { top: -10px; left: -10px; }
+    .wfm-plus--tr { top: -10px; right: -10px; }
+    .wfm-plus--bl { bottom: -10px; left: -10px; }
+    .wfm-plus--br { bottom: -10px; right: -10px; }
+
+    .wfm-counter {
       position: relative;
-      z-index: 2;
-    }
-
-    .indicator-pill {
-      width: 40px;
-      height: 40px;
-      background: #FFFFFF;
-      color: #000000;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 0;
+      margin-top: 0.5rem;
+      height: 1.25rem;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .wfm-counter span {
+      position: absolute;
       font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
       font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      box-shadow: none;
+      color: #64748B;
+      font-variant-numeric: tabular-nums;
+      transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .indicator-pill:hover {
-      border-color: #000000;
-      color: #000000;
-      transform: translateY(-1px);
-    }
+    .wfm-counter span.enter { opacity: 0; transform: translateX(16px); filter: blur(3px); }
+    .wfm-counter span.show  { opacity: 1; transform: translateX(0);    filter: blur(0); }
+    .wfm-counter span.leave { opacity: 0; transform: translateX(-16px); filter: blur(3px); }
 
-    .indicator-pill.active {
-      background: var(--surface-deep, #0A0D12);
-      color: #FFFFFF;
-      border-color: var(--surface-deep, #0A0D12);
-      box-shadow: none;
-    }
 
     /* ═══════════════════════════════════════════════════════════════
        DATA SOLUTIONS SECTION
@@ -1217,9 +1166,15 @@
         padding: 0 1rem;
         margin-bottom: 2rem;
       }
-      .workflow-card {
-        width: 280px;
-        padding: 1.75rem 1.25rem;
+      .wfm-strip {
+        padding: 2rem 0;
+      }
+      .wfm-item span {
+        font-size: 0.875rem;
+      }
+      .wfm-blur,
+      .wfm-tint {
+        width: 96px;
       }
       .intake-console-section {
         padding: 1.5rem 0.75rem 1.5rem;
@@ -1327,83 +1282,24 @@
         <h2 class="workflow-title split-heading">Workflow</h2>
       </div>
 
-      <div id="trackWrapper" class="workflow-track-wrapper">
-        <div id="track" class="workflow-track">
-          
-          <!-- SET 1 -->
-          <!-- Card 01: Learn -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-              </svg>
-            </div>
-            <h3>Learn</h3>
+      <div class="wfm">
+        <div class="wfm-strip" id="wfmStrip">
+          <div class="wfm-viewport">
+            <div class="wfm-track" id="wfmTrack"></div>
           </div>
 
-          <!-- Card 02: Discover -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-              </svg>
-            </div>
-            <h3>Discover</h3>
-          </div>
+          <div class="wfm-blur wfm-blur--left" data-dir="left" aria-hidden="true"></div>
+          <div class="wfm-blur wfm-blur--right" data-dir="right" aria-hidden="true"></div>
+          <div class="wfm-tint wfm-tint--left" aria-hidden="true"></div>
+          <div class="wfm-tint wfm-tint--right" aria-hidden="true"></div>
 
-          <!-- Card 03: Candidate Selection -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-              </svg>
-            </div>
-            <h3>Candidate Selection <br/> from Talent Pool</h3>
-          </div>
-
-          <!-- Card 04: Train -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-              </svg>
-            </div>
-            <h3>Train</h3>
-          </div>
-
-          <!-- Card 05: Manage Production -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
-            </div>
-            <h3>Manage Production</h3>
-          </div>
-
-          <!-- Card 06: Review + Deliver -->
-          <div class="workflow-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <h3>Review + Deliver</h3>
-          </div>        </div>
-      </div>
-
-      <!-- Timeline Indicators -->
-      <div class="workflow-timeline">
-        <div class="timeline-line"></div>
-        <div class="timeline-indicators">
-          <div class="indicator-pill active" data-index="0">01</div>
-          <div class="indicator-pill" data-index="1">02</div>
-          <div class="indicator-pill" data-index="2">03</div>
-          <div class="indicator-pill" data-index="3">04</div>
-          <div class="indicator-pill" data-index="4">05</div>
-          <div class="indicator-pill" data-index="5">06</div>
+          <svg class="wfm-plus wfm-plus--tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </div>
+
+        <div class="wfm-counter" id="wfmCounter" aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -2115,105 +2011,127 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       WORKFLOW AUTO-SCROLL CAROUSEL ENGINE
+       WORKFLOW BLURRED MARQUEE ENGINE
        ═══════════════════════════════════════════════════════════════ -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const trackWrapper = document.getElementById('trackWrapper');
-      const track = document.getElementById('track');
-      const cards = document.querySelectorAll('.workflow-card');
-      const pills = document.querySelectorAll('.indicator-pill');
+    /* Workflow blurred marquee engine */
+    document.addEventListener('DOMContentLoaded', function () {
+      var ITEMS = [
+        'Learn',
+        'Discover',
+        'Candidate Selection\nfrom Talent Pool',
+        'Train',
+        'Manage Production',
+        'Review + Deliver'
+      ];
+      var SPEED = 50;        // px per second
+      var SPEED_HOVER = 18;  // px per second on hover
 
-      if (!track || !cards.length) return;
+      var strip = document.getElementById('wfmStrip');
+      var track = document.getElementById('wfmTrack');
+      var counter = document.getElementById('wfmCounter');
+      if (!strip || !track || !counter) return;
 
-      const TOTAL = cards.length;
-      const AUTO_SCROLL_INTERVAL = 2400; // 2.4 seconds per step
-      const IDLE_RESUME_DELAY = 10000;   // Resume auto-scroll 10s after click
+      function buildSet() {
+        var frag = document.createDocumentFragment();
+        ITEMS.forEach(function (label, i) {
+          var item = document.createElement('div');
+          item.className = 'wfm-item';
+          item.setAttribute('data-marquee-index', i);
+          var span = document.createElement('span');
+          span.textContent = label;
+          item.appendChild(span);
+          frag.appendChild(item);
 
-      let currentIndex = 0;
-      let autoTimer = null;
-      let idleTimer = null;
-
-      // Position the track so card at index is centered inside trackWrapper
-      function centerCard(index) {
-        if (!cards[index]) return;
-        const card = cards[index];
-        const wrapperWidth = trackWrapper.offsetWidth;
-        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-        const targetX = (wrapperWidth / 2) - cardCenter;
-
-        track.style.transform = `translateX(${targetX}px)`;
-
-        // Update active classes
-        cards.forEach((c, i) => {
-          if (i === index) {
-            c.classList.add('active');
-          } else {
-            c.classList.remove('active');
-          }
+          var dot = document.createElement('span');
+          dot.className = 'wfm-dot';
+          dot.setAttribute('aria-hidden', 'true');
+          frag.appendChild(dot);
         });
-
-        pills.forEach((p, i) => {
-          if (i === index) {
-            p.classList.add('active');
-          } else {
-            p.classList.remove('active');
-          }
-        });
-
-        currentIndex = index;
+        return frag;
       }
+      track.appendChild(buildSet());
+      track.appendChild(buildSet());
 
-      function nextStep() {
-        const nextIndex = (currentIndex + 1) % TOTAL;
-        centerCard(nextIndex);
-      }
-
-      function startAutoScroll() {
-        stopAutoScroll();
-        autoTimer = setInterval(nextStep, AUTO_SCROLL_INTERVAL);
-      }
-
-      function stopAutoScroll() {
-        if (autoTimer) {
-          clearInterval(autoTimer);
-          autoTimer = null;
+      /* progressive edge blur layers */
+      Array.prototype.forEach.call(strip.querySelectorAll('.wfm-blur'), function (el) {
+        var angle = el.getAttribute('data-dir') === 'left' ? 270 : 90;
+        var layers = 8;
+        var seg = 1 / (layers + 1);
+        for (var i = 0; i < layers; i++) {
+          var stops = [i, i + 1, i + 2, i + 3].map(function (m, idx) {
+            var a = (idx === 1 || idx === 2) ? 1 : 0;
+            return 'rgba(255,255,255,' + a + ') ' + (m * seg * 100) + '%';
+          }).join(', ');
+          var grad = 'linear-gradient(' + angle + 'deg, ' + stops + ')';
+          var layer = document.createElement('i');
+          layer.style.maskImage = grad;
+          layer.style.webkitMaskImage = grad;
+          layer.style.backdropFilter = 'blur(' + i + 'px)';
+          layer.style.webkitBackdropFilter = 'blur(' + i + 'px)';
+          el.appendChild(layer);
         }
+      });
+
+      /* counter: one number at a time, fades left to right */
+      var activeIndex = -1;
+      var currentEl = null;
+      function setActive(index) {
+        if (index === activeIndex) return;
+        activeIndex = index;
+        var next = document.createElement('span');
+        next.className = 'enter';
+        next.textContent = String(index + 1);
+        counter.appendChild(next);
+        requestAnimationFrame(function () { next.className = 'show'; });
+        if (currentEl) {
+          var out = currentEl;
+          out.className = 'leave';
+          setTimeout(function () { if (out.parentNode) out.parentNode.removeChild(out); }, 320);
+        }
+        currentEl = next;
       }
 
-      function scheduleResume() {
-        clearTimeout(idleTimer);
-        idleTimer = setTimeout(() => {
-          startAutoScroll();
-        }, IDLE_RESUME_DELAY);
+      var offset = 0;
+      var speed = SPEED;
+      var last = null;
+      var nodes = track.querySelectorAll('[data-marquee-index]');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      strip.addEventListener('mouseenter', function () { speed = SPEED_HOVER; });
+      strip.addEventListener('mouseleave', function () { speed = SPEED; });
+
+      function frame(now) {
+        if (last === null) last = now;
+        var dt = (now - last) / 1000;
+        last = now;
+
+        if (!reduce) {
+          var half = track.scrollWidth / 2;
+          if (half > 0) {
+            offset -= speed * dt;
+            if (offset <= -half) offset += half;
+            track.style.transform = 'translateX(' + offset + 'px)';
+          }
+        }
+
+        var rect = strip.getBoundingClientRect();
+        var center = rect.left + rect.width / 2;
+        var best = -1;
+        var bestDist = Infinity;
+        for (var i = 0; i < nodes.length; i++) {
+          var r = nodes[i].getBoundingClientRect();
+          var d = Math.abs(r.left + r.width / 2 - center);
+          if (d < bestDist) {
+            bestDist = d;
+            best = Number(nodes[i].getAttribute('data-marquee-index'));
+          }
+        }
+        if (best >= 0) setActive(best);
+
+        requestAnimationFrame(frame);
       }
-
-      // Card click
-      cards.forEach((card, i) => {
-        card.addEventListener('click', () => {
-          stopAutoScroll();
-          centerCard(i);
-          scheduleResume();
-        });
-      });
-
-      // Pill click
-      pills.forEach((pill, i) => {
-        pill.addEventListener('click', () => {
-          stopAutoScroll();
-          centerCard(i);
-          scheduleResume();
-        });
-      });
-
-      // Recalculate centering on window resize
-      window.addEventListener('resize', () => {
-        centerCard(currentIndex);
-      });
-
-      // Initialize
-      centerCard(0);
-      startAutoScroll();
+      requestAnimationFrame(frame);
     });
 
     // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
