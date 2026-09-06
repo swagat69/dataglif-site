@@ -527,6 +527,11 @@
       will-change: transform, opacity;
     }
 
+    .smooth-text-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
     .contact-text {
       flex: 1;
       min-width: 0;
@@ -1301,7 +1306,7 @@
 
     <div class="hero-container">
       <h1 class="split-heading">Contact Us</h1>
-      <p>Let's build better data together. Get in touch and we'll respond within 48 hours.</p>
+      <p class="hero-subtitle">Let's build better data together. Get in touch and we'll respond within 48 hours.</p>
     </div>
   </section>
 
@@ -1650,6 +1655,32 @@
                 trigger: heading,
                 start: "top 85%",
                 toggleActions: "play none none none",
+                once: true
+              }
+            });
+          }
+        });
+      });
+
+      const smoothTargets = gsap.utils.toArray('.hero-subtitle');
+
+      smoothTargets.forEach((el) => {
+        if (!el) return;
+
+        SplitText.create(el, {
+          type: "lines",
+          linesClass: "smooth-text-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              opacity: 0,
+              y: 18,
+              duration: 1.0,
+              stagger: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 88%",
                 once: true
               }
             });

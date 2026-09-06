@@ -837,6 +837,11 @@
       will-change: transform, opacity;
     }
 
+    .smooth-text-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
     .services-grid-title {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: clamp(2rem, 3.5vw, 3rem); /* Adjusted to a proper size */
@@ -888,6 +893,11 @@
     }
 
     .heading-reveal-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .smooth-text-line {
       display: block;
       will-change: transform, opacity;
     }
@@ -1410,7 +1420,7 @@
     <div class="hero-container">
       <div class="hero-content">
         <h1 class="split-heading">Our Services</h1>
-        <p>Comprehensive data solutions for AI and enterprise.</p>
+        <p class="hero-subtitle">Comprehensive data solutions for AI and enterprise.</p>
       </div>
       <a href="contact.html" class="hero-cta-button">
         <span class="hero-cta-text">Request a Dataset</span>
@@ -2790,6 +2800,32 @@
                 trigger: heading,
                 start: "top 85%",
                 toggleActions: "play none none none",
+                once: true
+              }
+            });
+          }
+        });
+      });
+
+      const smoothTargets = gsap.utils.toArray('.hero-subtitle');
+
+      smoothTargets.forEach((el) => {
+        if (!el) return;
+
+        SplitText.create(el, {
+          type: "lines",
+          linesClass: "smooth-text-line",
+          autoSplit: true,
+          onSplit: (instance) => {
+            return gsap.from(instance.lines, {
+              opacity: 0,
+              y: 18,
+              duration: 1.0,
+              stagger: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 88%",
                 once: true
               }
             });
