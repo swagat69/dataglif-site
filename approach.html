@@ -6,7 +6,7 @@
   <title>Our Approach - DataGlif</title>
 
   <!-- Fonts -->
-    <meta name="description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
+  <meta name="description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
   <link rel="canonical" href="https://swagat69.github.io/dataglif-site/approach.html">
   <link rel="icon" href="assets/dataglif-logo.png" type="image/png">
   <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
   <meta property="og:url" content="https://swagat69.github.io/dataglif-site/approach.html">
   <meta property="og:image" content="https://swagat69.github.io/dataglif-site/assets/og-cover.jpg">
   <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 
@@ -451,6 +451,8 @@
       margin: 0 auto;
       padding: 2.5rem 0;
       background: #FFFFFF;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
     }
 
     .wfm-viewport {
@@ -476,14 +478,14 @@
 
     .wfm-item span {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.125rem;
-      line-height: 1.25;
+      font-size: 1rem;
+      line-height: 1.2;
       font-weight: 500;
       letter-spacing: -0.02em;
       text-align: center;
       white-space: pre-line;
-      color: #334155;
-      opacity: 0.92;
+      color: #64748B;
+      opacity: 0.8;
       transition: opacity 0.2s ease;
     }
 
@@ -528,13 +530,27 @@
 
     .wfm-tint--left {
       left: 0;
-      background: linear-gradient(to right, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
     }
 
     .wfm-tint--right {
       right: 0;
-      background: linear-gradient(to left, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.04));
     }
+
+    .wfm-plus {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 20;
+      pointer-events: none;
+      color: #64748B;
+    }
+
+    .wfm-plus--tl { top: -10px; left: -10px; }
+    .wfm-plus--tr { top: -10px; right: -10px; }
+    .wfm-plus--bl { bottom: -10px; left: -10px; }
+    .wfm-plus--br { bottom: -10px; right: -10px; }
 
     .wfm-counter {
       position: relative;
@@ -765,20 +781,25 @@
       transition: background 250ms ease;
     }
 
-    .feature-card:hover::before {
-      background:
-        /* Top-Left */
-        linear-gradient(to right, #0369A1 7px, transparent 7px) top left / 7px 1px no-repeat,
-        linear-gradient(to bottom, #0369A1 7px, transparent 7px) top left / 1px 7px no-repeat,
-        /* Top-Right */
-        linear-gradient(to left, #0369A1 7px, transparent 7px) top right / 7px 1px no-repeat,
-        linear-gradient(to bottom, #0369A1 7px, transparent 7px) top right / 1px 7px no-repeat,
-        /* Bottom-Left */
-        linear-gradient(to right, #0369A1 7px, transparent 7px) bottom left / 7px 1px no-repeat,
-        linear-gradient(to top, #0369A1 7px, transparent 7px) bottom left / 1px 7px no-repeat,
-        /* Bottom-Right */
-        linear-gradient(to left, #0369A1 7px, transparent 7px) bottom right / 7px 1px no-repeat,
-        linear-gradient(to top, #0369A1 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+
+    /* Same chip as .scarcity-icon, retuned for the light ground: the
+       cyan accent fails contrast on #F8FAFC, so the deep blue carries it. */
+    .feature-card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      background: rgba(3, 105, 161, 0.07);
+      border: 1px solid rgba(3, 105, 161, 0.18);
+      color: #0369A1;
+    }
+
+    .feature-card-icon svg {
+      width: 20px;
+      height: 20px;
     }
 
     .feature-card-title {
@@ -1164,7 +1185,7 @@
         padding: 2rem 0;
       }
       .wfm-item span {
-        font-size: 1rem;
+        font-size: 0.875rem;
       }
       .wfm-blur,
       .wfm-tint {
@@ -1204,7 +1225,7 @@
        NAVBAR (Preserved)
        ═══════════════════════════════════════════════════════════════ -->
   <nav class="navbar">
-    <div class="navbar-logo" onclick="window.location.href='index.html'"><img src="assets/dataglif-logo.png" alt="" width="28" height="28"><span class="dg-wordmark">DataGlif</span></div>
+    <a class="navbar-logo" href="index.html" aria-label="DataGlif home"><img src="assets/dataglif-logo.png" alt="DataGlif" width="32" height="32"></a>
 
     <div class="navbar-nav">
       <a href="index.html" class="nav-item">Home</a>
@@ -1291,6 +1312,10 @@
           <div class="wfm-tint wfm-tint--left" aria-hidden="true"></div>
           <div class="wfm-tint wfm-tint--right" aria-hidden="true"></div>
 
+          <svg class="wfm-plus wfm-plus--tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="wfm-plus wfm-plus--br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </div>
 
         <div class="wfm-counter" id="wfmCounter" aria-live="polite"></div>
@@ -1343,14 +1368,23 @@
       <h2 class="section-heading why-choose-heading split-heading">Built around the work, not a template</h2>
       <div class="feature-cards">
         <div class="feature-card">
+          <span class="feature-card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M160,112h48a16,16,0,0,0,16-16V48a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16V64H128a24,24,0,0,0-24,24v32H72v-8A16,16,0,0,0,56,96H24A16,16,0,0,0,8,112v32a16,16,0,0,0,16,16H56a16,16,0,0,0,16-16v-8h32v32a24,24,0,0,0,24,24h16v16a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V160a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16v16H128a8,8,0,0,1-8-8V88a8,8,0,0,1,8-8h16V96A16,16,0,0,0,160,112ZM56,144H24V112H56v32Zm104,16h48v48H160Zm0-112h48V96H160Z"/></svg>
+          </span>
           <h3 class="feature-card-title">Adaptive Framework</h3>
           <p>The workflow fits the problem. Taxonomy, risk, scale, and delivery requirements determine whether the process is manual, model-assisted, or hybrid.</p>
         </div>
         <div class="feature-card">
+          <span class="feature-card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,120h-8.34A96.14,96.14,0,0,0,136,32.34V24a8,8,0,0,0-16,0v8.34A96.14,96.14,0,0,0,32.34,120H24a8,8,0,0,0,0,16h8.34A96.14,96.14,0,0,0,120,223.66V232a8,8,0,0,0,16,0v-8.34A96.14,96.14,0,0,0,223.66,136H232a8,8,0,0,0,0-16Zm-96,87.6V200a8,8,0,0,0-16,0v7.6A80.15,80.15,0,0,1,48.4,136H56a8,8,0,0,0,0-16H48.4A80.15,80.15,0,0,1,120,48.4V56a8,8,0,0,0,16,0V48.4A80.15,80.15,0,0,1,207.6,120H200a8,8,0,0,0,0,16h7.6A80.15,80.15,0,0,1,136,207.6ZM128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"/></svg>
+          </span>
           <h3 class="feature-card-title">Domain Calibration</h3>
           <p>Annotators are hand selected for the task, calibrated on real examples, and coached around the edge cases that matter.</p>
         </div>
         <div class="feature-card">
+          <span class="feature-card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48V96a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h28.69L182.06,73.37a79.56,79.56,0,0,0-56.13-23.43h-.45A79.52,79.52,0,0,0,69.59,72.71,8,8,0,0,1,58.41,61.27a96,96,0,0,1,135,.79L208,76.69V48a8,8,0,0,1,16,0ZM186.41,183.29a80,80,0,0,1-112.47-.66L59.31,168H88a8,8,0,0,0,0-16H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V179.31l14.63,14.63A95.43,95.43,0,0,0,130,222.06h.53a95.36,95.36,0,0,0,67.07-27.33,8,8,0,0,0-11.18-11.44Z"/></svg>
+          </span>
           <h3 class="feature-card-title">Closed-Loop Iteration</h3>
           <p>Quality improves with every cycle. Disagreements and recurring errors feed back into the rubric, training, and review process strengthening consistency and quality over time.</p>
         </div>
@@ -1823,22 +1857,7 @@
       <div class="intake-console">
         
         <!-- 1. Top Header Bar -->
-        <div class="console-header-bar">
-          <div class="console-header-left">
-            <span>PROJECT INTAKE</span>
-            <span>/</span>
-            <span class="console-status-open">OPEN</span>
-          </div>
-          <div class="console-header-right">
-            <span class="console-status-dot" aria-hidden="true"></span>
-            <span>INTAKE OPEN</span>
-            <span class="console-reticle-icon" aria-hidden="true">
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
-            </span>
-          </div>
-        </div>
+        <p class="console-eyebrow">Project intake</p>
 
         <!-- 2. Main Middle Grid -->
         <div class="console-main-grid">
@@ -1871,15 +1890,9 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>01 / DATA</span>
-                  <span class="console-reticle-icon" aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                    </svg>
-                  </span>
+                  <span>DATA</span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -1892,15 +1905,9 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>02 / GAP</span>
-                  <span class="console-reticle-icon" aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                    </svg>
-                  </span>
+                  <span>GAP</span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -1913,15 +1920,9 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>03 / TARGET</span>
-                  <span class="console-reticle-icon" aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                    </svg>
-                  </span>
+                  <span>TARGET</span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -1938,9 +1939,8 @@
         <div class="console-sitemap-grid">
           
           <div>
-            <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
-              <img src="assets/dataglif-logo.png" alt="" width="26" height="26"><span class="dg-wordmark">DataGlif</span>
+            <div class="console-nav-col-header console-brand-lockup">
+              <img src="assets/dataglif-logo.png" alt="DataGlif" width="44" height="44">
             </div>
             <p class="console-brand-desc">
               Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
@@ -1949,7 +1949,6 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -1963,7 +1962,6 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -1976,31 +1974,29 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
               <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
-              <li><span>San Francisco, CA</span></li>
-              <li><span>Replies within 24 hours</span></li>
               <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
+            <p class="console-contact-note">San Francisco, CA<br>Replies within 24 hours</p>
           </div>
 
         </div>
 
         <!-- 4. Console Bottom Legal Bar -->
         <div class="console-bottom-bar">
-          <div>&copy; 2026 DATAGLIF. ALL RIGHTS RESERVED.</div>
+          <div>&copy; 2026 DataGlif. All rights reserved.</div>
           <div class="console-legal-links">
-            <a href="#privacy">PRIVACY</a>
+            <a href="privacy.html">Privacy</a>
             <span class="console-legal-sep">/</span>
-            <a href="#terms">TERMS</a>
+            <a href="terms.html">Terms</a>
             <span class="console-legal-sep">/</span>
-            <a href="#security">DATA SECURITY</a>
+            <a href="security.html">Data security</a>
           </div>
-          </footer>
         </div>
+        </footer>
 
       </div>
     </div>

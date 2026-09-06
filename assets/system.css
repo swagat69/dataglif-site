@@ -1,0 +1,760 @@
+/* ============================================================
+   DataGlif — Type & Colour System
+   Loaded last so it reconciles the four pages onto one system.
+
+   Families (only two are downloaded):
+     Bricolage Grotesque — display / headings
+     Inter               — everything else, including the
+                           label register that used to be mono
+   ============================================================ */
+
+:root{
+  /* ---- families ---- */
+  --dg-display:'Bricolage Grotesque', sans-serif;
+  --dg-text:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---- ground: dark ---- */
+  --dg-ink-950:#05070C;
+  --dg-ink-900:#0A0D12;
+  --dg-ink-880:#0F131C;
+  --dg-ink-850:#141A24;
+
+  /* ---- ground: light ---- */
+  --dg-paper:#F7F8FA;
+  --dg-paper-2:#EFF1F4;
+  --dg-card:#FFFFFF;
+
+  /* ---- text on dark ---- */
+  --dg-od-1:#F4F6F9;
+  --dg-od-2:#BAC2CE;
+  --dg-od-3:#8E98A8;   /* 5.9:1 on --dg-ink-950 */
+
+  /* ---- text on light ---- */
+  --dg-ol-1:#0E121A;
+  --dg-ol-2:#414B5B;
+  --dg-ol-3:#646E7D;   /* 4.9:1 on white */
+
+  /* ---- accent: one sky hue, two ramps ---- */
+  --dg-sky-300:#7DD3FC;
+  --dg-sky-400:#38BDF8;
+  --dg-sky-600:#0284C7;
+  --dg-sky-700:#0369A1;
+  --dg-accent-d:#38BDF8;   /* on dark grounds */
+  --dg-accent-l:#0369A1;   /* on light grounds — replaces the stray #2563eb */
+
+  /* ---- signals (meaning only, never decoration) ---- */
+  --dg-pos-d:#4ADE80;  --dg-pos-l:#0F5132;
+  --dg-warn-d:#F0B357; --dg-warn-l:#824D00;
+
+  /* ---- rules ---- */
+  --dg-rule-d:rgba(255,255,255,.10);
+  --dg-rule-d-soft:rgba(255,255,255,.06);
+  --dg-rule-l:#E1E4E9;
+  --dg-rule-l-2:#CDD2DA;
+
+  /* ---- type scale ---- */
+  --dg-d1:clamp(2.75rem, 5.4vw, 4.5rem);
+  --dg-d2:clamp(2rem, 3.6vw, 3.25rem);
+  --dg-d3:clamp(1.5rem, 2.2vw, 2rem);
+  --dg-d4:1.375rem;
+
+  --dg-t-xl:1.25rem;
+  --dg-t-lg:1.125rem;
+  --dg-t-md:1rem;
+  --dg-t-base:.9375rem;
+  --dg-t-sm:.8125rem;
+  --dg-t-xs:.75rem;      /* 12px — hard floor */
+
+  /* legacy aliases still referenced inline across the pages */
+  --accent-cyan:var(--dg-accent-d);
+  --blue:var(--dg-accent-l);
+  --font-d:var(--dg-display);
+  --font-b:var(--dg-text);
+  --font-m:var(--dg-text);
+  --lab-mono:var(--dg-text);
+}
+
+/* ============================================================
+   1. BASE
+   ============================================================ */
+
+body{
+  font-family:var(--dg-text);
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+h1,h2,h3,h4,.split-heading{
+  font-family:var(--dg-display);
+  letter-spacing:-.022em;
+  text-wrap:balance;
+}
+
+/* Inter needs a touch more line-height than DM Sans at body sizes */
+p{line-height:1.62;}
+
+/* ============================================================
+   2. THE LABEL REGISTER
+   Replaces the monospace voice. Uppercase Inter at 12px,
+   weight 600, wide tracking, tabular figures. One rule,
+   everywhere a mono label used to sit.
+   ============================================================ */
+
+.console-header-bar span,
+.console-nav-col-header span,
+.console-bottom-bar,
+.console-bottom-bar div,
+.console-legal-links a,
+.prompt-meta-row span,
+.card-eyebrow,
+.card-pill,
+.pipeline-eyebrow,
+.blog-eyebrow,
+.blog-tag,
+.blog-card-tag,
+.card-badge,
+.stage-header-tier,
+.stage-tag-item,
+.workflow-tag,
+.action-label,
+.video-label-overlay{
+  font-family:var(--dg-text);
+  font-size:var(--dg-t-xs);          /* 12px floor, was 7–11px */
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-variant-numeric:tabular-nums;
+  line-height:1.4;
+}
+
+/* the numbered console rows read as data, so keep them a shade calmer */
+.prompt-meta-row span{font-weight:500;letter-spacing:.15em;}
+
+/* ============================================================
+   3. CONTRAST — dark surfaces
+   Every value below was measured against --dg-ink-950.
+   ============================================================ */
+
+.console-header-bar span{color:var(--dg-od-3) !important;}
+.console-header-bar .console-status-open{color:var(--dg-pos-d) !important;}
+.prompt-meta-row span{color:var(--dg-od-3) !important;}
+.console-nav-col-header span{color:var(--dg-od-1) !important;}
+.console-nav-links a{color:var(--dg-od-2) !important;font-size:var(--dg-t-base);}
+.console-nav-links a:hover{color:var(--dg-accent-d) !important;}
+.console-brand-desc{color:var(--dg-od-2) !important;font-size:var(--dg-t-sm);line-height:1.65;}
+
+/* the legal bar: was 10px at 3.7:1 — the exact text people need to read */
+.console-bottom-bar{color:var(--dg-od-3) !important;}
+.console-bottom-bar > div{color:var(--dg-od-3) !important;}
+.console-legal-links a{color:var(--dg-od-2) !important;text-decoration:none;}
+.console-legal-links a:hover{color:var(--dg-accent-d) !important;}
+.console-legal-sep{color:rgba(255,255,255,.52) !important;}
+
+/* non-link facts in the footer must not look like links */
+.console-nav-links li > span{
+  color:var(--dg-od-3) !important;
+  font-size:var(--dg-t-sm);
+}
+
+/* ============================================================
+   4. CONTRAST + PALETTE — the mock product panels
+   Keyed on the exact legacy hex values, which appear only
+   inside these panels, so the rules can be global rather than
+   scoped to one section. Every value was measured on the
+   ground it actually composites onto.
+   ============================================================ */
+
+/* greys: were 2.5-2.8:1 on white */
+[style*="#9a9a9f"],[style*="#9A9A9F"],
+[style*="#a0a0a6"],[style*="#A0A0A6"]{color:var(--dg-ol-3) !important;}
+[style*="#6b6b70"],[style*="#6B6B70"]{color:var(--dg-ol-2) !important;}
+[style*="#3a3a40"],[style*="#3A3A40"],
+[style*="#2c2c2e"],[style*="#2C2C2E"]{color:var(--dg-ol-1) !important;}
+[style*="#7a7a82"],[style*="#7A7A82"]{color:#9BA3B0 !important;}
+[style*="#c4c4ca"],[style*="#C4C4CA"]{color:var(--dg-od-2) !important;}
+
+/* signals: green means pass, amber means amended, rose means dropped */
+[style*="#16a34a"],[style*="#059669"],[style*="#047857"]{color:var(--dg-pos-l) !important;}
+[style*="#d97706"],[style*="#b45309"],[style*="#c88d35"],
+[style*="#c99312"],[style*="#e5a84a"]{color:var(--dg-warn-l) !important;}
+[style*="#e11d48"]{color:#9F1239 !important;}
+
+/* purple was the one hue with no place in the brand */
+[style*="#c5b3e0"],[style*="#b5a0d8"],
+[style*="#a58fc0"],[style*="#9d85c8"]{color:var(--dg-sky-300) !important;}
+[style*="#7d69a5"]{color:var(--dg-accent-l) !important;}
+[style*="#3f8599"]{color:var(--dg-accent-l) !important;}
+
+/* nothing inside a mock panel drops below the 12px floor */
+[style*="font-size: 6px"],[style*="font-size: 7px"],
+[style*="font-size: 8px"],[style*="font-size: 9px"],
+[style*="font-size: 10px"],[style*="font-size: 11px"]{
+  font-size:var(--dg-t-xs) !important;
+  letter-spacing:.04em;
+}
+
+/* ============================================================
+   5. ACCENT RECONCILIATION
+   #2563eb (indigo) and #38BDF8 (sky) were two different hues
+   pretending to be one brand. Everything moves onto sky.
+   ============================================================ */
+
+[style*="#2563eb"],[style*="#2563EB"]{color:var(--dg-accent-l) !important;}
+a[style*="#2563eb"],a[style*="#2563EB"]{color:var(--dg-accent-l) !important;}
+
+/* the violet pill on Services was the only purple in the brand */
+.card-pill.violet{
+  color:var(--dg-accent-l) !important;
+  background:rgba(3,105,161,.10) !important;
+  border-color:rgba(3,105,161,.22) !important;
+}
+.card-pill.amber{
+  color:var(--dg-warn-l) !important;
+  background:rgba(154,91,0,.10) !important;
+  border-color:rgba(154,91,0,.22) !important;
+}
+
+/* ============================================================
+   6. THE LOGO LOCKUP
+   Was: mark alone on the homepage, a text wordmark on the
+   other three. One lockup now, on all four.
+   ============================================================ */
+
+.navbar-logo{
+  display:flex !important;
+  align-items:center;
+  gap:.55rem;
+  font-family:var(--dg-display);
+  font-weight:700;
+  font-size:1.0625rem;
+  letter-spacing:-.02em;
+  color:var(--dg-ol-1);
+  cursor:pointer;
+  line-height:1;
+}
+.navbar-logo img{
+  height:32px;
+  width:32px;
+  flex:0 0 auto;
+  vertical-align:middle;
+}
+.navbar-logo{text-decoration:none;}
+
+/* ============================================================
+   7. ONE BUTTON
+   Services rendered CTAs in title case; Home and Approach in
+   letterspaced caps. The caps are the more distinctive rule.
+   ============================================================ */
+
+.cta-button-label,
+.cta-button{
+  font-family:var(--dg-text);
+  font-weight:600;
+  letter-spacing:.12em;      /* matches the tracking the hero CTA already used */
+  text-transform:uppercase;
+  font-size:var(--dg-t-xs);
+  line-height:normal;        /* keep the hero button at its original height */
+}
+
+/* ============================================================
+   8. FOCUS — one ring, both grounds
+   Previously three :focus rules existed, all on one component.
+   ============================================================ */
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible{
+  outline:2px solid var(--dg-accent-l);
+  outline-offset:3px;
+  border-radius:3px;
+}
+.intake-console-section a:focus-visible,
+.intake-console-section button:focus-visible,
+.intake-console-section [tabindex]:focus-visible,
+.hero-container a:focus-visible,
+.hero-container button:focus-visible{
+  outline-color:var(--dg-accent-d);
+}
+
+/* skip link */
+.dg-skip{
+  position:absolute;left:-9999px;top:0;z-index:9999;
+  background:var(--dg-ink-950);color:#fff;
+  padding:.75rem 1.25rem;border-radius:0 0 4px 0;
+  font-size:var(--dg-t-sm);font-weight:600;text-decoration:none;
+}
+.dg-skip:focus{left:0;}
+
+/* ============================================================
+   9. THE CORNER MARKERS
+   14px blue blocks pinned 2,496px apart vertically — you could
+   never see all four, so the frame never read as a frame. It
+   read as a rendering fault. Removed.
+   ============================================================ */
+
+.section-corner-squares{display:none !important;}
+
+/* ============================================================
+   10. TAP TARGETS — 44px minimum
+   ============================================================ */
+
+@media (max-width:900px){
+  .console-nav-links a,
+  .console-legal-links a{
+    display:inline-block;
+    padding:.6rem 0;
+    min-height:44px;
+    line-height:1.9;
+  }
+  .navbar-toggle{min-width:44px;min-height:44px;}
+  .cta-button,.hero-cta,.console-cta{min-height:44px;}
+}
+
+/* ============================================================
+   11. REDUCED MOTION — the real version
+   The old rule covered two decorative classes and left Lenis,
+   every ScrollTrigger reveal, the marquee and three
+   autoplaying videos running.
+   ============================================================ */
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .blog-reveal,.split-heading,[class*="reveal"]{
+    opacity:1 !important;
+    transform:none !important;
+  }
+  .workflow-marquee,[class*="marquee"]{animation:none !important;}
+}
+
+/* ============================================================
+   12. FOOTER BRAND LOCKUP
+   Same mark + wordmark as the nav, sized for a dark ground.
+   The 1024px PNG was painting at 28px in pale blue on near
+   black — effectively invisible. Lifted until it reads.
+   ============================================================ */
+
+.console-nav-col-header img{
+  filter:brightness(1.55) saturate(1.15);
+  flex:0 0 auto;
+}
+.console-nav-col-header{gap:.5rem !important;}
+.console-brand-lockup img{height:52px;width:52px;}
+
+/* ============================================================
+   13. SECTION RHYTHM
+   Headings were set by a dozen one-off clamps. One scale now.
+   ============================================================ */
+
+.pipeline-title,.blog-title,.console-statement-title,
+.section-title,.scarcity-title,.workflow-title,
+.data-solutions-title,.why-choose-title{
+  font-size:var(--dg-d2) !important;
+  font-weight:700;
+  line-height:1.06;
+  letter-spacing:-.025em;
+}
+
+.pipeline-card-title,.blog-card-title,.service-card-title,
+.scarcity-item-title{
+  font-family:var(--dg-display);
+  font-size:var(--dg-d4) !important;
+  font-weight:600;
+  line-height:1.22;
+  letter-spacing:-.015em;
+}
+
+.pipeline-card-desc,.blog-card-desc,.service-card-desc,
+.console-statement-body{
+  font-size:var(--dg-t-md) !important;
+  line-height:1.62;
+  max-width:64ch;
+}
+
+/* section eyebrows sit above the title with real air */
+.pipeline-eyebrow,.blog-eyebrow{
+  display:block;
+  margin-bottom:1rem;
+  color:var(--dg-accent-l);
+}
+
+/* ============================================================
+   14. THE NODE TILES
+   Five gradient JPEGs — forest green, purple/violet, blue/teal,
+   red/black, sunset — none of them in the brand, and the
+   gradient-squircle-with-a-stock-glyph is the most recognisable
+   generated-UI signature in circulation. Replaced with one
+   flat ink tile and a sky hairline, so the diagram reads as a
+   system instead of five stickers.
+   ============================================================ */
+
+.node{
+  background-image:none !important;
+  background:
+    radial-gradient(120% 120% at 30% 18%, rgba(56,189,248,.17) 0%, rgba(56,189,248,0) 64%),
+    #131B27 !important;
+  border:1px solid rgba(56,189,248,.30) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+.node svg{stroke:var(--dg-sky-300) !important;}
+.node.active{
+  border-color:var(--dg-accent-d) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 0 0 1px rgba(56,189,248,.28),
+    0 8px 30px -10px rgba(56,189,248,.45) !important;
+}
+.node.active svg{stroke:#fff !important;}
+
+/* ============================================================
+   15. ONE CTA, EVERY PAGE
+   Services rendered its CTAs in title case; Home and Approach
+   in letterspaced caps. Caps is the distinctive rule, so caps
+   wins — including the hero CTA that sat outside .cta-button.
+   ============================================================ */
+
+.hero-cta-text,
+.hero-cta,
+.console-cta,
+.console-cta-label,
+.scarcity-cta,
+.data-brief-cta{
+  font-family:var(--dg-text) !important;
+  font-weight:600 !important;
+  font-size:var(--dg-t-xs) !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+}
+
+/* footer landmark wraps the sitemap + legal bar without changing layout */
+.console-footer{display:contents;}
+/* the hero headline is an h1 now — same element, correct tag */
+h1.brand{margin:0;}   /* tag change only — .brand keeps every one of its own type values */
+
+/* ============================================================
+   16. THE INTAKE ANSWERS
+   They were revealed on :hover only, as an overlay pinned
+   inset:0 that faded the question out as the answer faded in.
+   Two consequences: on any touch device the answers did not
+   exist at all, and on desktop you could read the question or
+   the answer but never both.
+
+   Now: the answer opens *beneath* the question on pointer or
+   keyboard, and below 900px it is simply always open — this
+   is primary content, not a flourish.
+   ============================================================ */
+
+.console-prompt-record{
+  position:relative;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  justify-content:center;
+}
+
+.prompt-hover-answer{
+  position:static !important;
+  inset:auto !important;
+  display:grid !important;
+  grid-template-rows:0fr;
+  opacity:0;
+  padding:0 1.75rem !important;
+  transform:none !important;
+  overflow:hidden;
+  transition:grid-template-rows 260ms ease, opacity 200ms ease, padding 260ms ease;
+}
+.prompt-hover-answer > *{min-height:0;}
+
+/* the question stays put — it is the context the answer needs */
+.console-prompt-record:hover .prompt-default-state,
+.console-prompt-record:focus-visible .prompt-default-state,
+.console-prompt-record:focus-within .prompt-default-state{
+  opacity:1 !important;
+  transform:none !important;
+  pointer-events:auto !important;
+}
+
+.console-prompt-record:hover .prompt-hover-answer,
+.console-prompt-record:focus-visible .prompt-hover-answer,
+.console-prompt-record:focus-within .prompt-hover-answer{
+  grid-template-rows:1fr;
+  opacity:1;
+  padding:.7rem 1.75rem 0 !important;
+}
+
+.prompt-answer-text{
+  font-size:var(--dg-t-base) !important;
+  line-height:1.6;
+  color:var(--dg-od-2) !important;
+  max-width:58ch;
+  margin:0;
+}
+
+@media (max-width:900px){
+  /* no hover on touch — the answers are just open */
+  .prompt-hover-answer{
+    grid-template-rows:1fr !important;
+    opacity:1 !important;
+    padding:.7rem 1.25rem 0 !important;
+    transition:none;
+  }
+  .console-prompt-record{min-height:44px;}
+}
+
+/* ============================================================
+   17. MOCK PANEL CONTRAST — the class-based half
+   These come from classes, not inline styles, so section 4
+   could not reach them. Measured on their real grounds.
+   ============================================================ */
+
+button,input,select,textarea{font-family:inherit;}
+
+.card-eyebrow.light{color:var(--dg-ol-3) !important;}   /* was #9a9a9f, 2.8:1 on white */
+.card-eyebrow.dark{color:#9BA3B0 !important;}           /* was #7a7a82 on #141416 */
+.card-metric-unit{color:var(--dg-ol-3) !important;}
+.card-metric-value{color:var(--dg-ol-1) !important;}
+
+/* status pills: the fill is the signal, the text has to be readable */
+.pipeline-card.light .card-pill,
+.pipeline-card.light .card-badge{
+  color:#0F5132 !important;                              /* 7.2:1 on the mint fill */
+  background:rgba(16,185,129,.16) !important;
+}
+.pipeline-card.dark .card-pill{
+  color:#6EE7B7 !important;                              /* 7.9:1 on the dark card */
+  background:rgba(16,185,129,.14) !important;
+}
+.card-pill.amber,.card-badge.amber{
+  color:#7A4405 !important;
+  background:rgba(245,158,11,.20) !important;
+}
+
+/* ============================================================
+   18. SERVICE CARD PILLS
+   Services uses .service-card where the homepage uses
+   .pipeline-card, and its dark variants needed the dark ramp
+   rather than the light one.
+   ============================================================ */
+
+.service-card.light .card-pill,
+.service-card.light .card-badge{
+  color:#0F5132 !important;
+  background:rgba(16,185,129,.16) !important;
+}
+.service-card.light .card-pill.amber,
+.service-card.light .card-badge.amber{
+  color:#7A4405 !important;
+  background:rgba(245,158,11,.20) !important;
+}
+.service-card.light .card-pill.violet{
+  color:var(--dg-accent-l) !important;
+  background:rgba(3,105,161,.12) !important;
+}
+
+.service-card.dark .card-pill,
+.service-card.dark .card-badge{
+  color:#6EE7B7 !important;
+  background:rgba(16,185,129,.14) !important;
+}
+.service-card.dark .card-pill.amber,
+.service-card.dark .card-badge.amber{
+  color:var(--dg-warn-d) !important;
+  background:rgba(240,179,87,.14) !important;
+}
+.service-card.dark .card-pill.violet{
+  color:var(--dg-sky-300) !important;
+  background:rgba(125,211,252,.13) !important;
+}
+
+/* micro-labels on dark panels were set at 45% white — under AA at 12px */
+[style*="rgba(255,255,255,0.45)"],
+[style*="rgba(255, 255, 255, 0.45)"]{color:rgba(255,255,255,.66) !important;}
+
+/* ============================================================
+   19. THE SERVICE LADDER KEEPS ITS NUMBER
+   The active row hid .menu-item-code entirely, so the column
+   read 01, 02, 03, "Data Enrichment", 05, 06 — the sequence
+   broke exactly where the eye lands. A counter puts the
+   ordinal back above the title, and it stays correct whichever
+   row is active.
+   ============================================================ */
+
+#consoleMenu{counter-reset:svc;}
+.console-menu-item{counter-increment:svc;}
+.console-menu-item.is-active .menu-item-code{display:none !important;}
+.console-menu-item.is-active .menu-item-title::before{
+  content:counter(svc,decimal-leading-zero);
+  display:block;
+  font-family:var(--dg-text);
+  font-size:var(--dg-t-xs);
+  font-weight:600;
+  letter-spacing:.14em;
+  color:var(--dg-accent-d);
+  margin-bottom:.4rem;
+}
+
+/* ============================================================
+   20. TAP TARGETS — the ones that were still short
+   ============================================================ */
+
+@media (max-width:900px){
+  .cta-button,.hero-cta,.hero-cta-text,.console-cta,
+  .scarcity-cta,.data-brief-cta,button[type=submit]{
+    min-height:44px !important;
+    display:inline-flex !important;
+    align-items:center;
+    justify-content:center;
+  }
+  /* mobile drawer links: short words still need a full-width target */
+  .mobile-nav-overlay a{
+    display:block;
+    min-height:44px;
+    line-height:44px;
+    width:100%;
+  }
+  /* inline mail links in running text get a real hit area without
+     disturbing the line they sit in */
+  .console-statement-body a,
+  .console-cta-row a{
+    display:inline-block;
+    padding:.55rem 0;
+  }
+}
+
+/* ============================================================
+   21. THE FOOTER, REBUILT
+
+   What came off: a status bar that claimed live capacity twice
+   in one row with a pulsing dot connected to nothing; four
+   viewfinder brackets; three blinking cursors; four decorative
+   squares; and 01/02/03 ordinals on three questions that have
+   no order. Twelve marks, none of which encoded anything.
+
+   What stays is the structure, which was always fine — it just
+   needed hierarchy instead of costume.
+   ============================================================ */
+
+/* one quiet section label where the fake status bar used to be */
+.console-eyebrow{
+  font-family:var(--dg-text);
+  font-size:var(--dg-t-xs);
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dg-od-3);
+  margin:0 0 2.75rem;
+  padding-bottom:1.1rem;
+  border-bottom:1px solid var(--dg-rule-d);
+}
+
+/* the three prompts: the category is the label, no ordinal */
+.prompt-meta-row span{
+  color:var(--dg-od-3) !important;
+  letter-spacing:.16em;
+  font-weight:600;
+}
+.prompt-query-line{
+  font-size:var(--dg-t-lg) !important;
+  font-weight:500;
+  line-height:1.35;
+  color:var(--dg-od-1);
+}
+
+/* ---- footer columns ---- */
+.console-footer{display:contents;}
+
+.console-nav-col-header{
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+  margin-bottom:1.15rem;
+  padding-bottom:.7rem;
+  border-bottom:1px solid var(--dg-rule-d-soft);
+}
+.console-nav-col-header span{
+  font-family:var(--dg-text);
+  font-size:var(--dg-t-xs);
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dg-od-3) !important;
+}
+
+/* the brand column carries the lockup, so it drops the rule */
+.console-brand-lockup{border-bottom:0;padding-bottom:0;margin-bottom:.9rem;}
+.console-nav-col-header img{filter:brightness(1.55) saturate(1.15);flex:0 0 auto;}
+
+.console-brand-desc{
+  color:var(--dg-od-3) !important;
+  font-size:var(--dg-t-sm);
+  line-height:1.7;
+  max-width:34ch;
+  margin:0;
+}
+
+.console-nav-links{list-style:none;margin:0;padding:0;display:grid;gap:.15rem;}
+.console-nav-links a{
+  display:inline-block;
+  padding:.32rem 0;
+  font-size:var(--dg-t-base);
+  color:var(--dg-od-2) !important;
+  text-decoration:none;
+  transition:color 150ms ease;
+}
+.console-nav-links a:hover{color:var(--dg-accent-d) !important;}
+
+/* facts are not links, so they no longer sit in the link list */
+.console-contact-note{
+  margin:1.1rem 0 0;
+  font-size:var(--dg-t-sm);
+  line-height:1.7;
+  color:var(--dg-od-3);
+}
+
+/* ---- legal bar ---- */
+.console-bottom-bar{
+  border-top:1px solid var(--dg-rule-d);
+  margin-top:3.25rem;
+  padding-top:1.4rem;
+}
+.console-bottom-bar,
+.console-bottom-bar > div{
+  font-size:var(--dg-t-sm) !important;
+  font-weight:400 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+  color:var(--dg-od-3) !important;
+}
+.console-legal-links{display:flex;gap:1.4rem;}
+.console-legal-links a{
+  font-size:var(--dg-t-sm) !important;
+  font-weight:400 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+  color:var(--dg-od-3) !important;
+  text-decoration:none;
+}
+.console-legal-links a:hover{color:var(--dg-od-1) !important;}
+.console-legal-sep{display:none;}
+
+@media (max-width:900px){
+  .console-eyebrow{margin-bottom:2rem;}
+  .console-bottom-bar{margin-top:2.25rem;gap:.9rem;}
+  .console-legal-links{gap:1.1rem;flex-wrap:wrap;}
+}
+
+/* brand column: no rule, but the same optical baseline as the ruled ones */
+.console-brand-lockup{
+  border-bottom:1px solid transparent;
+  padding-bottom:.7rem;
+  margin-bottom:1.15rem;
+}
