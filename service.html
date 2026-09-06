@@ -1643,9 +1643,6 @@
       .intake-console-section {
         padding: 1.5rem 0.75rem 1.5rem;
       }
-      .console-header-bar {
-        padding: 0.6rem 1rem;
-      }
       .console-statement-pane {
         padding: 1.35rem 1rem;
       }
@@ -2386,44 +2383,10 @@
       position: relative;
     }
 
-    .console-header-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 0 0.85rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.6875rem;
-      letter-spacing: 0.18em;
-      text-transform: none;
-    }
 
-    .console-header-left {
-      color: rgba(255, 255, 255, 0.5);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
 
-    .console-status-open {
-      color: #34D399;
-      font-weight: 600;
-    }
 
-    .console-header-right {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      color: rgba(255, 255, 255, 0.7);
-    }
 
-    .console-status-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #34D399;
-      box-shadow: 0 0 6px #34D399;
-    }
 
     .console-reticle-icon {
       display: inline-flex;
@@ -2565,20 +2528,7 @@
       gap: 0.55rem;
     }
 
-    .prompt-cursor {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      background-color: var(--accent-cyan, #38BDF8);
-      flex-shrink: 0;
-      vertical-align: middle;
-      animation: prompt-blink 1.5s infinite;
-    }
 
-    @keyframes prompt-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
 
     /* Hover State: Replaces everything with strictly the answer text */
     .prompt-hover-answer {
@@ -2630,14 +2580,6 @@
       font-weight: 600;
     }
 
-    .console-nav-arrow {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      background-color: var(--accent-cyan, #38BDF8);
-      flex-shrink: 0;
-      vertical-align: middle;
-    }
 
     .console-brand-desc {
       font-family: 'DM Sans', sans-serif;
@@ -2721,9 +2663,6 @@
       .intake-console-section {
         padding: 1.5rem 0.75rem 1.5rem;
       }
-      .console-header-bar {
-        padding: 0.6rem 1rem;
-      }
       .console-statement-pane {
         padding: 1.35rem 1rem;
       }
@@ -2749,24 +2688,6 @@
     <div class="intake-console-wrapper">
       <div class="intake-console">
         
-        <!-- 1. Top Header Bar -->
-        <div class="console-header-bar">
-          <div class="console-header-left">
-            <span>PROJECT INTAKE</span>
-            <span>/</span>
-            <span class="console-status-open">OPEN</span>
-          </div>
-          <div class="console-header-right">
-            <span class="console-status-dot" aria-hidden="true"></span>
-            <span>INTAKE OPEN</span>
-            <span class="console-reticle-icon" aria-hidden="true">
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
-            </span>
-          </div>
-        </div>
-
         <!-- 2. Main Middle Grid -->
         <div class="console-main-grid">
           
@@ -2798,7 +2719,7 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>01 / DATA</span>
+                  <span>DATA</span>
                   <span class="console-reticle-icon" aria-hidden="true">
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                       <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -2806,7 +2727,6 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -2819,7 +2739,7 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>02 / GAP</span>
+                  <span>GAP</span>
                   <span class="console-reticle-icon" aria-hidden="true">
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                       <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -2827,7 +2747,6 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -2840,7 +2759,7 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>03 / TARGET</span>
+                  <span>TARGET</span>
                   <span class="console-reticle-icon" aria-hidden="true">
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                       <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -2848,7 +2767,6 @@
                   </span>
                 </div>
                 <div class="prompt-query-line">
-                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -2865,7 +2783,6 @@
           
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>DATAGLIF</span>
             </div>
             <p class="console-brand-desc">
@@ -2875,7 +2792,6 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -2889,7 +2805,6 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -2902,7 +2817,6 @@
 
           <div>
             <div class="console-nav-col-header">
-              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
