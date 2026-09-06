@@ -6,7 +6,7 @@
   <title>Our Approach - DataGlif</title>
 
   <!-- Fonts -->
-  <meta name="description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
+    <meta name="description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
   <link rel="canonical" href="https://swagat69.github.io/dataglif-site/approach.html">
   <link rel="icon" href="assets/dataglif-logo.png" type="image/png">
   <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
   <meta property="og:url" content="https://swagat69.github.io/dataglif-site/approach.html">
   <meta property="og:image" content="https://swagat69.github.io/dataglif-site/assets/og-cover.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 
@@ -88,6 +88,9 @@
     }
 
     .navbar-logo {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 1.125rem;
       font-weight: 700;
@@ -95,6 +98,12 @@
       letter-spacing: -0.02em;
       flex-shrink: 0;
       cursor: pointer;
+    }
+
+    .navbar-logo img {
+      height: 32px;
+      width: 32px;
+      display: block;
     }
 
     .navbar-nav {
@@ -451,8 +460,6 @@
       margin: 0 auto;
       padding: 2.5rem 0;
       background: #FFFFFF;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
     }
 
     .wfm-viewport {
@@ -478,14 +485,14 @@
 
     .wfm-item span {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1rem;
-      line-height: 1.2;
+      font-size: 1.125rem;
+      line-height: 1.25;
       font-weight: 500;
       letter-spacing: -0.02em;
       text-align: center;
       white-space: pre-line;
-      color: #64748B;
-      opacity: 0.8;
+      color: #334155;
+      opacity: 0.92;
       transition: opacity 0.2s ease;
     }
 
@@ -530,27 +537,13 @@
 
     .wfm-tint--left {
       left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+      background: linear-gradient(to right, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
     }
 
     .wfm-tint--right {
       right: 0;
-      background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.04));
+      background: linear-gradient(to left, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
     }
-
-    .wfm-plus {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      z-index: 20;
-      pointer-events: none;
-      color: #64748B;
-    }
-
-    .wfm-plus--tl { top: -10px; left: -10px; }
-    .wfm-plus--tr { top: -10px; right: -10px; }
-    .wfm-plus--bl { bottom: -10px; left: -10px; }
-    .wfm-plus--br { bottom: -10px; right: -10px; }
 
     .wfm-counter {
       position: relative;
@@ -782,8 +775,8 @@
     }
 
 
-    /* Same chip as .scarcity-icon, retuned for the light ground: the
-       cyan accent fails contrast on #F8FAFC, so the deep blue carries it. */
+    /* Same chip the page uses further down, retuned for the light card:
+       the cyan accent fails contrast on #F8FAFC, so the deep blue carries it. */
     .feature-card-icon {
       display: flex;
       align-items: center;
@@ -1185,7 +1178,7 @@
         padding: 2rem 0;
       }
       .wfm-item span {
-        font-size: 0.875rem;
+        font-size: 1rem;
       }
       .wfm-blur,
       .wfm-tint {
@@ -1312,10 +1305,6 @@
           <div class="wfm-tint wfm-tint--left" aria-hidden="true"></div>
           <div class="wfm-tint wfm-tint--right" aria-hidden="true"></div>
 
-          <svg class="wfm-plus wfm-plus--tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </div>
 
         <div class="wfm-counter" id="wfmCounter" aria-live="polite"></div>
@@ -1857,7 +1846,22 @@
       <div class="intake-console">
         
         <!-- 1. Top Header Bar -->
-        <p class="console-eyebrow">Project intake</p>
+        <div class="console-header-bar">
+          <div class="console-header-left">
+            <span>PROJECT INTAKE</span>
+            <span>/</span>
+            <span class="console-status-open">OPEN</span>
+          </div>
+          <div class="console-header-right">
+            <span class="console-status-dot" aria-hidden="true"></span>
+            <span>INTAKE OPEN</span>
+            <span class="console-reticle-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
 
         <!-- 2. Main Middle Grid -->
         <div class="console-main-grid">
@@ -1890,9 +1894,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>DATA</span>
+                  <span>01 / DATA</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -1905,9 +1915,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>GAP</span>
+                  <span>02 / GAP</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -1920,9 +1936,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>TARGET</span>
+                  <span>03 / TARGET</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -1939,8 +1961,9 @@
         <div class="console-sitemap-grid">
           
           <div>
-            <div class="console-nav-col-header console-brand-lockup">
-              <img src="assets/dataglif-logo.png" alt="DataGlif" width="44" height="44">
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
+              <img src="assets/dataglif-logo.png" alt="" width="26" height="26"><span class="dg-wordmark">DataGlif</span>
             </div>
             <p class="console-brand-desc">
               Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
@@ -1949,6 +1972,7 @@
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
@@ -1962,6 +1986,7 @@
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -1974,29 +1999,31 @@
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
               <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
+              <li><span>San Francisco, CA</span></li>
+              <li><span>Replies within 24 hours</span></li>
               <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
-            <p class="console-contact-note">San Francisco, CA<br>Replies within 24 hours</p>
           </div>
 
         </div>
 
         <!-- 4. Console Bottom Legal Bar -->
         <div class="console-bottom-bar">
-          <div>&copy; 2026 DataGlif. All rights reserved.</div>
+          <div>&copy; 2026 DATAGLIF. ALL RIGHTS RESERVED.</div>
           <div class="console-legal-links">
-            <a href="privacy.html">Privacy</a>
+            <a href="#privacy">PRIVACY</a>
             <span class="console-legal-sep">/</span>
-            <a href="terms.html">Terms</a>
+            <a href="#terms">TERMS</a>
             <span class="console-legal-sep">/</span>
-            <a href="security.html">Data security</a>
+            <a href="#security">DATA SECURITY</a>
           </div>
+          </footer>
         </div>
-        </footer>
 
       </div>
     </div>

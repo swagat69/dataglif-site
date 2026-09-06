@@ -6,19 +6,9 @@
   <title>Services - DataGlif</title>
 
   <!-- Fonts -->
-  <meta name="description" content="Data annotation services across image and video, 3D and spatial, text and documents, audio and multimodal, plus data operations and QA.">
-  <link rel="canonical" href="https://swagat69.github.io/dataglif-site/services.html">
-  <link rel="icon" href="assets/dataglif-logo.png" type="image/png">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="DataGlif">
-  <meta property="og:title" content="Data annotation services — image, 3D, text & audio | DataGlif">
-  <meta property="og:description" content="Data annotation services across image and video, 3D and spatial, text and documents, audio and multimodal, plus data operations and QA.">
-  <meta property="og:url" content="https://swagat69.github.io/dataglif-site/services.html">
-  <meta property="og:image" content="https://swagat69.github.io/dataglif-site/assets/og-cover.jpg">
-  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
 
   <style>
@@ -43,11 +33,11 @@
       --ink-faint: #aea9a2;
       --line: #dedad4;
       --line-2: #c5c0b8;
-      --blue: #0369A1;
-      --blue-soft: rgba(3, 105, 161,0.08);
+      --blue: #2563eb;
+      --blue-soft: rgba(37,99,235,0.08);
       --font-d: 'Bricolage Grotesque', sans-serif;
-      --font-b: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-      --font-m: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-b: 'Satoshi', system-ui, -apple-system, sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
 
       /* Network Map colors */
       --ring-color: #dbe4e4;
@@ -65,7 +55,7 @@
     body {
       background: #FFFFFF;
       color: #000000;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 16px;
       line-height: 1.6; /* 160% body leading */
       letter-spacing: -0.02em; /* -2% body tracking */
@@ -106,6 +96,9 @@
     }
 
     .navbar-logo {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 1.125rem;
       font-weight: 700;
@@ -113,6 +106,12 @@
       letter-spacing: -0.02em;
       flex-shrink: 0;
       cursor: pointer;
+    }
+
+    .navbar-logo img {
+      height: 32px;
+      width: 32px;
+      display: block;
     }
 
     .navbar-nav {
@@ -125,7 +124,7 @@
     }
 
     .nav-item {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.875rem;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.65);
@@ -143,7 +142,7 @@
 
     .nav-item::before,
     .nav-item::after {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.875rem;
       font-weight: 600;
       color: #000000;
@@ -178,7 +177,7 @@
 
     /* Active Page Indication - Precision Monospace Brackets [ ] in Blue */
     .nav-item.active {
-      color: #0369A1;
+      color: #2563EB;
       font-weight: 600;
       background: transparent;
     }
@@ -186,7 +185,7 @@
     .nav-item.active::before,
     .nav-item.active::after {
       opacity: 1;
-      color: #0369A1;
+      color: #2563EB;
       font-weight: 600;
       transform: translateX(0);
     }
@@ -207,7 +206,7 @@
       border: 1px solid rgba(56, 189, 248, 0.5);
       clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
       color: #000000;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.12em;
@@ -318,7 +317,7 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 9999px;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.6875rem;
       font-weight: 600;
       letter-spacing: 0.16em;
@@ -362,7 +361,7 @@
     }
 
     .hero-container p {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1.125rem;
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -382,7 +381,7 @@
       border: 1px solid rgba(56, 189, 248, 0.5);
       clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
       color: #080D1A;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.8125rem;
       font-weight: 600;
       letter-spacing: 0.12em;
@@ -446,7 +445,7 @@
     }
 
     .intro-container p {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: clamp(1rem, 2vw, 1.125rem);
       font-weight: 400;
       line-height: 1.6;
@@ -479,7 +478,7 @@
       position: absolute;
       width: 14px;
       height: 14px;
-      background-color: #0369A1;
+      background-color: #2563EB;
     }
 
     .corner-square--tl {
@@ -672,7 +671,7 @@
     }
 
     .orbit-panel-text {
-      font-family: var(--font-b);
+      font-family: 'DM Sans', system-ui, sans-serif;
       font-size: 1.125rem;
       line-height: 1.625;
       letter-spacing: -0.015em;
@@ -687,7 +686,7 @@
       align-items: center;
       justify-content: center;
       margin-top: 0.85rem;
-      font-family: var(--font-m);
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.12em;
@@ -795,6 +794,7 @@
       }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
        6 STACKING SERVICE CARDS SECTION
        ═══════════════════════════════════════════════════════════════ */
@@ -851,7 +851,7 @@
     }
 
     .services-grid-subtitle {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -906,7 +906,7 @@
     }
 
     .services-grid-subtitle {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.95rem;
       line-height: 1.5;
       letter-spacing: -0.02em;
@@ -960,7 +960,7 @@
     }
 
     .menu-item-code {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.8125rem;
       font-weight: 500;
       letter-spacing: 0.08em;
@@ -990,7 +990,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: #0369A1;
+      background: #2563EB;
       opacity: 0;
       transform: scaleX(0);
       transform-origin: left;
@@ -1016,7 +1016,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: #0369A1;
+      background: #2563EB;
       opacity: 0;
       transform: scaleX(0);
       transform-origin: left;
@@ -1081,7 +1081,7 @@
     }
 
     .stage-tag-item {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.85);
@@ -1093,7 +1093,7 @@
       display: inline-block;
       width: 4px;
       height: 4px;
-      background-color: #0369A1;
+      background-color: #2563EB;
       flex-shrink: 0;
       opacity: 0.85;
     }
@@ -1210,7 +1210,7 @@
     }
 
     .mobile-nav-item {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1.125rem;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.75);
@@ -1223,7 +1223,7 @@
 
     .mobile-nav-item::before,
     .mobile-nav-item::after {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 1.125rem;
       font-weight: 600;
       color: #000000;
@@ -1255,14 +1255,14 @@
     }
 
     .mobile-nav-item.active {
-      color: #0369A1;
+      color: #2563EB;
       font-weight: 600;
     }
 
     .mobile-nav-item.active::before,
     .mobile-nav-item.active::after {
       opacity: 1;
-      color: #0369A1;
+      color: #2563EB;
       transform: translateX(0);
     }
 
@@ -1346,10 +1346,8 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="assets/system.css">
 </head>
 <body>
-  <a class="dg-skip" href="#main">Skip to content</a>
 
   <!-- ═══════════════════════════════════════════════════════════════
        NAVBAR (Preserved)
@@ -1365,14 +1363,14 @@
     </div>
 
     <div class="navbar-actions">
-      <a class="cta-button" href="contact.html">
+      <button class="cta-button" onclick="window.location.href='contact.html'">
         <span class="cta-button-label">Book a Call</span>
         <span class="cta-button-arrow">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-      </a>
+      </button>
 
       <!-- Mobile Hamburger Button -->
       <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -1404,8 +1402,6 @@
       </div>
     </div>
   </div>
-
-  <main id="main">
 
   <!-- ═══════════════════════════════════════════════════════════════
        HERO SECTION
@@ -2058,7 +2054,7 @@
       align-items: center;
       padding: 0 0 0.85rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.6875rem;
       letter-spacing: 0.18em;
       text-transform: none;
@@ -2124,7 +2120,7 @@
     }
 
     .console-desc {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -2142,7 +2138,7 @@
     }
 
     .console-subnote {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.45);
     }
@@ -2209,7 +2205,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: none;
@@ -2222,7 +2218,7 @@
     }
 
     .prompt-query-line {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.9);
@@ -2267,7 +2263,7 @@
     }
 
     .prompt-answer-text {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.84375rem;
       line-height: 1.55;
       color: rgba(255, 255, 255, 0.92);
@@ -2287,7 +2283,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: none;
@@ -2306,7 +2302,7 @@
     }
 
     .console-brand-desc {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem;
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.5);
@@ -2322,7 +2318,7 @@
 
     .console-nav-links a,
     .console-nav-links span {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.78125rem;
       line-height: 1.3;
       color: rgba(255, 255, 255, 0.58);
@@ -2341,7 +2337,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 0 0 0;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.625rem;
       letter-spacing: 0.16em;
       text-transform: none;
@@ -2416,7 +2412,22 @@
       <div class="intake-console">
         
         <!-- 1. Top Header Bar -->
-        <p class="console-eyebrow">Project intake</p>
+        <div class="console-header-bar">
+          <div class="console-header-left">
+            <span>PROJECT INTAKE</span>
+            <span>/</span>
+            <span class="console-status-open">OPEN</span>
+          </div>
+          <div class="console-header-right">
+            <span class="console-status-dot" aria-hidden="true"></span>
+            <span>INTAKE OPEN</span>
+            <span class="console-reticle-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M1 5V1H5M11 1H15V5M15 11V15H11M5 15H1V11M6 8H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
 
         <!-- 2. Main Middle Grid -->
         <div class="console-main-grid">
@@ -2449,9 +2460,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>DATA</span>
+                  <span>01 / DATA</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What are you working with?</span>
                 </div>
               </div>
@@ -2464,9 +2481,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>GAP</span>
+                  <span>02 / GAP</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What is failing or missing?</span>
                 </div>
               </div>
@@ -2479,9 +2502,15 @@
             <div class="console-prompt-record" tabindex="0">
               <div class="prompt-default-state">
                 <div class="prompt-meta-row">
-                  <span>TARGET</span>
+                  <span>03 / TARGET</span>
+                  <span class="console-reticle-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 4V1H4M10 1H13V4M13 10V13H10M4 13H1V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                 </div>
                 <div class="prompt-query-line">
+                  <span class="prompt-cursor" aria-hidden="true"></span>
                   <span>What must production-ready mean?</span>
                 </div>
               </div>
@@ -2494,12 +2523,12 @@
         </div>
 
         <!-- 3. Bottom Sitemap Navigation -->
-        <footer class="console-footer">
         <div class="console-sitemap-grid">
           
           <div>
-            <div class="console-nav-col-header console-brand-lockup">
-              <img src="assets/dataglif-logo.png" alt="DataGlif" width="44" height="44">
+            <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
+              <span>DATAGLIF</span>
             </div>
             <p class="console-brand-desc">
               Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
@@ -2508,19 +2537,21 @@
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
-              <li><a href="services.html">Image &amp; Video</a></li>
-              <li><a href="services.html">3D, Spatial &amp; Multiview</a></li>
-              <li><a href="services.html">Text &amp; Documents</a></li>
-              <li><a href="services.html">Audio &amp; Multimodal</a></li>
-              <li><a href="services.html">Data Operations &amp; QA</a></li>
+              <li><a href="service.html">Image &amp; Video</a></li>
+              <li><a href="service.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="service.html">Text &amp; Documents</a></li>
+              <li><a href="service.html">Audio &amp; Multimodal</a></li>
+              <li><a href="service.html">Data Operations &amp; QA</a></li>
             </ul>
           </div>
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>COMPANY</span>
             </div>
             <ul class="console-nav-links">
@@ -2533,34 +2564,33 @@
 
           <div>
             <div class="console-nav-col-header">
+              <span class="console-nav-arrow" aria-hidden="true"></span>
               <span>GET IN TOUCH</span>
             </div>
             <ul class="console-nav-links">
               <li><a href="mailto:hello@dataglif.com">hello@dataglif.com</a></li>
+              <li><span>San Francisco, CA</span></li>
+              <li><span>Replies within 24 hours</span></li>
               <li><a href="https://www.linkedin.com/company/dataglif" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
-            <p class="console-contact-note">San Francisco, CA<br>Replies within 24 hours</p>
           </div>
 
         </div>
 
         <!-- 4. Console Bottom Legal Bar -->
         <div class="console-bottom-bar">
-          <div>&copy; 2026 DataGlif. All rights reserved.</div>
+          <div>&copy; 2026 DATAGLIF. ALL RIGHTS RESERVED.</div>
           <div class="console-legal-links">
-            <a href="privacy.html">Privacy</a>
+            <a href="#privacy">PRIVACY</a>
             <span class="console-legal-sep">/</span>
-            <a href="terms.html">Terms</a>
+            <a href="#terms">TERMS</a>
             <span class="console-legal-sep">/</span>
-            <a href="security.html">Data security</a>
+            <a href="#security">DATA SECURITY</a>
           </div>
         </div>
-        </footer>
 
       </div>
     </div>
-  </section>
-
   <script>
     // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
     (function initSmartNavbar() {
@@ -2852,8 +2882,6 @@
       });
     });
   </script>
-
-  </main>
 
 </body>
 </html>
