@@ -6,9 +6,19 @@
   <title>Our Approach - DataGlif</title>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
+  <link rel="canonical" href="https://swagat69.github.io/dataglif-site/approach.html">
+  <link rel="icon" href="assets/dataglif-logo.png" type="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DataGlif">
+  <meta property="og:title" content="Our approach to annotation quality | DataGlif">
+  <meta property="og:description" content="How DataGlif runs an annotation programme: adaptive workflows, calibrated annotators, and closed-loop quality iteration.">
+  <meta property="og:url" content="https://swagat69.github.io/dataglif-site/approach.html">
+  <meta property="og:image" content="https://swagat69.github.io/dataglif-site/assets/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 
   <!-- Unicorn Studio SDK (for exact HydraDB Tree WebGL Animation) -->
   
@@ -37,7 +47,7 @@
     body {
       background: var(--surface-deep);
       color: #FFFFFF;
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 16px;
       line-height: 1.6; /* 160% body leading */
       letter-spacing: -0.02em; /* -2% body tracking */
@@ -97,7 +107,7 @@
     }
 
     .nav-item {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.875rem;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.65);
@@ -115,7 +125,7 @@
 
     .nav-item::before,
     .nav-item::after {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.875rem;
       font-weight: 600;
       color: #000000;
@@ -150,7 +160,7 @@
 
     /* Active Page Indication - Precision Monospace Brackets [ ] in Blue */
     .nav-item.active {
-      color: #2563EB;
+      color: #0369A1;
       font-weight: 600;
       background: transparent;
     }
@@ -158,7 +168,7 @@
     .nav-item.active::before,
     .nav-item.active::after {
       opacity: 1;
-      color: #2563EB;
+      color: #0369A1;
       font-weight: 600;
       transform: translateX(0);
     }
@@ -179,7 +189,7 @@
       border: 1px solid rgba(56, 189, 248, 0.5);
       clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
       color: #000000;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.12em;
@@ -278,7 +288,7 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 9999px;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.6875rem;
       font-weight: 600;
       letter-spacing: 0.16em;
@@ -316,7 +326,7 @@
     }
 
     .hero-container p {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1.125rem;
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -349,7 +359,7 @@
       position: absolute;
       width: 14px;
       height: 14px;
-      background-color: #2563EB;
+      background-color: #0369A1;
     }
 
     .corner-square--tl {
@@ -403,11 +413,11 @@
     }
 
     .workflow-tag {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       letter-spacing: 0.01em; /* ALL CAPS 1% */
       text-transform: uppercase;
-      color: #2563EB;
+      color: #0369A1;
       margin-bottom: 0.75rem;
       display: inline-flex;
       align-items: center;
@@ -441,8 +451,6 @@
       margin: 0 auto;
       padding: 2.5rem 0;
       background: #FFFFFF;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
     }
 
     .wfm-viewport {
@@ -468,14 +476,14 @@
 
     .wfm-item span {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1rem;
-      line-height: 1.2;
+      font-size: 1.125rem;
+      line-height: 1.25;
       font-weight: 500;
       letter-spacing: -0.02em;
       text-align: center;
       white-space: pre-line;
-      color: #64748B;
-      opacity: 0.8;
+      color: #334155;
+      opacity: 0.92;
       transition: opacity 0.2s ease;
     }
 
@@ -488,7 +496,7 @@
       height: 10px;
       flex: 0 0 auto;
       align-self: center;
-      background: #2563EB;
+      background: #0369A1;
     }
 
     .wfm-blur {
@@ -520,27 +528,13 @@
 
     .wfm-tint--left {
       left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+      background: linear-gradient(to right, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
     }
 
     .wfm-tint--right {
       right: 0;
-      background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.04));
+      background: linear-gradient(to left, #FFFFFF 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%);
     }
-
-    .wfm-plus {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      z-index: 20;
-      pointer-events: none;
-      color: #64748B;
-    }
-
-    .wfm-plus--tl { top: -10px; left: -10px; }
-    .wfm-plus--tr { top: -10px; right: -10px; }
-    .wfm-plus--bl { bottom: -10px; left: -10px; }
-    .wfm-plus--br { bottom: -10px; right: -10px; }
 
     .wfm-counter {
       position: relative;
@@ -555,7 +549,7 @@
 
     .wfm-counter span {
       position: absolute;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       color: #64748B;
@@ -598,7 +592,7 @@
     }
 
     .solutions-subtitle {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -744,7 +738,7 @@
       flex-direction: column;
       justify-content: flex-start;
       position: relative;
-      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.04);
+      box-shadow: 0 4px 20px rgba(3, 105, 161, 0.04);
       transition: background 250ms ease, box-shadow 250ms ease;
     }
 
@@ -774,17 +768,17 @@
     .feature-card:hover::before {
       background:
         /* Top-Left */
-        linear-gradient(to right, #2563EB 7px, transparent 7px) top left / 7px 1px no-repeat,
-        linear-gradient(to bottom, #2563EB 7px, transparent 7px) top left / 1px 7px no-repeat,
+        linear-gradient(to right, #0369A1 7px, transparent 7px) top left / 7px 1px no-repeat,
+        linear-gradient(to bottom, #0369A1 7px, transparent 7px) top left / 1px 7px no-repeat,
         /* Top-Right */
-        linear-gradient(to left, #2563EB 7px, transparent 7px) top right / 7px 1px no-repeat,
-        linear-gradient(to bottom, #2563EB 7px, transparent 7px) top right / 1px 7px no-repeat,
+        linear-gradient(to left, #0369A1 7px, transparent 7px) top right / 7px 1px no-repeat,
+        linear-gradient(to bottom, #0369A1 7px, transparent 7px) top right / 1px 7px no-repeat,
         /* Bottom-Left */
-        linear-gradient(to right, #2563EB 7px, transparent 7px) bottom left / 7px 1px no-repeat,
-        linear-gradient(to top, #2563EB 7px, transparent 7px) bottom left / 1px 7px no-repeat,
+        linear-gradient(to right, #0369A1 7px, transparent 7px) bottom left / 7px 1px no-repeat,
+        linear-gradient(to top, #0369A1 7px, transparent 7px) bottom left / 1px 7px no-repeat,
         /* Bottom-Right */
-        linear-gradient(to left, #2563EB 7px, transparent 7px) bottom right / 7px 1px no-repeat,
-        linear-gradient(to top, #2563EB 7px, transparent 7px) bottom right / 1px 7px no-repeat;
+        linear-gradient(to left, #0369A1 7px, transparent 7px) bottom right / 7px 1px no-repeat,
+        linear-gradient(to top, #0369A1 7px, transparent 7px) bottom right / 1px 7px no-repeat;
     }
 
     .feature-card-title {
@@ -798,7 +792,7 @@
     }
 
     .feature-card p {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6; /* 160% leading */
       letter-spacing: -0.02em; /* -2% tracking */
@@ -848,7 +842,7 @@
     }
 
     .scarcity-body p {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6; /* 160% body leading */
       letter-spacing: -0.02em; /* -2% body tracking */
@@ -1041,7 +1035,7 @@
     }
 
     .mobile-nav-item {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1.125rem;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.75);
@@ -1054,7 +1048,7 @@
 
     .mobile-nav-item::before,
     .mobile-nav-item::after {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1.125rem;
       font-weight: 600;
       color: #000000;
@@ -1086,14 +1080,14 @@
     }
 
     .mobile-nav-item.active {
-      color: #2563EB;
+      color: #0369A1;
       font-weight: 600;
     }
 
     .mobile-nav-item.active::before,
     .mobile-nav-item.active::after {
       opacity: 1;
-      color: #2563EB;
+      color: #0369A1;
       transform: translateX(0);
     }
 
@@ -1170,7 +1164,7 @@
         padding: 2rem 0;
       }
       .wfm-item span {
-        font-size: 0.875rem;
+        font-size: 1rem;
       }
       .wfm-blur,
       .wfm-tint {
@@ -1201,14 +1195,16 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/system.css">
 </head>
 <body>
+  <a class="dg-skip" href="#main">Skip to content</a>
 
   <!-- ═══════════════════════════════════════════════════════════════
        NAVBAR (Preserved)
        ═══════════════════════════════════════════════════════════════ -->
   <nav class="navbar">
-    <div class="navbar-logo" onclick="window.location.href='index.html'">DataGlif</div>
+    <div class="navbar-logo" onclick="window.location.href='index.html'"><img src="assets/dataglif-logo.png" alt="" width="28" height="28"><span class="dg-wordmark">DataGlif</span></div>
 
     <div class="navbar-nav">
       <a href="index.html" class="nav-item">Home</a>
@@ -1218,14 +1214,14 @@
     </div>
 
     <div class="navbar-actions">
-      <button class="cta-button" onclick="window.location.href='contact.html'">
+      <a class="cta-button" href="contact.html">
         <span class="cta-button-label">Book a Call</span>
         <span class="cta-button-arrow">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-      </button>
+      </a>
 
       <!-- Mobile Hamburger Button -->
       <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -1257,6 +1253,8 @@
       </div>
     </div>
   </div>
+
+  <main id="main">
 
   <!-- ═══════════════════════════════════════════════════════════════
        HERO SECTION
@@ -1293,10 +1291,6 @@
           <div class="wfm-tint wfm-tint--left" aria-hidden="true"></div>
           <div class="wfm-tint wfm-tint--right" aria-hidden="true"></div>
 
-          <svg class="wfm-plus wfm-plus--tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="wfm-plus wfm-plus--br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </div>
 
         <div class="wfm-counter" id="wfmCounter" aria-live="polite"></div>
@@ -1471,7 +1465,7 @@
       align-items: center;
       padding: 0 0 0.85rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.6875rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -1537,7 +1531,7 @@
     }
 
     .console-desc {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 1rem; /* 16px body */
       line-height: 1.6;
       letter-spacing: -0.02em;
@@ -1555,7 +1549,7 @@
     }
 
     .console-subnote {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.45);
     }
@@ -1622,7 +1616,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -1635,7 +1629,7 @@
     }
 
     .prompt-query-line {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.9);
@@ -1680,7 +1674,7 @@
     }
 
     .prompt-answer-text {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.84375rem;
       line-height: 1.55;
       color: rgba(255, 255, 255, 0.92);
@@ -1700,7 +1694,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -1719,7 +1713,7 @@
     }
 
     .console-brand-desc {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.5);
@@ -1735,7 +1729,7 @@
 
     .console-nav-links a,
     .console-nav-links span {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.78125rem;
       line-height: 1.3;
       color: rgba(255, 255, 255, 0.58);
@@ -1754,7 +1748,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 0 0 0;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 0.625rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -1940,12 +1934,13 @@
         </div>
 
         <!-- 3. Bottom Sitemap Navigation -->
+        <footer class="console-footer">
         <div class="console-sitemap-grid">
           
           <div>
             <div class="console-nav-col-header">
               <span class="console-nav-arrow" aria-hidden="true"></span>
-              <span>DATAGLIF</span>
+              <img src="assets/dataglif-logo.png" alt="" width="26" height="26"><span class="dg-wordmark">DataGlif</span>
             </div>
             <p class="console-brand-desc">
               Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
@@ -1958,11 +1953,11 @@
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
-              <li><a href="service.html">Image &amp; Video</a></li>
-              <li><a href="service.html">3D, Spatial &amp; Multiview</a></li>
-              <li><a href="service.html">Text &amp; Documents</a></li>
-              <li><a href="service.html">Audio &amp; Multimodal</a></li>
-              <li><a href="service.html">Data Operations &amp; QA</a></li>
+              <li><a href="services.html">Image &amp; Video</a></li>
+              <li><a href="services.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="services.html">Text &amp; Documents</a></li>
+              <li><a href="services.html">Audio &amp; Multimodal</a></li>
+              <li><a href="services.html">Data Operations &amp; QA</a></li>
             </ul>
           </div>
 
@@ -2004,6 +1999,7 @@
             <span class="console-legal-sep">/</span>
             <a href="#security">DATA SECURITY</a>
           </div>
+          </footer>
         </div>
 
       </div>
@@ -2287,6 +2283,8 @@
       });
     });
   </script>
+
+  </main>
 
 </body>
 </html>
