@@ -2388,12 +2388,6 @@
 
 
 
-    .console-reticle-icon {
-      display: inline-flex;
-      color: rgba(255, 255, 255, 0.4);
-      transition: color 200ms ease, transform 300ms ease;
-    }
-
     /* Middle Grid: Statement + 3 Prompt Records */
     .console-main-grid {
       display: grid;
@@ -2412,10 +2406,10 @@
 
     .console-heading {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-size: clamp(1.65rem, 2.5vw, 2.25rem);
       font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.04em;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
       color: #FFFFFF;
       margin: 0;
     }
@@ -2423,10 +2417,10 @@
     .console-desc {
       font-family: 'DM Sans', sans-serif;
       font-size: 1rem; /* 16px body */
-      line-height: 1.6;
-      letter-spacing: -0.02em;
+      line-height: 1.6; /* 160% leading */
+      letter-spacing: -0.02em; /* -2% tracking */
       color: rgba(255, 255, 255, 0.65);
-      max-width: 55ch; /* 50-60 chars */
+      max-width: 55ch; /* 50-60 chars per line */
       margin: 0;
     }
 
@@ -2436,6 +2430,13 @@
       flex-wrap: wrap;
       gap: 1.25rem;
       margin-top: 0.35rem;
+    }
+
+    /* The footer's brief button keeps the console's mono lockup, whatever
+       the page's own button styling happens to be. */
+    .console-action-row .cta-button {
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
     }
 
     .console-subnote {
@@ -2509,7 +2510,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      text-transform: none;
+      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.45);
     }
 
@@ -2574,7 +2575,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      text-transform: none;
+      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: 0.75rem;
       font-weight: 600;
@@ -2620,7 +2621,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.625rem;
       letter-spacing: 0.16em;
-      text-transform: none;
+      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.4);
     }
 
@@ -2693,7 +2694,7 @@
           
           <!-- Left Statement Pane -->
           <div class="console-statement-pane">
-            <h2 class="console-heading split-heading">Start With the Failure Mode.</h2>
+            <h2 class="console-heading">Start With the Failure Mode.</h2>
             <p class="console-desc">
               Show us what the model is missing, where the data breaks down, or what quality must be proven. That becomes the brief for the right collection, annotation, enrichment, and review workflow.
             </p>
@@ -2783,7 +2784,7 @@
           
           <div>
             <div class="console-nav-col-header">
-              <span>DATAGLIF</span>
+              <img src="assets/dataglif-logo.png" alt="DataGlif" style="height: 28px; width: auto; vertical-align: middle;">
             </div>
             <p class="console-brand-desc">
               Human-validated training data for AI and agentic systems. Collection, annotation, and quality operations across image, video, 3D, text, and audio.
@@ -2795,11 +2796,11 @@
               <span>SERVICES</span>
             </div>
             <ul class="console-nav-links">
-              <li><a href="service.html">Image &amp; Video</a></li>
-              <li><a href="service.html">3D, Spatial &amp; Multiview</a></li>
-              <li><a href="service.html">Text &amp; Documents</a></li>
-              <li><a href="service.html">Audio &amp; Multimodal</a></li>
-              <li><a href="service.html">Data Operations &amp; QA</a></li>
+              <li><a href="services.html">Image &amp; Video</a></li>
+              <li><a href="services.html">3D, Spatial &amp; Multiview</a></li>
+              <li><a href="services.html">Text &amp; Documents</a></li>
+              <li><a href="services.html">Audio &amp; Multimodal</a></li>
+              <li><a href="services.html">Data Operations &amp; QA</a></li>
             </ul>
           </div>
 
@@ -2843,6 +2844,8 @@
 
       </div>
     </div>
+  </section>
+
   <script>
     // Smart Navbar: Hide on scroll down smoothly, show on scroll up quickly
     (function initSmartNavbar() {
