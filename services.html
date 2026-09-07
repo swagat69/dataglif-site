@@ -674,7 +674,7 @@
       font-size: 1.125rem;
       line-height: 1.625;
       letter-spacing: -0.015em;
-      color: var(--ink-2, #3a3a38);
+      color: #334155;
       max-width: 520px;
       margin: 0 auto;
     }
@@ -690,7 +690,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink-dim, #6b6b68);
+      color: #64748B;
     }
 
     .orbit-point + .orbit-point::before {
@@ -807,11 +807,13 @@
     /* ═══════════════════════════════════════════════════════════════
        CHOOSE THE DATA SERVICES YOU NEED (Split-Console Layout)
        ═══════════════════════════════════════════════════════════════ */
+    /* The light palette the rest of the site is built on: slate-50 ground,
+       white panels, #E2E8F0 rules, #0F172A ink. */
     .services-grid-section {
       width: 100%;
-      background: var(--bg, #f0ede8);
+      background: #F8FAFC;
       padding: 4.5rem 2rem 4rem;
-      border-top: 1px solid var(--line, #dedad4);
+      border-top: 1px solid #E2E8F0;
       position: relative;
     }
 
@@ -847,7 +849,7 @@
       font-weight: 700;
       line-height: 1.15;
       letter-spacing: -0.04em;
-      color: var(--ink, #111210);
+      color: #0F172A;
       text-transform: none;
       margin: 0 auto 0.75rem auto;
       text-align: center;
@@ -858,21 +860,25 @@
       font-size: 0.95rem;
       line-height: 1.5;
       letter-spacing: -0.02em;
-      color: var(--ink-2, #3a3a38);
+      color: #475569;
       max-width: 58ch;
       margin: 0 auto;
       text-align: center;
     }
 
+    /* Held to one line above 768px, which needs more room than the 58ch
+       measure — capping it there overflows the text right and throws the
+       centring off. */
     @media (min-width: 768px) {
       .services-grid-subtitle {
         white-space: nowrap;
+        max-width: none;
       }
     }
 
     .services-console {
-      background: var(--surface, #ffffff);
-      border: 1px solid var(--line, #dedad4);
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
       position: relative;
       max-width: 1040px;
       margin: 0 auto;
@@ -886,16 +892,16 @@
 
     /* Left Column: Numbered Service List */
     .console-menu-col {
-      border-right: 1px solid var(--line, #dedad4);
+      border-right: 1px solid #E2E8F0;
       display: flex;
       flex-direction: column;
-      background: var(--surface-2, #f4f1ec);
+      background: #EEF2F6;
     }
 
     .console-menu-item {
       padding: 1.05rem 1.5rem;
       min-height: 52px;
-      border-bottom: 1px solid var(--line, #dedad4);
+      border-bottom: 1px solid #E2E8F0;
       cursor: pointer;
       position: relative;
       background: transparent;
@@ -910,7 +916,7 @@
     }
 
     .console-menu-item:hover {
-      background: rgba(17, 18, 16, 0.03);
+      background: rgba(15, 23, 42, 0.035);
     }
 
     .menu-item-code {
@@ -919,12 +925,12 @@
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: none;
-      color: var(--ink-dim, #6b6b68);
+      color: #64748B;
       transition: color 180ms ease;
     }
 
     .console-menu-item:hover .menu-item-code {
-      color: var(--ink, #111210);
+      color: #0F172A;
     }
 
     /* Active: ONLY the bigger text */
@@ -933,7 +939,7 @@
       font-size: 1.25rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: var(--ink, #111210);
+      color: #0F172A;
       display: none;
       line-height: 1.2;
     }
@@ -953,7 +959,7 @@
 
     /* On click / active: HIDE number & small writing, SHOW ONLY the bigger text */
     .console-menu-item.is-active {
-      background: var(--surface, #ffffff);
+      background: #FFFFFF;
     }
 
     .console-menu-item.is-active .menu-item-code {
@@ -999,7 +1005,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: var(--surface, #ffffff);
+      background: #FFFFFF;
     }
 
     /* Upper Tier: Exact Description */
@@ -1013,13 +1019,13 @@
       font-weight: 700;
       line-height: 1.35;
       letter-spacing: -0.025em;
-      color: var(--ink, #111210);
+      color: #0F172A;
     }
 
     .stage-tier-divider {
       height: 1px;
       width: 100%;
-      background: var(--line, #dedad4);
+      background: #E2E8F0;
     }
 
     /* Lower Tier: Side-by-Side Tags with Tiny Square Separators */
@@ -1038,7 +1044,7 @@
       font-family: 'Inter', sans-serif;
       font-size: 0.9375rem;
       font-weight: 500;
-      color: var(--ink-2, #3a3a38);
+      color: #334155;
       letter-spacing: -0.01em;
     }
 
