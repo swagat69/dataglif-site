@@ -509,7 +509,7 @@
       height: 100vh;
       min-height: 660px;
       overflow: hidden;
-      background: #E9E9EA;
+      background: #F8FAFC;
     }
 
     .orbit-track {
@@ -686,7 +686,7 @@
       justify-content: center;
       margin-top: 0.85rem;
       font-family: 'Inter', sans-serif;
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -696,10 +696,13 @@
     .orbit-point + .orbit-point::before {
       content: '';
       display: inline-block;
-      width: 5px;
-      height: 5px;
-      margin: 0 0.65rem;
-      vertical-align: middle;
+      width: 4px;
+      height: 4px;
+      margin: 0 0.6rem;
+      /* `middle` centres on the x-height, which reads low against all-caps.
+         Sitting the dot 0.2em off the baseline puts it in the cap band, and
+         the em keeps it there if the row is ever resized. */
+      vertical-align: 0.2em;
       background: #3B82F6;
     }
 
