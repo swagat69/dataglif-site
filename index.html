@@ -2463,9 +2463,9 @@
       display: flex;
       flex-direction: column;
       border-radius: 16px;
-      border: 1px solid var(--blog-line);
+      overflow: hidden;
       background: var(--blog-card);
-      padding: 0.625rem;
+      padding: 0;
     }
 
     /* ── Wells ─────────────────────────────────────────────────────────
@@ -2476,7 +2476,7 @@
     .blog-well {
       position: relative;
       overflow: hidden;
-      border-radius: var(--radius-md);
+      border-radius: 0;
       background: var(--blog-well);
     }
 
@@ -2779,7 +2779,7 @@
   <style>
     .intake-console-section {
       width: 100%;
-      background: var(--surface-deepest, #05070C);
+      background: #03040A;
       padding: 3rem 2rem 2rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       position: relative;
@@ -3317,16 +3317,16 @@
 
       // ── Preview tuning, per demo ──────────────────────────────────────
       var PREVIEW_CSS = {
-        // The document is set for a full page; inside a card it can carry a
-        // good deal more text and still read clearly at ~15px.
+        // The document is set for a full page; inside a card it drops to
+        // ~11px so the whole brief fits the well without scrolling past it.
         'ner-annotation-FULL.html':
-          '.document-container{padding:1.35rem 1.6rem!important}' +
-          '.document-text{font-size:0.95rem!important;line-height:1.6!important}' +
-          '.document-text h2{font-size:1.25rem!important;margin-bottom:0.6rem!important}' +
-          '.document-text h3{font-size:1rem!important;margin:0.85rem 0 0.4rem!important}' +
-          '.document-text p{margin-bottom:0.65rem!important}' +
-          '.document-text ul,.document-text ol{margin:0.45rem 0 0.65rem 1.05rem!important}' +
-          '.document-text li{margin-bottom:0.28rem!important}',
+          '.document-container{padding:1rem 1.15rem!important}' +
+          '.document-text{font-size:0.72rem!important;line-height:1.5!important}' +
+          '.document-text h2{font-size:0.95rem!important;margin-bottom:0.45rem!important}' +
+          '.document-text h3{font-size:0.8rem!important;margin:0.6rem 0 0.3rem!important}' +
+          '.document-text p{margin-bottom:0.45rem!important}' +
+          '.document-text ul,.document-text ol{margin:0.35rem 0 0.45rem 0.9rem!important}' +
+          '.document-text li{margin-bottom:0.2rem!important}',
 
         // The 3D context the turn needs, and one page rather than two stacked
         // once the book switches to its narrow layout.
