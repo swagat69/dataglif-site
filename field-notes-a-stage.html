@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes — A · Stage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="field-notes-base.css">
+<style>
+  /* ======================================================================
+     LAYOUT A — STAGE
+     One demo at a time, at the largest size the grid allows (796px live
+     width), with the three notes as an index beside it.
+
+     Why this one works: the booklet demo needs >=740px before its region
+     boxes read, and this is the only layout that guarantees every demo
+     clears that on every screen. It is also the lightest: exactly one
+     demo is ever mounted.
+     ====================================================================== */
+
+  .fn-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 2.75rem;
+    margin-bottom: 2.75rem;
+    border-bottom: 1px solid var(--fn-line);
+  }
+
+  .fn-head .fn-h2 { max-width: 20ch; }
+
+  .console {
+    display: grid;
+    grid-template-columns: 312px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* ---- Index rail ---------------------------------------------------- */
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 4rem;
+  }
+
+  .rail-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1.15rem 1.15rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--fn-r-out);
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    color: var(--fn-ink);
+    cursor: pointer;
+    transition: background 0.3s var(--fn-ease), border-color 0.3s var(--fn-ease);
+  }
+
+  .rail-item:hover { background: rgba(255, 255, 255, 0.7); }
+
+  .rail-item[aria-selected='true'] {
+    background: var(--fn-plate);
+    border-color: var(--fn-line);
+  }
+
+  /* The crop marks are the selection indicator. They travel to whichever
+     note is on the stage, which is what they were decorating all along. */
+  .rail-item .fn-marks { opacity: 0; transition: opacity 0.35s var(--fn-ease); }
+  .rail-item[aria-selected='true'] .fn-marks { opacity: 1; }
+
+  .rail-item .fn-title { font-size: 1.0625rem; }
+
+  .rail-item .fn-tag { transition: color 0.3s var(--fn-ease); }
+  .rail-item[aria-selected='true'] .fn-tag { color: var(--fn-ink); }
+
+  .rail-note {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--fn-line);
+    font-family: var(--fn-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fn-muted);
+  }
+
+  /* ---- Stage --------------------------------------------------------- */
+
+  .stage-well { aspect-ratio: 16 / 9; }
+
+  .stage-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.75rem 1.25rem 0.75rem;
+  }
+
+  .stage-panel .fn-title { font-size: clamp(1.4rem, 2.1vw, 1.85rem); }
+
+  .stage-panel .fn-open { margin-top: 0.6rem; }
+
+  /* Crossfade between notes. Justified: it is a state transition, and it
+     stops the stage flashing white while a new demo mounts. */
+  .stage-body { opacity: 1; transition: opacity 0.28s var(--fn-ease); }
+  .stage-body.is-swapping { opacity: 0; }
+
+  .demo { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+          transition: opacity 0.4s var(--fn-ease); }
+  .demo.is-active { opacity: 1; pointer-events: auto; }
+
+  /* ---- Responsive ---------------------------------------------------- */
+
+  @media (max-width: 980px) {
+    .console { grid-template-columns: 1fr; gap: 1.5rem; }
+    .rail {
+      position: static;
+      flex-direction: row;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+      margin: 0 -1.5rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .rail-item { min-width: 250px; scroll-snap-align: start; }
+    .rail-note { display: none; }
+    .stage-well { aspect-ratio: 4 / 3; }
+  }
+
+  @media (max-width: 620px) {
+    .fn { padding: 4rem 1.25rem 4.5rem; }
+    .stage-well { aspect-ratio: 3 / 4; }
+    .stage-panel { padding: 1.25rem 0.5rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <strong>Field Notes</strong>
+  <span>A · Stage</span>
+  <nav>
+    <a href="field-notes-compare.html">Compare</a>
+    <a href="field-notes-a-stage.html" aria-current="page">A Stage</a>
+    <a href="field-notes-b-plates.html">B Plates</a>
+    <a href="field-notes-c-bento.html">C Bento</a>
+    <a href="field-notes-d-index.html">D Index</a>
+  </nav>
+</div>
+
+<section class="fn" id="field-notes">
+  <div class="fn-wrap">
+
+    <header class="fn-head" data-rise="0">
+      <span class="fn-kicker">Field Notes</span>
+      <h2 class="fn-h2">What we learn building datasets.</h2>
+    </header>
+
+    <div class="console">
+
+      <!-- Index -->
+      <div class="rail" role="tablist" aria-label="Field notes" data-rise="60">
+
+        <button class="rail-item" role="tab" id="tab-cvat" aria-controls="panel" aria-selected="true" data-note="cvat">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-tag">Custom Annotation Tooling</span>
+          <span class="fn-title">Extending CVAT for rotation-aware 3D annotation</span>
+        </button>
+
+        <button class="rail-item" role="tab" id="tab-iaa" aria-controls="panel" aria-selected="false" tabindex="-1" data-note="iaa">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-tag">Annotation Intelligence</span>
+          <span class="fn-title">Agent-assisted calibration for higher IAA</span>
+        </button>
+
+        <button class="rail-item" role="tab" id="tab-layout" aria-controls="panel" aria-selected="false" tabindex="-1" data-note="layout">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-tag">Document Intelligence</span>
+          <span class="fn-title">Layout is the context layer</span>
+        </button>
+
+        <p class="rail-note">Every note runs live. Use one, then pick the next.</p>
+      </div>
+
+      <!-- Stage -->
+      <div class="fn-plate" id="panel" role="tabpanel" aria-labelledby="tab-cvat" data-rise="120">
+        <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+
+        <div class="fn-well stage-well" data-fit="contain">
+          <div class="demo is-active" data-note="cvat">
+            <video data-src="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4"
+                   autoplay loop muted playsinline preload="none"
+                   aria-label="Rotation-aware cuboid annotation in CVAT"></video>
+          </div>
+          <div class="demo" data-note="iaa">
+            <iframe data-lazy="ner-annotation-FULL.html" title="Named-entity annotation review, live demo"></iframe>
+          </div>
+          <div class="demo" data-note="layout">
+            <iframe data-lazy="dla-booklet-FULL.html" title="Document layout analysis, live demo"></iframe>
+          </div>
+        </div>
+
+        <div class="stage-panel stage-body">
+          <span class="fn-tag" data-field="tag">Custom Annotation Tooling</span>
+          <h3 class="fn-title" data-field="title">Extending CVAT for rotation-aware 3D annotation</h3>
+          <p class="fn-copy" data-field="copy">Driver's-view footage constantly changes a vehicle's angle and perspective. CVAT's default cuboid controls do not represent those rotations naturally. We create our own rotation-aware cuboids making 3D alignment faster, more intuitive, and more consistent across frames.</p>
+          <a class="fn-open" href="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4" target="_blank" rel="noopener" data-field="open">
+            Open at full size
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="field-notes-embed.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NOTES = {
+    cvat: {
+      tag: 'Custom Annotation Tooling',
+      title: 'Extending CVAT for rotation-aware 3D annotation',
+      copy: "Driver's-view footage constantly changes a vehicle's angle and perspective. CVAT's default cuboid controls do not represent those rotations naturally. We create our own rotation-aware cuboids making 3D alignment faster, more intuitive, and more consistent across frames.",
+      href: 'https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4'
+    },
+    iaa: {
+      tag: 'Annotation Intelligence',
+      title: 'Agent-assisted calibration for higher IAA',
+      copy: 'We combine expert review with advanced AI models to identify annotation disagreements, uncover unclear guidelines, and highlight where annotators may need additional support. Each review cycle helps us improve the rubric, provide targeted coaching, and increase consistency while keeping human judgment at the center of the process.',
+      href: 'ner-annotation-FULL.html'
+    },
+    layout: {
+      tag: 'Document Intelligence',
+      title: 'Layout is the context layer',
+      copy: 'OCR can find the words; structure reveals what they mean. Procurement packages, job postings, and legal documents encode context through sections, tables, lists, and hierarchy. We build and validate that structural layer first, giving downstream models a stronger foundation for extracting skills, clauses, dates, contract terms, and other critical information.',
+      href: 'dla-booklet-FULL.html'
+    }
+  };
+
+  var tabs   = Array.prototype.slice.call(document.querySelectorAll('.rail-item'));
+  var demos  = document.querySelectorAll('.demo');
+  var panel  = document.getElementById('panel');
+  var body   = panel.querySelector('.stage-body');
+  var fields = {
+    tag:   panel.querySelector('[data-field="tag"]'),
+    title: panel.querySelector('[data-field="title"]'),
+    copy:  panel.querySelector('[data-field="copy"]'),
+    open:  panel.querySelector('[data-field="open"]')
+  };
+
+  // Mount the demo for a note the moment it is first asked for.
+  function ensure(id) {
+    var host = document.querySelector('.demo[data-note="' + id + '"]');
+    var frame = host && host.querySelector('iframe, video');
+    if (!frame) return;
+    if (frame.tagName === 'IFRAME' && !frame.getAttribute('data-src')) {
+      frame.setAttribute('data-src', frame.getAttribute('data-lazy'));
+    }
+    window.fnMount(frame);
+  }
+
+  function select(id, focus) {
+    tabs.forEach(function (t) {
+      var on = t.dataset.note === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if (on && focus) t.focus();
+      if (on) panel.setAttribute('aria-labelledby', t.id);
+    });
+
+    ensure(id);
+
+    body.classList.add('is-swapping');
+    window.setTimeout(function () {
+      var n = NOTES[id];
+      fields.tag.textContent   = n.tag;
+      fields.title.textContent = n.title;
+      fields.copy.textContent  = n.copy;
+      fields.open.href         = n.href;
+      body.classList.remove('is-swapping');
+    }, 200);
+
+    demos.forEach(function (d) { d.classList.toggle('is-active', d.dataset.note === id); });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { select(tab.dataset.note); });
+    tab.addEventListener('keydown', function (e) {
+      var next = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? i + 1
+               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? i - 1
+               : e.key === 'Home' ? 0
+               : e.key === 'End'  ? tabs.length - 1 : null;
+      if (next === null) return;
+      e.preventDefault();
+      select(tabs[(next + tabs.length) % tabs.length].dataset.note, true);
+    });
+  });
+
+  // Mount the opening note as soon as the section is in reach.
+  ensure('cvat');
+})();
+</script>
+</body>
+</html>

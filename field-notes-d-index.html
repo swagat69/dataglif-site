@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes — D · Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="field-notes-base.css">
+<style>
+  /* ======================================================================
+     LAYOUT D — INDEX
+     Keeps the compact three-up rhythm the section has today, but the tile
+     stops pretending to be the demo. Each tile runs the demo at its own
+     narrow-viewport layout at 1:1 (legible, just partial), and the real
+     viewing surface is a full-bleed viewer where nothing is reduced.
+
+     Honest trade: the entity demo reads well in a tile, the document demo
+     does not, so this layout leans hardest on the viewer.
+     ====================================================================== */
+
+  .fn-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 3rem;
+  }
+
+  .fn-head .fn-h2 { max-width: 20ch; }
+
+  .index {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .note { display: flex; flex-direction: column; }
+
+  .note-plate {
+    position: relative;
+    cursor: pointer;
+    border: 0;
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    transition: transform 0.35s var(--fn-ease), box-shadow 0.35s var(--fn-ease);
+  }
+
+  .note-plate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px -18px rgba(10, 10, 11, 0.35);
+  }
+
+  .note-plate:active { transform: translateY(-1px); }
+
+  .note-well {
+    height: 300px;
+    /* The demo runs at 1:1 and the tile shows the top of it. The fade says
+       plainly that there is more, and the whole tile opens it. */
+    -webkit-mask-image: linear-gradient(180deg, #000 76%, rgba(0, 0, 0, 0.15) 100%);
+            mask-image: linear-gradient(180deg, #000 76%, rgba(0, 0, 0, 0.15) 100%);
+  }
+
+  .note-well[data-fit='contain'] {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+
+  .note-well > iframe { pointer-events: none; }
+
+  .note-cue {
+    position: absolute;
+    right: 1.35rem;
+    bottom: 1.35rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--fn-r-ctl);
+    background: rgba(10, 10, 11, 0.86);
+    color: #fff;
+    font-family: var(--fn-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s var(--fn-ease), transform 0.3s var(--fn-ease);
+  }
+
+  .note-cue svg { width: 12px; height: 12px; }
+
+  .note-plate:hover .note-cue,
+  .note-plate:focus-visible .note-cue { opacity: 1; transform: none; }
+
+  .note-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.35rem 0.75rem 0.5rem;
+  }
+
+  .note-text .fn-title { font-size: 1.25rem; }
+
+  /* ---- Viewer -------------------------------------------------------- */
+
+  .viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    background: rgba(8, 10, 14, 0.72);
+    -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--fn-ease), visibility 0.3s;
+  }
+
+  .viewer.is-open { opacity: 1; visibility: visible; }
+
+  .viewer-shell {
+    width: min(1280px, 100%);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--fn-plate);
+    border-radius: var(--fn-r-out);
+    padding: var(--fn-matte);
+    transform: scale(0.965);
+    transition: transform 0.35s var(--fn-ease);
+  }
+
+  .viewer.is-open .viewer-shell { transform: none; }
+
+  .viewer-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0.5rem 0.85rem;
+  }
+
+  .viewer-bar .fn-tag { flex: 1; }
+
+  .viewer-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--fn-line-2);
+    border-radius: var(--fn-r-ctl);
+    background: transparent;
+    color: var(--fn-ink);
+    cursor: pointer;
+    transition: background 0.2s var(--fn-ease), color 0.2s var(--fn-ease);
+  }
+
+  .viewer-close:hover { background: var(--fn-ink); color: var(--fn-paper); }
+  .viewer-close svg   { width: 15px; height: 15px; }
+
+  .viewer-well { flex: 1; min-height: 0; height: min(74vh, 760px); }
+
+  .viewer-well > video { object-fit: contain; }
+
+  /* ---- Responsive ---------------------------------------------------- */
+
+  @media (max-width: 980px) {
+    .index { grid-template-columns: repeat(2, 1fr); }
+    .index .note:last-child { grid-column: 1 / -1; }
+    .index .note:last-child .note-well { height: 420px; }
+  }
+
+  @media (max-width: 640px) {
+    .fn { padding: 4rem 1.25rem 4.5rem; }
+    .index { grid-template-columns: 1fr; gap: 2rem; }
+    .index .note:last-child .note-well { height: 300px; }
+    .note-cue { opacity: 1; transform: none; }
+    .viewer-well { height: 64vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <strong>Field Notes</strong>
+  <span>D · Index</span>
+  <nav>
+    <a href="field-notes-compare.html">Compare</a>
+    <a href="field-notes-a-stage.html">A Stage</a>
+    <a href="field-notes-b-plates.html">B Plates</a>
+    <a href="field-notes-c-bento.html">C Bento</a>
+    <a href="field-notes-d-index.html" aria-current="page">D Index</a>
+  </nav>
+</div>
+
+<section class="fn" id="field-notes">
+  <div class="fn-wrap">
+
+    <header class="fn-head" data-rise="0">
+      <span class="fn-kicker">Field Notes</span>
+      <h2 class="fn-h2">What we learn building datasets.</h2>
+    </header>
+
+    <div class="index">
+
+      <article class="note" data-rise="0">
+        <button class="fn-plate note-plate" data-open="cvat" aria-label="Open the CVAT cuboid demo">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-well note-well" data-fit="contain">
+            <video data-src="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4"
+                   autoplay loop muted playsinline preload="none"
+                   aria-label="Rotation-aware cuboid annotation in CVAT"></video>
+          </span>
+          <span class="note-cue">
+            Open
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </span>
+        </button>
+        <div class="note-text">
+          <span class="fn-tag">Custom Annotation Tooling</span>
+          <h3 class="fn-title">Extending CVAT for rotation-aware 3D annotation</h3>
+          <p class="fn-copy">Driver's-view footage constantly changes a vehicle's angle and perspective. CVAT's default cuboid controls do not represent those rotations naturally. We create our own rotation-aware cuboids making 3D alignment faster, more intuitive, and more consistent across frames.</p>
+        </div>
+      </article>
+
+      <article class="note" data-rise="90">
+        <button class="fn-plate note-plate" data-open="iaa" aria-label="Open the entity annotation demo">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-well note-well">
+            <iframe data-src="ner-annotation-FULL.html" title="Named-entity annotation review, preview" loading="lazy" tabindex="-1"></iframe>
+          </span>
+          <span class="note-cue">
+            Open
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </span>
+        </button>
+        <div class="note-text">
+          <span class="fn-tag">Annotation Intelligence</span>
+          <h3 class="fn-title">Agent-assisted calibration for higher IAA</h3>
+          <p class="fn-copy">We combine expert review with advanced AI models to identify annotation disagreements, uncover unclear guidelines, and highlight where annotators may need additional support. Each review cycle helps us improve the rubric, provide targeted coaching, and increase consistency while keeping human judgment at the center of the process.</p>
+        </div>
+      </article>
+
+      <article class="note" data-rise="180">
+        <button class="fn-plate note-plate" data-open="layout" aria-label="Open the document layout demo">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="fn-well note-well">
+            <iframe data-src="dla-booklet-FULL.html" title="Document layout analysis, preview" loading="lazy" tabindex="-1"></iframe>
+          </span>
+          <span class="note-cue">
+            Open
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </span>
+        </button>
+        <div class="note-text">
+          <span class="fn-tag">Document Intelligence</span>
+          <h3 class="fn-title">Layout is the context layer</h3>
+          <p class="fn-copy">OCR can find the words; structure reveals what they mean. Procurement packages, job postings, and legal documents encode context through sections, tables, lists, and hierarchy. We build and validate that structural layer first, giving downstream models a stronger foundation for extracting skills, clauses, dates, contract terms, and other critical information.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Viewer -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-label" hidden>
+  <div class="viewer-shell">
+    <div class="viewer-bar">
+      <span class="fn-tag" id="viewer-label">Custom Annotation Tooling</span>
+      <button class="viewer-close" id="viewer-close" aria-label="Close demo">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>
+    <div class="fn-well viewer-well" id="viewer-well"></div>
+  </div>
+</div>
+
+<script src="field-notes-embed.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var SOURCES = {
+    cvat:   { label: 'Custom Annotation Tooling', kind: 'video', src: 'https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4', title: 'Rotation-aware cuboid annotation in CVAT' },
+    iaa:    { label: 'Annotation Intelligence',   kind: 'frame', src: 'ner-annotation-FULL.html', title: 'Named-entity annotation review, live demo' },
+    layout: { label: 'Document Intelligence',     kind: 'frame', src: 'dla-booklet-FULL.html',    title: 'Document layout analysis, live demo' }
+  };
+
+  var viewer  = document.getElementById('viewer');
+  var well    = document.getElementById('viewer-well');
+  var label   = document.getElementById('viewer-label');
+  var closeEl = document.getElementById('viewer-close');
+  var opener  = null;
+
+  function open(id) {
+    var s = SOURCES[id];
+    if (!s) return;
+
+    label.textContent = s.label;
+    well.classList.remove('is-live');
+
+    if (s.kind === 'video') {
+      well.innerHTML = '<video src="' + s.src + '" autoplay loop muted playsinline controls aria-label="' + s.title + '"></video>';
+      well.setAttribute('data-fit', 'contain');
+    } else {
+      well.innerHTML = '<iframe src="' + s.src + '" title="' + s.title + '"></iframe>';
+      well.removeAttribute('data-fit');
+    }
+
+    var media = well.firstElementChild;
+    media.addEventListener(s.kind === 'video' ? 'loadeddata' : 'load',
+      function () { well.classList.add('is-live'); }, { once: true });
+
+    viewer.hidden = false;
+    // Next frame, so the transition actually runs.
+    requestAnimationFrame(function () { viewer.classList.add('is-open'); });
+    document.body.style.overflow = 'hidden';
+    closeEl.focus();
+  }
+
+  function close() {
+    viewer.classList.remove('is-open');
+    document.body.style.overflow = '';
+    window.setTimeout(function () {
+      viewer.hidden = true;
+      well.innerHTML = '';   // stop playback, release the frame
+    }, 300);
+    if (opener) opener.focus();
+  }
+
+  document.querySelectorAll('[data-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      opener = btn;
+      open(btn.getAttribute('data-open'));
+    });
+  });
+
+  closeEl.addEventListener('click', close);
+
+  viewer.addEventListener('mousedown', function (e) {
+    if (e.target === viewer) close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !viewer.hidden) close();
+  });
+
+  // Keep focus inside the dialog while it is open.
+  viewer.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    closeEl.focus();
+  });
+})();
+</script>
+</body>
+</html>

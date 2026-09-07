@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes — Spread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="field-notes-base.css">
+<style>
+  /* ======================================================================
+     FIELD NOTES — SPREAD
+     Wide band, paired middle, wide band. Four cells for the section's four
+     notes, each preview sized to the source's real dimensions:
+
+       featured  1140 x 247   native 1600x346, all three camera panels
+       cuboid      548 x 460   native 16:9, letterboxed on its own black
+       entity      548 x 460   demo renders at 1:1 and runs itself
+       document   1140 x 860   full spread plus page nav, nothing clipped
+
+     Previews only. No added controls, no scaling, no cropping.
+     ====================================================================== */
+
+  .fn-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .fn-head .fn-h2 { max-width: 20ch; }
+
+  .spread {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .band { grid-column: 1 / -1; }
+
+  /* ---- Card ---------------------------------------------------------- */
+
+  .note {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .note-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.4rem 0.9rem 0.9rem;
+  }
+
+  .note-text .fn-title { font-size: 1.3rem; }
+
+  .band .note-text { padding: 1.6rem 1.1rem 1rem; }
+  .band .note-text .fn-title { font-size: clamp(1.45rem, 2.2vw, 1.95rem); }
+
+  /* Full-width cards let their paragraph run the whole measure rather than
+     wrapping early against empty space. */
+  .band .fn-copy { max-width: none; }
+
+  .note-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 0.35rem;
+    font-family: var(--fn-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fn-muted);
+  }
+
+  .note-meta span.dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(10, 10, 11, 0.3);
+  }
+
+  /* ---- Wells, sized to each source -------------------------------------
+     Nothing here scales a demo down. The video wells carry the source's
+     own ratio so no frame is lost; the demo wells are tall enough for the
+     demo to lay itself out and run.
+     -------------------------------------------------------------------- */
+
+  /* Each video well carries its source's exact ratio, so the frame fills it
+     edge to edge: nothing is cropped and there is no letterbox. */
+  .well-featured { aspect-ratio: 1600 / 346; }
+
+  /* The pair runs taller than the video's own 16:9 so the entity demo has
+     room for real text. The cuboid fills it with `cover`, which trims only
+     the empty black margin either side of a centred subject. */
+  .well-pair { aspect-ratio: 4 / 3; }
+
+  .fn-well > video { object-fit: cover; background: transparent; }
+
+  /* Shorter than a true two-page spread would be. The pages are sized from
+     the height instead of the width, so the band loses depth without either
+     page being cropped; the slack sits as a margin either side of the book. */
+  .well-doc { aspect-ratio: 8 / 5; }
+
+  /* Previews stay previews, as on the live section. */
+  .fn-well > iframe { pointer-events: none; }
+
+  /* ---- Responsive ---------------------------------------------------- */
+
+  /* Every well is ratio-driven, so width takes care of itself. What changes
+     below is the ratio, because each demo switches to its own narrow layout
+     at a different point. */
+
+  @media (max-width: 1000px) {
+    .spread { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    /* Stacked now, so the pair no longer has to match. */
+    .well-pair--frame { aspect-ratio: 4 / 3; }
+  }
+
+  /* The document demo drops to a single page once its frame is under 768px,
+     which happens at about this viewport. One page, so one page's ratio. */
+  @media (max-width: 836px) {
+    .well-doc { aspect-ratio: 1136 / 1548; }
+  }
+
+  @media (max-width: 700px) {
+    .fn { padding: 4rem 1.25rem 4.5rem; }
+    /* At phone width the 4.6:1 strip is a 68px sliver. Fill a 16:9 box from
+       the centre panel instead: less of the frame, but something readable. */
+    .well-featured { aspect-ratio: 16 / 9; }
+    .well-pair--frame { aspect-ratio: 3 / 4; }
+    .note-text, .band .note-text { padding: 1.2rem 0.5rem 0.6rem; }
+    .note-text .fn-title { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <strong>Field Notes</strong>
+  <span>Spread</span>
+  <nav>
+    <a href="field-notes-spread.html" aria-current="page">Spread</a>
+    <a href="field-notes-compare.html">Compare</a>
+    <a href="field-notes-a-stage.html">A</a>
+    <a href="field-notes-b-plates.html">B</a>
+    <a href="field-notes-c-bento.html">C</a>
+    <a href="field-notes-d-index.html">D</a>
+  </nav>
+</div>
+
+<section class="fn" id="field-notes">
+  <div class="fn-wrap">
+
+    <header class="fn-head" data-rise="0">
+      <span class="fn-kicker">Field Notes</span>
+      <h2 class="fn-h2">What we learn building datasets.</h2>
+    </header>
+
+    <div class="spread">
+
+      <!-- 1 — featured, full width at the source's own 4.62:1 -->
+      <article class="note band fn-plate" data-rise="0">
+        <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <div class="fn-well well-featured">
+          <video data-src="videos/fsd-highway-merge-horizontal.mp4"
+                 autoplay loop muted playsinline preload="none"
+                 aria-label="Three-camera highway footage with cuboid and lane annotations"></video>
+        </div>
+        <div class="note-text">
+          <span class="fn-tag">Manual + Semi-Automatic Tagging</span>
+          <h3 class="fn-title">Combining expert annotation with SAM models</h3>
+          <p class="fn-copy">We combine expert frame-level annotation with Meta's latest SAM models to speed up complex driving sequences without sacrificing accuracy. GPU-accelerated inference and temporal tracking help generate consistent masks across frames, while human annotators review and refine the results. This allows us to move faster while preserving the details that matter most such as lane boundaries, vehicle trajectories, occlusions, and merge behavior.</p>
+          <p class="note-meta">POV / Highway <span class="dot"></span> Perception Data</p>
+        </div>
+      </article>
+
+      <!-- 2 — pair, left -->
+      <article class="note fn-plate" data-rise="80">
+        <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <div class="fn-well well-pair well-pair--video">
+          <video data-src="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4"
+                 autoplay loop muted playsinline preload="none"
+                 aria-label="Rotation-aware cuboid annotation in CVAT"></video>
+        </div>
+        <div class="note-text">
+          <span class="fn-tag">Custom Annotation Tooling</span>
+          <h3 class="fn-title">Extending CVAT for rotation-aware 3D annotation</h3>
+          <p class="fn-copy">Driver's-view footage constantly changes a vehicle's angle and perspective. CVAT's default cuboid controls do not represent those rotations naturally. We create our own rotation-aware cuboids making 3D alignment faster, more intuitive, and more consistent across frames.</p>
+        </div>
+      </article>
+
+      <!-- 3 — pair, right -->
+      <article class="note fn-plate" data-rise="160">
+        <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <div class="fn-well well-pair well-pair--frame">
+          <iframe data-src="ner-annotation-FULL.html" title="Named-entity annotation review, live preview" loading="lazy" tabindex="-1"></iframe>
+        </div>
+        <div class="note-text">
+          <span class="fn-tag">Annotation Intelligence</span>
+          <h3 class="fn-title">Agent-assisted calibration for higher IAA</h3>
+          <p class="fn-copy">We combine expert review with advanced AI models to identify annotation disagreements, uncover unclear guidelines, and highlight where annotators may need additional support. Each review cycle helps us improve the rubric, provide targeted coaching, and increase consistency while keeping human judgment at the center of the process.</p>
+        </div>
+      </article>
+
+      <!-- 4 — the document demo, full width, full height -->
+      <article class="note band fn-plate" data-rise="0">
+        <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <div class="fn-well well-doc">
+          <iframe data-src="dla-booklet-FULL.html" id="docFrame" title="Document layout analysis, live preview" loading="lazy" tabindex="-1"></iframe>
+        </div>
+        <div class="note-text">
+          <span class="fn-tag">Document Intelligence</span>
+          <h3 class="fn-title">Layout is the context layer</h3>
+          <p class="fn-copy">OCR can find the words; structure reveals what they mean. Procurement packages, job postings, and legal documents encode context through sections, tables, lists, and hierarchy. We build and validate that structural layer first, giving downstream models a stronger foundation for extracting skills, clauses, dates, contract terms, and other critical information.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script src="field-notes-embed.js"></script>
+<script>
+/* These are previews, so the demos show their work and nothing else.
+   Each demo ships its own toolbar - a play button, page arrows, a counter.
+   Inside a preview those are dead controls, so they are stripped and the
+   demo is driven from here instead. Same origin, so this works on the
+   live site exactly as it does locally. */
+(function () {
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var PREVIEW_CSS = {
+    /* Hide the toolbar, drop the demo's dark surround, and let the paper
+       run to the edges of the well. */
+    'ner-annotation-FULL.html':
+      '.header,.controls-bar,.legend{display:none!important}' +
+      /* min-height:100vh alone lets the content push the body past the frame,
+         so nothing downstream can resolve a percentage height. Pin it. */
+      'html,body{height:100%!important;max-height:100%!important;' +
+        'overflow:hidden!important;background:#fff!important}' +
+      /* The demo's own scroller is #documentContainer - scrollElementIntoContainer
+         drives container.scrollTop and reads container.clientHeight - but the
+         overflow sits on .viewport instead, so those calls do nothing and the
+         document never follows the annotations. Move the scrolling onto the
+         element the code actually targets. */
+      '.viewport{display:block!important;flex:1 1 auto!important;min-height:0!important;' +
+        'padding:0!important;overflow:hidden!important}' +
+      '.document-container{max-width:none!important;width:100%!important;height:100%!important;' +
+        'overflow-y:auto!important;border-radius:0!important;box-shadow:none!important;' +
+        'padding:1.15rem 1.4rem!important;scroll-behavior:smooth!important}' +
+      '.document-container::-webkit-scrollbar{width:6px}' +
+      '.document-container::-webkit-scrollbar-thumb{background:rgba(10,10,11,.18);border-radius:3px}' +
+      /* Tightened so more of the document sits in the tile at once. 14.4px on
+         a 1.52 leading still clears the readable floor comfortably. */
+      '.document-text{font-size:0.9rem!important;line-height:1.52!important}' +
+      '.document-text h2{font-size:1.22rem!important;margin-bottom:0.55rem!important}' +
+      '.document-text h3{font-size:0.98rem!important;margin:0.8rem 0 0.35rem!important}' +
+      '.document-text p{margin-bottom:0.6rem!important}' +
+      '.document-text ul,.document-text ol{margin:0.4rem 0 0.6rem 1.05rem!important}' +
+      '.document-text li{margin-bottom:0.25rem!important}',
+
+    /* Same idea: no toolbar, no page arrows, no dark stage. The two pages
+       are widened to 50% each so the spread fills the well exactly, which
+       is why the well carries the 2272 x 1548 ratio of a two-page spread. */
+    'dla-booklet-FULL.html':
+      '.topbar,.bottom-controls{display:none!important}' +
+      'html,body{height:100%!important;max-height:100%!important;' +
+        'overflow:hidden!important;background:#fff!important}' +
+      '.reading-stage{flex:1 1 auto!important;min-height:0!important;padding:0!important;' +
+        'overflow:hidden!important}' +
+      '.book-container{max-width:none!important;height:100%!important;min-height:0!important;' +
+        'align-items:center!important}' +
+      /* Sized by height rather than width, so the band can be shorter without
+         either page being cropped. */
+      '.page{border:0!important;box-shadow:none!important;border-radius:0!important;' +
+        'height:100%!important;width:auto!important;aspect-ratio:1136/1548!important;' +
+        'max-width:none!important;flex:0 0 auto!important}' +
+      '.reading-stage{align-items:stretch!important}'
+  };
+
+  /* The booklet was built for a page turn that was never wired up: the
+     container already carries `perspective: 2400px`, `.page` already has a
+     transform transition, and there is a spine shadow down the middle, but
+     updateDisplay() only swaps the image sources. This drives the leaf those
+     hooks were waiting for - the right page rotates about the spine and lands
+     as the new left page, which is how the spread actually reads. */
+  function turnPage(doc, w) {
+    var book  = doc.querySelector('.book-container');
+    var right = doc.querySelector('.page-right');
+    var leftI = doc.getElementById('leftPageImg');
+    var rightI = doc.getElementById('rightPageImg');
+
+    if (!book || !right || !leftI || !rightI || doc.querySelector('.fn-leaf')) {
+      w.nextPage();
+      return;
+    }
+
+    var oldLeft  = leftI.getAttribute('src');
+    var oldRight = rightI.getAttribute('src');
+
+    var r = right.getBoundingClientRect();
+    var b = book.getBoundingClientRect();
+
+    w.nextPage();                       // advances the spread underneath
+    var newLeft = leftI.getAttribute('src');
+
+    if (newLeft === oldLeft) return;    // nothing turned
+
+    // Hold the old left page in place until the leaf covers it.
+    leftI.setAttribute('src', oldLeft);
+
+    var leaf = doc.createElement('div');
+    leaf.className = 'fn-leaf';
+    leaf.style.cssText =
+      'position:absolute;z-index:6;pointer-events:none;' +
+      'top:' + (r.top - b.top) + 'px;left:' + (r.left - b.left) + 'px;' +
+      'width:' + r.width + 'px;height:' + r.height + 'px;' +
+      'transform-style:preserve-3d;transform-origin:left center;' +
+      'transform:rotateY(0deg);' +
+      'transition:transform 760ms cubic-bezier(.42,0,.22,1);';
+
+    function face(src, flipped) {
+      var img = doc.createElement('img');
+      img.src = src;
+      img.style.cssText =
+        'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;' +
+        'background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;' +
+        'box-shadow:0 8px 26px rgba(0,0,0,.22);' +
+        (flipped ? 'transform:rotateY(180deg);' : '');
+      return img;
+    }
+
+    leaf.appendChild(face(oldRight, false));   // the page being turned
+    leaf.appendChild(face(newLeft, true));     // its reverse, the new left page
+    book.appendChild(leaf);
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { leaf.style.transform = 'rotateY(-180deg)'; });
+    });
+
+    setTimeout(function () {
+      leftI.setAttribute('src', newLeft);
+      if (leaf.parentNode) leaf.parentNode.removeChild(leaf);
+    }, 780);
+  }
+
+  function strip(frame) {
+    var css = PREVIEW_CSS[frame.getAttribute('data-src') || ''];
+    if (!css) return;
+
+    var doc;
+    try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.body) return;
+
+    var style = doc.createElement('style');
+    style.textContent = css;
+    doc.head.appendChild(style);
+
+    if (frame._loop) { clearInterval(frame._loop); frame._loop = null; }
+    if (reduced) return;
+
+    var w = frame.contentWindow;
+
+    /* Both demos run once and stop, which would leave the preview parked on
+       a blank last page. Turn each into a loop. */
+
+    if (typeof w.nextPage === 'function') {
+      frame._loop = setInterval(function () {
+        try {
+          var t = doc.getElementById('pageText');
+          var m = t && t.textContent.match(/(\d+)-(\d+)\s+of\s+(\d+)/);
+          if (m && Number(m[2]) >= Number(m[3])) {
+            clearInterval(frame._loop);
+            frame._loop = null;
+            w.location.reload();      // back to page one; load fires again
+            return;
+          }
+          turnPage(doc, w);
+        } catch (e) { clearInterval(frame._loop); }
+      }, 3800);
+      return;
+    }
+
+    if (typeof w.playAnimation === 'function') {
+      frame._loop = setInterval(function () {
+        try {
+          var s = doc.getElementById('statusText');
+          if (s && /complete/i.test(s.textContent)) {
+            w.resetAnimation();
+            setTimeout(function () { try { w.playAnimation(); } catch (e) {} }, 1200);
+          }
+        } catch (e) { clearInterval(frame._loop); }
+      }, 2000);
+    }
+  }
+
+  document.querySelectorAll('.fn-well iframe').forEach(function (frame) {
+    frame.addEventListener('load', function () { strip(frame); });
+  });
+})();
+</script>
+</body>
+</html>

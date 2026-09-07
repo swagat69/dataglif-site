@@ -1,0 +1,284 @@
+/* ==========================================================================
+   Field Notes — shared foundation for the four layout prototypes
+   Preserves the incumbent DataGlif "lab" language: paper island, matted
+   plates, corner crop marks, Bricolage / DM Sans / IBM Plex Mono.
+   ========================================================================== */
+
+:root {
+  /* Incumbent Field Notes palette — unchanged */
+  --fn-paper:  #f6f5f3;
+  --fn-plate:  #ffffff;
+  --fn-ink:    #0a0a0b;
+  --fn-muted:  #6b6b70;
+  --fn-line:   rgba(10, 10, 11, 0.08);
+  --fn-line-2: rgba(10, 10, 11, 0.14);
+  --fn-tick:   rgba(10, 10, 11, 0.22);
+  --fn-well:   #e7e6e3;
+  --fn-accent: #38bdf8;
+
+  /* Type */
+  --fn-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fn-body:    'DM Sans', system-ui, sans-serif;
+  --fn-mono:    'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  /* One radius system: 16 outer / 12 inner / 8 controls */
+  --fn-r-out: 16px;
+  --fn-r-in:  12px;
+  --fn-r-ctl: 8px;
+
+  --fn-matte: 0.625rem;   /* the incumbent 10px mat around every preview */
+  --fn-max:   1160px;
+
+  --fn-ease:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--fn-paper);
+  color: var(--fn-ink);
+  font-family: var(--fn-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, video, iframe { display: block; max-width: 100%; }
+
+:focus-visible {
+  outline: 2px solid var(--fn-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Prototype chrome — NOT part of the design. Lets you flip between the four.
+   -------------------------------------------------------------------------- */
+
+.proto-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1.5rem;
+  background: #0a0d12;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: var(--fn-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.proto-bar strong {
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+
+.proto-bar nav { display: flex; gap: 0.4rem; margin-left: auto; flex-wrap: wrap; }
+
+.proto-bar a {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.proto-bar a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.proto-bar a[aria-current='page'] { background: var(--fn-accent); color: #04121b; }
+
+/* --------------------------------------------------------------------------
+   Section shell
+   -------------------------------------------------------------------------- */
+
+.fn {
+  padding: 6rem 1.5rem 6.5rem;
+  background: var(--fn-paper);
+}
+
+.fn-wrap {
+  width: 100%;
+  max-width: var(--fn-max);
+  margin: 0 auto;
+}
+
+.fn-kicker {
+  font-family: var(--fn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--fn-muted);
+}
+
+.fn-h2 {
+  font-family: var(--fn-display);
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.fn-tag {
+  font-family: var(--fn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fn-muted);
+}
+
+.fn-title {
+  font-family: var(--fn-display);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.fn-copy {
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: var(--fn-muted);
+  max-width: 68ch;
+}
+
+/* --------------------------------------------------------------------------
+   The plate — matted frame + corner crop marks (incumbent signature)
+   -------------------------------------------------------------------------- */
+
+.fn-plate {
+  position: relative;
+  background: var(--fn-plate);
+  border: 1px solid var(--fn-line);
+  border-radius: var(--fn-r-out);
+  padding: var(--fn-matte);
+}
+
+.fn-marks {
+  position: absolute;
+  inset: -9px;
+  pointer-events: none;
+}
+
+.fn-marks i {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border: 0 solid var(--fn-tick);
+  transition: border-color 0.35s var(--fn-ease);
+}
+
+.fn-marks i:nth-child(1) { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+.fn-marks i:nth-child(2) { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+.fn-marks i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+.fn-marks i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* --------------------------------------------------------------------------
+   The well — where a demo actually lives.
+   No transform scaling. The frame gets its true width and the demo runs
+   its own responsive CSS inside it.
+   -------------------------------------------------------------------------- */
+
+.fn-well {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--fn-r-in);
+  background: var(--fn-well);
+}
+
+.fn-well > iframe,
+.fn-well > video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.fn-well > video { object-fit: cover; background: #07090d; }
+
+/* Video wells letterbox rather than crop: the source is 16:9 and the box is
+   16:9, so `contain` and `cover` agree and nothing is lost either way. */
+.fn-well[data-fit='contain'] > video { object-fit: contain; background: #07090d; }
+
+/* Skeleton shown until the frame mounts */
+.fn-well::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.55) 50%, transparent 80%),
+    var(--fn-well);
+  background-size: 220% 100%, 100% 100%;
+  animation: fn-shimmer 1.5s linear infinite;
+  opacity: 1;
+  transition: opacity 0.5s var(--fn-ease);
+  pointer-events: none;
+}
+
+.fn-well.is-live::after { opacity: 0; }
+
+@keyframes fn-shimmer {
+  from { background-position: 120% 0, 0 0; }
+  to   { background-position: -120% 0, 0 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Open control — the affordance the live section is missing
+   -------------------------------------------------------------------------- */
+
+.fn-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--fn-line-2);
+  border-radius: var(--fn-r-ctl);
+  background: transparent;
+  color: var(--fn-ink);
+  font-family: var(--fn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s var(--fn-ease), color 0.2s var(--fn-ease),
+              border-color 0.2s var(--fn-ease);
+}
+
+.fn-open:hover  { background: var(--fn-ink); border-color: var(--fn-ink); color: var(--fn-paper); }
+.fn-open:active { transform: translateY(1px); }
+.fn-open svg    { width: 13px; height: 13px; flex: none; }
+
+/* --------------------------------------------------------------------------
+   Reveal — one entrance, exponential ease-out, from an already-legible state
+   -------------------------------------------------------------------------- */
+
+[data-rise] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--fn-ease), transform 0.7s var(--fn-ease);
+}
+
+[data-rise].is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-rise] { opacity: 1; transform: none; }
+}

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes — four layouts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:    #0a0d12;
+    --panel: #0f131c;
+    --line:  rgba(255, 255, 255, 0.09);
+    --ink:   rgba(255, 255, 255, 0.94);
+    --ink-2: rgba(255, 255, 255, 0.62);
+    --ink-3: rgba(255, 255, 255, 0.40);
+    --cyan:  #38bdf8;
+    --warn:  #f97316;
+    --ease:  cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 5rem 1.5rem 6rem; }
+
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+  }
+
+  .lede { margin-top: 1.25rem; max-width: 62ch; color: var(--ink-2); }
+
+  h2 {
+    margin-top: 4.5rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* --- constraint table --- */
+
+  table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.9rem; }
+  caption { text-align: left; color: var(--ink-2); padding-bottom: 0.9rem; font-size: 0.9rem; }
+  th, td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--line);
+  }
+  tbody tr + tr td { border-top: 1px solid rgba(255, 255, 255, 0.05); }
+  td.num { font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+  .bad  { color: var(--warn); }
+  .good { color: var(--cyan); }
+
+  /* --- option cards --- */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+  }
+
+  .opt {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.6rem 1.6rem 1.4rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .opt:hover { border-color: rgba(56, 189, 248, 0.45); transform: translateY(-2px); }
+
+  .opt h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .opt p { color: var(--ink-2); font-size: 0.9rem; }
+
+  .opt dl { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1rem; font-size: 0.82rem; margin-top: 0.2rem; }
+  .opt dt { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); padding-top: 0.15rem; }
+  .opt dd { color: var(--ink-2); }
+
+  .pick {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  .flag {
+    align-self: flex-start;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  ul.notes { margin-top: 1.25rem; padding-left: 1.1rem; color: var(--ink-2); max-width: 66ch; }
+  ul.notes li { margin-bottom: 0.5rem; }
+
+  a.plain { color: var(--cyan); }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    .wrap { padding: 3.5rem 1.25rem 4rem; }
+    table { font-size: 0.82rem; }
+    th, td { padding: 0.6rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="mono">DataGlif</span>
+  <h1>Four ways to make the Field Notes demos readable.</h1>
+  <p class="lede">
+    The section shipping today renders each demo at a forced 1280px viewport and
+    then shrinks it to 29%, so 15px body copy lands at 4.3px. Every layout below
+    deletes that scaling. The demo gets its real width and runs its own
+    responsive CSS, so nothing is reduced and nothing is cropped.
+  </p>
+
+  <h2>What each demo actually needs</h2>
+  <table>
+    <caption>Measured in the browser against the live page, at a 1496px viewport.</caption>
+    <thead>
+      <tr><th>Demo</th><th>Today</th><th>Minimum legible width</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cuboid capture</td>
+        <td class="num bad">370 x 277, cover-cropped</td>
+        <td class="num good">16:9 box, any width</td>
+        <td>3840 x 2160 source forced into a 4:3 tile loses about a quarter of the frame.</td>
+      </tr>
+      <tr>
+        <td>Entity annotation</td>
+        <td class="num bad">scale 0.289</td>
+        <td class="num good">370px</td>
+        <td>Reaches its own narrow layout and is fully readable at tile width.</td>
+      </tr>
+      <tr>
+        <td>Document layout</td>
+        <td class="num bad">scale 0.289</td>
+        <td class="num good">740px</td>
+        <td>Two document pages side by side. Below 740 the region boxes stop resolving.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Built</h2>
+  <div class="grid">
+    <a class="opt" href="field-notes-spread.html" style="grid-column:1/-1">
+      <span class="flag">Current direction</span>
+      <h3>Spread</h3>
+      <p>Wide band, paired middle, wide band. Four cells for the section's four notes. Previews only, no added controls: each demo's own toolbar is stripped and its dark stage removed, so the well shows nothing but the work.</p>
+      <dl>
+        <dt>Featured</dt><dd>1139 x 246, the source's native 4.62:1, all three camera panels</dd>
+        <dt>Pair</dt><dd>547 x 410 each, matched, no letterbox</dd>
+        <dt>Document</dt><dd>1139 x 776, full spread edge to edge, loops through 28 pages</dd>
+        <dt>Mobile</dt><dd>Each well takes the ratio its demo switches to</dd>
+      </dl>
+      <span class="pick">Open the spread</span>
+    </a>
+  </div>
+
+  <h2>Earlier explorations</h2>
+  <div class="grid">
+
+    <a class="opt" href="field-notes-a-stage.html">
+      <h3>A · Stage</h3>
+      <p>One demo at a time on a 796px stage, with the three notes as an index rail beside it. The crop marks that already decorate the section become the selection indicator.</p>
+      <dl>
+        <dt>Widths</dt><dd>796px for every demo</dd>
+        <dt>Weight</dt><dd>One demo mounted, ever</dd>
+        <dt>Height</dt><dd>Most compact of the four</dd>
+        <dt>Cost</dt><dd>Two notes need a click</dd>
+      </dl>
+      <span class="pick">Open layout A</span>
+    </a>
+
+    <a class="opt" href="field-notes-b-plates.html">
+      <h3>B · Plates</h3>
+      <p>Each note is its own band. Two run as demo-and-column pairs at 692px, then the third breaks to the full 1140px because the document demo needs it. Everything is visible without interaction.</p>
+      <dl>
+        <dt>Widths</dt><dd>692px, 692px, 1140px</dd>
+        <dt>Weight</dt><dd>All three, lazily mounted</dd>
+        <dt>Height</dt><dd>Tallest of the four</dd>
+        <dt>Cost</dt><dd>Three live demos on screen</dd>
+      </dl>
+      <span class="pick">Open layout B</span>
+    </a>
+
+    <a class="opt" href="field-notes-c-bento.html">
+      <h3>C · Bento</h3>
+      <p>Three cells for three notes, each sized to the minimum width its demo needs. The asymmetry is the measurement, not styling. Keeps a browsable feel while still clearing every threshold.</p>
+      <dl>
+        <dt>Widths</dt><dd>716px, 378px, 1140px</dd>
+        <dt>Weight</dt><dd>All three, lazily mounted</dd>
+        <dt>Height</dt><dd>Middle</dd>
+        <dt>Cost</dt><dd>Most responsive tuning</dd>
+      </dl>
+      <span class="pick">Open layout C</span>
+    </a>
+
+    <a class="opt" href="field-notes-d-index.html">
+      <h3>D · Index</h3>
+      <p>Keeps today's three-up rhythm, but the tile stops pretending to be the demo: it runs at 1:1 and shows the top of it, and a full-bleed viewer is the real surface. Lightest and fastest.</p>
+      <dl>
+        <dt>Widths</dt><dd>350px tile, 1260px viewer</dd>
+        <dt>Weight</dt><dd>Lightest</dd>
+        <dt>Height</dt><dd>Same as today</dd>
+        <dt>Cost</dt><dd>Document demo needs the viewer</dd>
+      </dl>
+      <span class="pick">Open layout D</span>
+    </a>
+
+  </div>
+
+  <h2>Held constant across all four</h2>
+  <ul class="notes">
+    <li>Type, palette, radii, matted plates and corner crop marks are the incumbent section's, unchanged.</li>
+    <li>Copy is identical in all four, so the comparison is about layout. Two card titles were moved to sentence case to match the third.</li>
+    <li>Demos mount only when the section is within 400px of the viewport. Today's version eagerly loads two iframes and two autoplay videos, roughly 8MB, whether or not anyone scrolls down.</li>
+    <li>Each demo has a visible, keyboard-reachable control that opens it at full size. Today the demos are interactive but nothing says so.</li>
+    <li>Reduced motion collapses every entrance and transition.</li>
+    <li>The section stays a light paper island, which is how it reads on the live site.</li>
+  </ul>
+
+  <h2>Still open</h2>
+  <ul class="notes">
+    <li>The <code>Field Notes</code> label above the heading is kept in all four because it is the section's name. The heading carries fine without it if you want it gone.</li>
+    <li><a class="plain" href="https://swagat69.github.io/dataglif-site/#blog" target="_blank" rel="noopener">The live section</a> for side-by-side reference.</li>
+  </ul>
+
+</div>
+</body>
+</html>

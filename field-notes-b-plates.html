@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes — B · Plates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="field-notes-base.css">
+<style>
+  /* ======================================================================
+     LAYOUT B — PLATES
+     Each note is its own band. Two run as demo-and-column pairs at 692px
+     live width; the third breaks to the full 1140px because the document
+     demo needs it. The break is the point: the layout is sized by what
+     each demo actually requires, not by a grid decided in advance.
+     ====================================================================== */
+
+  .fn-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 3rem;
+  }
+
+  .fn-head .fn-h2 { max-width: 20ch; }
+
+  .plates { display: flex; flex-direction: column; }
+
+  .band {
+    display: grid;
+    grid-template-columns: 712px 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    padding: 3.25rem 0;
+    border-top: 1px solid var(--fn-line);
+  }
+
+  .band:first-child { border-top: 0; padding-top: 0.5rem; }
+
+  /* Second band mirrors. Two is the cap; the third changes family instead
+     of continuing the zigzag. */
+  .band--mirror { grid-template-columns: 1fr 712px; }
+  .band--mirror .band-plate { order: 2; }
+  .band--mirror .band-text  { order: 1; }
+
+  /* Third band: the document demo gets the whole measure. */
+  .band--wide {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .band--wide .band-text { max-width: 62ch; }
+
+  .band-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .band-text .fn-title { font-size: clamp(1.35rem, 2vw, 1.8rem); }
+  .band-text .fn-open  { margin-top: 0.75rem; }
+
+  .band-well { aspect-ratio: 16 / 9; }
+  .band--wide .band-well { aspect-ratio: 21 / 9; }
+
+  /* ---- Responsive ---------------------------------------------------- */
+
+  @media (max-width: 1180px) {
+    .band          { grid-template-columns: 60% 1fr; gap: 2.5rem; }
+    .band--mirror  { grid-template-columns: 1fr 60%; }
+    .band--wide    { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    .band,
+    .band--mirror,
+    .band--wide {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 2.5rem 0;
+    }
+    .band--mirror .band-plate,
+    .band--mirror .band-text { order: 0; }
+    .band-well       { aspect-ratio: 4 / 3; }
+    .band--wide .band-well { aspect-ratio: 4 / 3; }
+  }
+
+  @media (max-width: 620px) {
+    .fn { padding: 4rem 1.25rem 4.5rem; }
+    .band-well, .band--wide .band-well { aspect-ratio: 3 / 4; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <strong>Field Notes</strong>
+  <span>B · Plates</span>
+  <nav>
+    <a href="field-notes-compare.html">Compare</a>
+    <a href="field-notes-a-stage.html">A Stage</a>
+    <a href="field-notes-b-plates.html" aria-current="page">B Plates</a>
+    <a href="field-notes-c-bento.html">C Bento</a>
+    <a href="field-notes-d-index.html">D Index</a>
+  </nav>
+</div>
+
+<section class="fn" id="field-notes">
+  <div class="fn-wrap">
+
+    <header class="fn-head" data-rise="0">
+      <span class="fn-kicker">Field Notes</span>
+      <h2 class="fn-h2">What we learn building datasets.</h2>
+    </header>
+
+    <div class="plates">
+
+      <!-- 1 -->
+      <article class="band" data-rise="0">
+        <div class="fn-plate band-plate">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <div class="fn-well band-well" data-fit="contain">
+            <video data-src="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4"
+                   autoplay loop muted playsinline preload="none"
+                   aria-label="Rotation-aware cuboid annotation in CVAT"></video>
+          </div>
+        </div>
+        <div class="band-text">
+          <span class="fn-tag">Custom Annotation Tooling</span>
+          <h3 class="fn-title">Extending CVAT for rotation-aware 3D annotation</h3>
+          <p class="fn-copy">Driver's-view footage constantly changes a vehicle's angle and perspective. CVAT's default cuboid controls do not represent those rotations naturally. We create our own rotation-aware cuboids making 3D alignment faster, more intuitive, and more consistent across frames.</p>
+          <a class="fn-open" href="https://swagat69.github.io/dataglif-site/cuboid_rotation.mp4" target="_blank" rel="noopener">
+            Open at full size
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="band band--mirror" data-rise="0">
+        <div class="fn-plate band-plate">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <div class="fn-well band-well">
+            <iframe data-src="ner-annotation-FULL.html" title="Named-entity annotation review, live demo" loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="band-text">
+          <span class="fn-tag">Annotation Intelligence</span>
+          <h3 class="fn-title">Agent-assisted calibration for higher IAA</h3>
+          <p class="fn-copy">We combine expert review with advanced AI models to identify annotation disagreements, uncover unclear guidelines, and highlight where annotators may need additional support. Each review cycle helps us improve the rubric, provide targeted coaching, and increase consistency while keeping human judgment at the center of the process.</p>
+          <a class="fn-open" href="ner-annotation-FULL.html" target="_blank" rel="noopener">
+            Open at full size
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 3 — breaks wide, because the document demo needs the measure -->
+      <article class="band band--wide" data-rise="0">
+        <div class="band-text">
+          <span class="fn-tag">Document Intelligence</span>
+          <h3 class="fn-title">Layout is the context layer</h3>
+          <p class="fn-copy">OCR can find the words; structure reveals what they mean. Procurement packages, job postings, and legal documents encode context through sections, tables, lists, and hierarchy. We build and validate that structural layer first, giving downstream models a stronger foundation for extracting skills, clauses, dates, contract terms, and other critical information.</p>
+          <a class="fn-open" href="dla-booklet-FULL.html" target="_blank" rel="noopener">
+            Open at full size
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+          </a>
+        </div>
+        <div class="fn-plate band-plate">
+          <span class="fn-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <div class="fn-well band-well">
+            <iframe data-src="dla-booklet-FULL.html" title="Document layout analysis, live demo" loading="lazy"></iframe>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script src="field-notes-embed.js"></script>
+</body>
+</html>
